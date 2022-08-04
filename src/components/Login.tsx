@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { get } from "../api/user";
 import { User as Iuser } from "../utils/modals";
 

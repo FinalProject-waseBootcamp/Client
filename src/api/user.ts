@@ -3,7 +3,6 @@ import{User as Iuser} from '../utils/modals'
 
 export const get = async () => {
     try {
-        debugger
         const response= await axios.get('http://localhost:3333/user');
         const usersList:Iuser[]=await response.data.map((user:Iuser)=>{
             return{
@@ -15,7 +14,7 @@ export const get = async () => {
         return usersList;
     }
     catch (error) {
-        console.log('error in get user', error);
+        console.log('error in get users', error);
     }
 
 }
