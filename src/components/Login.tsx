@@ -13,7 +13,6 @@ export default function User() {
     try {
       const users = (await get()) as Iuser[];
       setUsers(users);
-      debugger;
     } catch (err) {
       console.log(err);
     }
