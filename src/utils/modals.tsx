@@ -4,8 +4,11 @@ export interface User {
     email: string;
   }
 
-  export interface Business{
+  export interface System{
+    uid: string;
     adminId: string;
     name: string;
+    topic: string;
     description: string;
+    communicationDetails: string;
   }
