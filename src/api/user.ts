@@ -16,5 +16,5 @@ export const get = async () => {
     catch (error) {
         console.log('error in get users', error);
     }
-
 }
+

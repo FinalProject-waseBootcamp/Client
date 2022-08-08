@@ -3,3 +3,9 @@ export interface User {
     lastName: string;
     email: string;
   }
+
+  export interface Business{
+    adminId: string;
+    name: string;
+    description: string;
+  }
