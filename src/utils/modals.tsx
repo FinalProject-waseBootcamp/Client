@@ -12,3 +12,5 @@ export interface User {
     description: string;
     communicationDetails: string;
   }
+
+  
