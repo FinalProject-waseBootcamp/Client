@@ -1,94 +1,90 @@
-// import React from "react";
+import React, { useState } from "react";
 // import { withRouter } from "react-router-dom";
-// import { auth } from "./firebase";
+import { auth } from "./firebase";
+import { useNavigate } from 'react-router-dom';
+import { sendPasswordResetEmail } from "firebase/auth";
+import { JsxElement } from "typescript";
 
-// class EmailRegister extends React.Component{
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             email: '',
-//             password: ''
-//         };
-        
+export default function EmailRegister(){
 
-//         this.handleChange = this.handleChange.bind(this);
-//         this.handleSubmit = this.handleSubmit.bind(this);
-//       }
-        
-//     handleChange(event){
-//         this.setState({
-//             [event.target.name]: event.target.value
+const [email, setEmail] = React.useState('');
+const [password, setPassword] = React.useState('');
+
+// const handleChange=(event:any)=>{
+//         setName({
+//             event.target.value
 //         });
 
-//         // var partialState = {};
-//         // partialState[event.target.name] = event.target.value;
-//         // this.setState(partialState);
+// var partialState = {};
+// partialState[event.target.name] = event.target.value;
+// this.setState(partialState);
 
-//         //this.setState({email: event.target.value})        
-//     }
-    
-//     async handleSubmit(event) {
-//         event.preventDefault();
-
-//         await auth.createUserWithEmailAndPassword(this.state.email, this.state.password).then(
-//             async (result) => {
-//                 //3 - pick the result and store the token
-//                 const token = await auth?.currentUser?.getIdToken(true);
-//                 await auth?.currentUser?.sendEmailVerification();
-
-//                 //4 - check if have token in the current user
-//                 if (token) {
-//                   //5 - put the token at localStorage (We'll use this to make requests)
-//                   localStorage.setItem("@token", token);
-//                   this.setState({
-//                     email: "",
-//                     password: ""
-//                   });
-//                   alert("Press on the verification link that we sent to you email address")
-//                   this.props.history.push("/login");
-//                 }
-//               },
-//               function (error) {
-//                 alert(error)
-//               }
-//         );
-//     }
-
-//     render() {
-//         return(
-//             <form onSubmit={this.handleSubmit}>
-//             <div>
-//                 <h3>Register with email</h3>
-//             </div>
-//             <div>
-//                 <label for="user">Enter your email: </label>
-//                 <input 
-//                     name="email"
-//                     type="email" 
-//                     placeholder="insert a valid email" 
-//                     required
-//                     value={this.state.email}
-//                     onChange={this.handleChange}
-//                 />
-//             </div>
-//             <div>
-//                 <label for="pwd">Enter your password: </label>
-//                 <input
-//                     name="password"
-//                     type="password"
-//                     placeholder="insert a password"
-//                     required
-//                     value={this.state.password}
-//                     onChange={this.handleChange}
-//                 />
-//             </div>
-//             <div>
-//             <input type="submit" value="Subscribe!"/>
-//             </div>
-//         </form>
-//         )
-//     }
+//this.setState({email: event.target.value})        
 // }
 
-// export default withRouter(EmailRegister);
-export{}
+const handleSubmit = async () => {
+    // event.preventDefault();
+
+    await auth.createUserWithEmailAndPassword(email, password).then(
+        async (result) => {
+            //3 - pick the result and store the token
+            const token = await auth?.currentUser?.getIdToken(true);
+            await auth?.currentUser?.sendEmailVerification();
+
+            //4 - check if have token in the current user
+            if (token) {
+                //5 - put the token at localStorage (We'll use this to make requests)
+                localStorage.setItem("@token", token);
+                //   this.setState({
+                //     email: "",
+                //     password: ""
+                //   });
+                setEmail('');
+                setPassword('');
+                alert("Press on the verification link that we sent to you email address")
+                const navigate = useNavigate();
+                navigate("/login");
+            }
+        },
+        function (error) {
+            alert(error)
+        }
+    );
+
+
+
+return (
+    <form onSubmit={() => handleSubmit}>
+        <div>
+            <h3>Register with email</h3>
+        </div>
+        <div>
+            <label htmlFor="user">Enter your email: </label>
+            <input
+                name="email"
+                type="email"
+                placeholder="insert a valid email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
+        </div>
+        <div>
+            <label htmlFor="pwd">Enter your password: </label>
+            <input
+                name="password"
+                type="password"
+                placeholder="insert a password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+        </div>
+        <div>
+            <input type="submit" value="Subscribe!" />
+        </div>
+    </form>
+)
+
+}}
+

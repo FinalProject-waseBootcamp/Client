@@ -1,7 +1,7 @@
 import React from "react";
 
 import Login from "./Login";
-// import EmailRegister from "./EmailRegister";
+import EmailRegister from './EmailRegister';
 // import EmailLogin from "./EmailLogin";
 // import ResetPassword from "./ResetPassword"
 
