@@ -12,7 +12,7 @@ export default function SuperLogin() {
                 <Login />
             </p>
             <p>
-                {/* <EmailRegister /> */}
+                <EmailRegister />
             </p>
             <p>
                 {/* <EmailLogin /> */}

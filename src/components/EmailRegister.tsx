@@ -9,24 +9,12 @@ export default function EmailRegister(){
 
 const [email, setEmail] = React.useState('');
 const [password, setPassword] = React.useState('');
-
-// const handleChange=(event:any)=>{
-//         setName({
-//             event.target.value
-//         });
-
-// var partialState = {};
-// partialState[event.target.name] = event.target.value;
-// this.setState(partialState);
-
-//this.setState({email: event.target.value})        
-// }
+const navigate = useNavigate();
 
 const handleSubmit = async () => {
-    // event.preventDefault();
 
     await auth.createUserWithEmailAndPassword(email, password).then(
-        async (result) => {
+        async () => {
             //3 - pick the result and store the token
             const token = await auth?.currentUser?.getIdToken(true);
             await auth?.currentUser?.sendEmailVerification();
@@ -42,17 +30,14 @@ const handleSubmit = async () => {
                 setEmail('');
                 setPassword('');
                 alert("Press on the verification link that we sent to you email address")
-                const navigate = useNavigate();
-                navigate("/login");
+                navigate("/user");
             }
         },
         function (error) {
             alert(error)
         }
     );
-
-
-
+    }
 return (
     <form onSubmit={() => handleSubmit}>
         <div>
@@ -86,5 +71,5 @@ return (
     </form>
 )
 
-}}
+}
 
