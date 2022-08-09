@@ -1,9 +1,9 @@
 import React from "react";
 
 import Login from "./Login";
-// import EmailRegister from './EmailRegister';
-// import EmailLogin from "./EmailLogin";
-// import ResetPassword from "./ResetPassword"
+import EmailRegister from './EmailRegister';
+import EmailLogin from "./EmailLogin";
+import ResetPassword from "./ResetPassword"
 
 export default function SuperLogin() {
     return(
@@ -12,7 +12,7 @@ export default function SuperLogin() {
                 <Login />
             </p>
             <p>
-                {/* <EmailRegister /> */}
+                <EmailRegister />
             </p>
             <p>
                 {/* <EmailLogin /> */}

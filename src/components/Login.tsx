@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { auth, firebase } from './firebase';
+import {  logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -28,9 +29,12 @@ export default function Login() {
   return (
     <div>
       <h3>Login with Google</h3>
-      <button onClick={googleLogin} className="login-button">
+      {/* <button onClick={googleLogin} className="login-button">
         GOOGLE
-      </button>
+      </button> */}
+      <button className="login__btn login__google" onClick={signInWithGoogle}>
+          Google
+        </button>
     </div>
   );
 }
