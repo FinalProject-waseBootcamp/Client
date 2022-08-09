@@ -1,16 +1,24 @@
+enum Roles {
+  MAIN_ADMIN,
+  SYSTEM_ADMIN,
+  LOCATION_USER,
+  USER,
+}
+
 export interface User {
-    firstName: string;
-    lastName: string;
-    email: string;
-  }
+  uid: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: Roles;
+  phone: string;
+}
 
-  export interface System{
-    uid: string;
-    adminId: string;
-    name: string;
-    topic: string;
-    description: string;
-    communicationDetails: string;
-  }
-
-  
+export interface System {
+  uid: string;
+  adminId: string;
+  name: string;
+  topic: string;
+  description: string;
+  communicationDetails: string;
+}
