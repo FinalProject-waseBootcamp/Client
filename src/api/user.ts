@@ -6,9 +6,11 @@ export const get = async () => {
         const response= await axios.get('http://localhost:3333/user');
         const usersList:Iuser[]=await response.data.map((user:Iuser)=>{
             return{
+                uid:user.uid,
                 firstName:user.firstName,
                 lastName:user.lastName,
-                email:user.email
+                email:user.email,
+                phone: user.phone,
             }
         })
         return usersList;

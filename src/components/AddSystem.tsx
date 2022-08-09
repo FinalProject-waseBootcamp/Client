@@ -7,27 +7,34 @@ import { System as ISystem } from "../utils/modals";
 import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 
+const basic_url =new URL("http://localhost:3000/system/");
 export default function AddSystem() {
+    debugger;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ISystem>();
-  const name_ref = useRef("");
-  const topic_ref = useRef("");
-  const description_ref = useRef("");
-  const communicationDetails_ref = useRef("");
+  const name_ref = useRef<HTMLInputElement>();
+  const topic_ref = useRef<HTMLInputElement>();
+  const description_ref = useRef<HTMLInputElement>();
+  const communicationDetails_ref = useRef<HTMLInputElement>();
   const createSystem = async () => {
     try {
       const systemToAdd = {
         uid: undefined,
         adminId: "from mobx",
-        name: name_ref.current,
-        topic: topic_ref.current,
-        description: description_ref.current,
-        communicationDetails: communicationDetails_ref.current,
+        name: name_ref.current?.value||'',
+        topic: topic_ref.current?.value||'',
+        description: description_ref.current?.value||'',
+        communicationDetails: communicationDetails_ref.current?.value||'',
       };
-      const newSystem = await post(systemToAdd);
+      debugger
+      const newSystem:ISystem = await post(systemToAdd);
+      const newUrl=new URL(`${basic_url}?uid=${newSystem.uid}&name=${newSystem.name}`);
+      alert("your new url for system is: "+newUrl);
+      return newUrl;
+      debugger;
     } catch (err) {
       console.log(err);
     }
