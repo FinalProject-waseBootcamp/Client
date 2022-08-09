@@ -1,3 +1,4 @@
+import { async } from '@firebase/util';
 import axios from 'axios';
 import { stringify } from 'querystring';
 import{System as Isystem} from '../utils/modals'
@@ -16,8 +17,15 @@ export const get = async () => {
             }
         })
         return systemssList;
+    }catch (error) {
+        console.log('error in get systems', error);
     }
-    catch (error) {
-        console.log('error in get business', error);
+}
+export const post=async(newSystem:Isystem)=>{
+    try{
+        const response= await axios.post('http://localhost:3333/system',newSystem);
+    }catch(error){
+        console.log('error in create system', error);
     }
+
 }
