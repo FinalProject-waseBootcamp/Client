@@ -39,7 +39,7 @@ export default function AddSystem() {
       console.log(newSystem);
       
       // const newUrl=new URL(`${basic_url}?uid=${newSystem.uid}&name=${newSystem.name}`);
-      const newUrl = new URL(`${basic_url}/${newSystem.uid}/${newSystem.name}`);
+      const newUrl = new URL(`${basic_url}/${newSystem.name}/${newSystem.uid}`);
       alert("your new url for system is: " + newUrl);
       return newUrl;
       debugger;

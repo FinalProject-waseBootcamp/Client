@@ -10,18 +10,24 @@ import { System } from '../utils/modals';
 import Stack from '@mui/material/Stack';
 import swal from 'sweetalert';
 import Button from '@mui/material/Button';
+import { constants } from 'fs';
 
 
 export default function MySystem() {
-
+debugger
     const [myBusiness, setMyBusiness] = useState<System[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        getBusiness();
+        debugger
+        async function name() {
+            const _myBusiness=await getSystems();
+            setMyBusiness(_myBusiness);
+        }
+        name();
     }, [])
 
-    const d = async (uid: string) => {
+    const deleteSystem = async (uid: string) => {
         try {
 
             swal({
@@ -50,18 +56,14 @@ export default function MySystem() {
 
     }
 
-
-
-
-
-    const getBusiness = async () => {
+    const getSystems = async () => {
         try {
             debugger
             //get uid manager from mobix
             const managerId = '62f38f54c2019e2ac4f4c9aa';
             const res = await axios.get(`http://localhost:3333/system/${managerId}`);
-            let myBusiness = await res.data;
-            setMyBusiness(myBusiness);
+            // const myBusiness = await res.data;
+            return res.data;
         } catch (error) {
             console.log(error);
         }
@@ -72,8 +74,8 @@ export default function MySystem() {
             <Typography gutterBottom variant="h2" component="div" sx={{ textAlign: 'center', padding: '10px', }}>All systems</Typography>
             <Stack padding={3} direction="row" spacing={5} sx={{ '& .MuiCard-root': { m: 5 }, flexWrap: 'wrap' }} >
                 <Button variant="contained">add system</Button>
-                {myBusiness && myBusiness.map((business: System) =>
-                    <Card >
+                {myBusiness?.length > 0 && myBusiness.map((business: System) =>
+                    <Card key={business.uid} >
                         <CardMedia
                             component="img"
                             alt="system"
@@ -93,7 +95,7 @@ export default function MySystem() {
                         </CardContent>
                         <CardActions>
                             <Button size="medium" onClick={() => navigate('/editBusines')}>Edit my business settings </Button>
-                            <Button size="medium" onClick={()=>d(business.adminId)}>Delete my business settings </Button>
+                            <Button size="medium" onClick={()=>deleteSystem(business.adminId)}>Delete my business settings </Button>
                         </CardActions>
                     </Card>
                 )}

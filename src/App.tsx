@@ -19,6 +19,7 @@ function App() {
           <Route path="/user" element={<User />} />
           <Route path="/addSystem" element={<AddSystem />} />
           <Route path="/mySystem" element={<MySystem />} />
+          {/* <Route path="/system" element={<MySystem />} /> */}
 
           <Route path="/system/welcome/:name/:uid" element={<System />}>
             {/* <Route path="*" element={<System />} /> */}
