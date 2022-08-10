@@ -77,7 +77,7 @@ export default function MySystem() {
                             component="img"
                             alt="system"
                             height="140"
-                            image={business.urlImage}
+                            image={business.imgUrl}
                         />
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="div">
