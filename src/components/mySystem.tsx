@@ -21,11 +21,7 @@ debugger
     useEffect(() => {
         getSystems();
     }, [])
-    useEffect(() => {
-        console.log(myBusiness);
 
-        console.log(myBusiness.length);
-    },[myBusiness] )
 
     const deleteSystem = async (uid: string) => {
         try {
@@ -63,7 +59,6 @@ debugger
             const managerId = '62f3aa7f929ec31aeb9c3e84';
             const res = await axios.get(`http://localhost:3333/system/${managerId}`);
             const _myBusiness=await res.data
-            // const manager = [];
             setMyBusiness(_myBusiness);
         } catch (error) {
             console.log(error);
@@ -95,7 +90,7 @@ debugger
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <Button size="medium" onClick={() => navigate('/editBusines')}>Edit my business settings </Button>
+                            <Button size="medium" onClick={() => navigate('/editBusines')}>Edit my business settings </Button><br/><br/>
                             <Button size="medium" onClick={()=>deleteSystem(business.adminId)}>Delete my business settings </Button>
                         </CardActions>
                     </Card>
