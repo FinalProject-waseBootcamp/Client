@@ -4,7 +4,7 @@ import { post } from "../api/system";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { System as ISystem } from "../utils/modals";
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
 import { Button } from "@mui/material";
 
 const basic_url =new URL("http://localhost:3000/system/");
@@ -19,6 +19,8 @@ export default function AddSystem() {
   const topic_ref = useRef<HTMLInputElement>();
   const description_ref = useRef<HTMLInputElement>();
   const communicationDetails_ref = useRef<HTMLInputElement>();
+  const imgUrl_ref = useRef<HTMLInputElement>();
+
   const createSystem = async () => {
     try {
       const systemToAdd = {
@@ -28,6 +30,7 @@ export default function AddSystem() {
         topic: topic_ref.current?.value||'',
         description: description_ref.current?.value||'',
         communicationDetails: communicationDetails_ref.current?.value||'',
+        imgUrl: imgUrl_ref.current?.value||''
       };
       debugger
       const newSystem:ISystem = await post(systemToAdd);
@@ -134,6 +137,10 @@ export default function AddSystem() {
             {errors.communicationDetails?.type === "required" && (
               <span>required</span>
             )}
+          </div>
+          <div>
+          <TextField placeholder="imgUrl"/>
+ 
           </div>
           </div>
         </nav>
