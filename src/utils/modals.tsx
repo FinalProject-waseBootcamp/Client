@@ -21,4 +21,5 @@ export interface System {
   topic: string;
   description: string;
   communicationDetails: string;
+  urlImage : string;
 }

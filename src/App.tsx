@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import User from "./components/Users";
 import SuperLogin from "./components/SuperLogin";
 import EmailRegister from "./components/EmailRegister";
+import MySystem from "./components/mySystem";
+import EditBusines from "./components/editBusines";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route path="" element={<SuperLogin />} />
           <Route path="/login" element={<SuperLogin />} />
           <Route path="/user" element={<User />} />
+          <Route path="/mySystem" element={<MySystem />} />
+          <Route path='/editBusines' element={<EditBusines />} />
           {/* <Route path="/register" element={<EmailRegister />} /> */}
         </Routes>
       </Router>
