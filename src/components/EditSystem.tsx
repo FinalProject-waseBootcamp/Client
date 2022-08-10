@@ -1,5 +1,7 @@
-export default function EditBusines() {
+export default function EditSystem() {
     return (
-        <div></div>
+        <div>
+            
+        </div>
     )
 }
