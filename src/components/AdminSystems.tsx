@@ -22,26 +22,32 @@ export default function MySystems() {
   }, []);
 
   const deleteSystem = async (uid: string) => {
+    debugger;
     try {
       swal({
         title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this business!",
+        text: "Once deleted, you will not be able to recover this system!",
         icon: "warning",
-        // buttons: true,
+        buttons: ["Cancel", "Ok"],
         dangerMode: true,
       }).then(async (willDelete) => {
+        debugger;
         if (willDelete) {
-          const res = await axios.delete(
-            `http://localhost:3333/system/${uid}}`
-          );
-          let status = await res.status;
+          debugger;
+          const res = await axios.delete(`http://localhost:3333/system/${uid}`);
+          debugger;
+          const status = await res.status;
+          debugger;
           if (status === 200) {
+            debugger;
             swal("Poof! Your business has been deleted!", {
               icon: "success",
             });
-          } else {
-            swal("Your business is safe!");
+            getSystems();
           }
+        } else {
+          debugger;
+          swal("Your business is safe!");
         }
       });
     } catch (error) {
@@ -56,7 +62,7 @@ export default function MySystems() {
     try {
       debugger;
       const res = await axios.get(`http://localhost:3333/system/${managerId}`);
-      const _mySystems:System[] = await res.data;
+      const _mySystems: System[] = await res.data;
       setMySystems(_mySystems);
     } catch (error) {
       console.log(error);
@@ -79,10 +85,16 @@ export default function MySystems() {
         spacing={5}
         sx={{ "& .MuiCard-root": { m: 5 }, flexWrap: "wrap" }}
       >
-        <Button variant="contained" id="leftTopButton">add system</Button>
+        <Button
+          variant="contained"
+          id="leftTopButton"
+          onClick={() => navigate("/addSystem")}
+        >
+          add system
+        </Button>
         {mySystems?.length > 0 &&
           mySystems.map((system: System) => (
-            <Card key={system.uid}>
+            <Card key={system._id}>
               <CardMedia
                 component="img"
                 alt="system"
@@ -106,7 +118,11 @@ export default function MySystems() {
                 </Button>
                 <Button
                   size="medium"
-                  onClick={() => deleteSystem(system.adminId)}
+                  onClick={() => {
+                    debugger;
+                    console.log(system._id);
+                    deleteSystem(system._id || "");
+                  }}
                 >
                   Delete this system
                 </Button>

@@ -8,7 +8,7 @@ export const get = async () => {
         const response= await axios.get('http://localhost:3333/system');
         const systemssList:Isystem[]=await response.data.map((system:Isystem)=>{
             return{
-                uid:system.uid,
+                _id:system._id,
                 adminId:system.adminId,
                 topic: system.topic,
                 name:system.name,

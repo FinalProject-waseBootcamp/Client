@@ -15,7 +15,7 @@ export interface User {
 }
 
 export interface System {
-  uid?: string;
+  _id?: string;
   adminId: string;
   name: string;
   topic: string;
