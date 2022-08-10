@@ -19,13 +19,13 @@ debugger
     const navigate = useNavigate();
 
     useEffect(() => {
-        debugger
-        async function name() {
-            const _myBusiness=await getSystems();
-            setMyBusiness(_myBusiness);
-        }
-        name();
+        getSystems();
     }, [])
+    useEffect(() => {
+        console.log(myBusiness);
+
+        console.log(myBusiness.length);
+    },[myBusiness] )
 
     const deleteSystem = async (uid: string) => {
         try {
@@ -60,10 +60,11 @@ debugger
         try {
             debugger
             //get uid manager from mobix
-            const managerId = '62f38f54c2019e2ac4f4c9aa';
+            const managerId = '62f3aa7f929ec31aeb9c3e84';
             const res = await axios.get(`http://localhost:3333/system/${managerId}`);
-            // const myBusiness = await res.data;
-            return res.data;
+            const _myBusiness=await res.data
+            // const manager = [];
+            setMyBusiness(_myBusiness);
         } catch (error) {
             console.log(error);
         }
@@ -74,7 +75,7 @@ debugger
             <Typography gutterBottom variant="h2" component="div" sx={{ textAlign: 'center', padding: '10px', }}>All systems</Typography>
             <Stack padding={3} direction="row" spacing={5} sx={{ '& .MuiCard-root': { m: 5 }, flexWrap: 'wrap' }} >
                 <Button variant="contained">add system</Button>
-                {myBusiness?.length > 0 && myBusiness.map((business: System) =>
+                {myBusiness?.length >0 && myBusiness.map((business: System) =>
                     <Card key={business.uid} >
                         <CardMedia
                             component="img"
