@@ -7,7 +7,7 @@ import { System as ISystem } from "../utils/modals";
 import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 
-const basic_url =new URL("http://localhost:3000/system/");
+const basic_url =new URL("http://localhost:3000/system/welcome");
 export default function AddSystem() {
     debugger;
   const {
@@ -31,7 +31,8 @@ export default function AddSystem() {
       };
       debugger
       const newSystem:ISystem = await post(systemToAdd);
-      const newUrl=new URL(`${basic_url}?uid=${newSystem.uid}&name=${newSystem.name}`);
+      // const newUrl=new URL(`${basic_url}?uid=${newSystem.uid}&name=${newSystem.name}`);
+      const newUrl=new URL(`${basic_url}/${newSystem.uid}/${newSystem.name}`);
       alert("your new url for system is: "+newUrl);
       return newUrl;
       debugger;

@@ -17,7 +17,9 @@ function App() {
           <Route path="/addsystem" element={<AddSystem />} />
           <Route path="/login" element={<SuperLogin />} />
           <Route path="/user" element={<User />} />
-          <Route path="/system" element={<System/>} />
+          <Route path="/system/welcome/:name/:uid" element={<System />}>
+            {/* <Route path="*" element={<System />} /> */}
+          </Route>
         </Routes>
       </Router>
     </div>
