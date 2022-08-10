@@ -1,0 +1,9 @@
+.newSystemInput{
+ display: flex;   
+ flex-direction: row;
+ justify-content:center;
+}
+.newSystemTitle{
+    margin-bottom: 8vh;
+    text-align: left;
+}

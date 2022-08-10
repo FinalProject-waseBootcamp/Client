@@ -8,7 +8,6 @@
     "@firebase/app": "^0.7.30",
     "@mui/material": "^5.9.3",
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.47",
@@ -19,6 +18,7 @@
     "mobx": "^6.6.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.34.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "sweetalert": "^2.1.2",
@@ -48,5 +48,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/react": "^13.3.0",
+    "react-test-renderer": "^18.2.0"
   }
 }

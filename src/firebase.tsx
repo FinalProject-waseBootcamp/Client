@@ -40,6 +40,7 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
+import { Navigate, useNavigate } from "react-router-dom";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyACOl3OJgiJpk5luBai21eY1TVhHq3gOSo",
@@ -76,6 +77,7 @@ const signInWithGoogle = async () => {
 const logInWithEmailAndPassword = async (email:string, password:string) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
+    // navigate('/addsystem');
   } catch (err:any) {
     console.error(err);
     alert(err.message);
