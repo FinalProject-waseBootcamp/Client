@@ -56,8 +56,9 @@ export default function MySystem() {
 
     const getBusiness = async () => {
         try {
+            debugger
             //get uid manager from mobix
-            const managerId = '';
+            const managerId = '62f38f54c2019e2ac4f4c9aa';
             const res = await axios.get(`http://localhost:3333/system/${managerId}`);
             let myBusiness = await res.data;
             setMyBusiness(myBusiness);

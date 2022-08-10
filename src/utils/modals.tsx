@@ -6,7 +6,7 @@ enum Roles {
 }
 
 export interface User {
-  uid: string;
+  uid:string;
   firstName: string;
   lastName: string;
   email: string;
@@ -15,7 +15,7 @@ export interface User {
 }
 
 export interface System {
-  uid: string | undefined;
+  uid?: string;
   adminId: string;
   name: string;
   topic: string;

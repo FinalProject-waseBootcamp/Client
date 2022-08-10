@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 export default function System() {
   // const [searchParams, setSearchParams] = useSearchParams();
   // const systemName=searchParams.get('name');
-  const { name ,uid} = useParams();
+  const { uid,name} = useParams();
     
   return (
     <>

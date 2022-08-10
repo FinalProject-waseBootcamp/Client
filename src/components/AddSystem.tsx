@@ -4,12 +4,14 @@ import { post } from "../api/system";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { System as ISystem } from "../utils/modals";
-import { useForm } from 'react-hook-form';
-import { Button } from "@mui/material";
 
-const basic_url =new URL("http://localhost:3000/system/welcome");
+import { useForm } from "react-hook-form";
+import { Button } from "@mui/material";
+import { log } from "console";
+
+const basic_url = new URL("http://localhost:3000/system/welcome");
 export default function AddSystem() {
-    debugger;
+  debugger;
   const {
     register,
     handleSubmit,
@@ -24,19 +26,21 @@ export default function AddSystem() {
   const createSystem = async () => {
     try {
       const systemToAdd = {
-        uid: undefined,
         adminId: "from mobx",
-        name: name_ref.current?.value||'',
-        topic: topic_ref.current?.value||'',
-        description: description_ref.current?.value||'',
-        communicationDetails: communicationDetails_ref.current?.value||'',
-        imgUrl: imgUrl_ref.current?.value||''
+        name: name_ref.current?.value || "",
+        topic: topic_ref.current?.value || "",
+        description: description_ref.current?.value || "",
+        communicationDetails: communicationDetails_ref.current?.value || "",
+        imgUrl: imgUrl_ref.current?.value || "",
       };
-      debugger
-      const newSystem:ISystem = await post(systemToAdd);
+      
+      debugger;
+      const newSystem: ISystem = await post(systemToAdd);
+      console.log(newSystem);
+      
       // const newUrl=new URL(`${basic_url}?uid=${newSystem.uid}&name=${newSystem.name}`);
-      const newUrl=new URL(`${basic_url}/${newSystem.uid}/${newSystem.name}`);
-      alert("your new url for system is: "+newUrl);
+      const newUrl = new URL(`${basic_url}/${newSystem.uid}/${newSystem.name}`);
+      alert("your new url for system is: " + newUrl);
       return newUrl;
       debugger;
     } catch (err) {
@@ -46,8 +50,8 @@ export default function AddSystem() {
 
   return (
     <>
-    <h2>welcome</h2>
-    <h4>enter details for new system</h4>
+      <h2>welcome</h2>
+      <h4>enter details for new system</h4>
       <Box
         component="form"
         sx={{
@@ -65,84 +69,92 @@ export default function AddSystem() {
             <h5 className="newSystemTitle">COMMUNICATION</h5>
           </div>
           <div>
-          <div>
-            <TextField
-              required
-              id="standard-required"
-              variant="filled"
-              label=" "
-              placeholder="system name"
-              inputRef={name_ref}
-              {...register("name", {
-                required: true,
-                minLength: 2,
-                maxLength: 20,
-              })}
-            />
-            {errors.name?.type === "minLength" && <span>too short name</span>}
-            {errors.name?.type === "maxLength" && <span>too long name</span>}
-            {errors.name?.type === "required" && <span>required</span>}
-          </div>
-          <div>
-            <TextField
-              required
-              id="standard-required"
-              variant="filled"
-              label=" "
-              placeholder="system topic"
-              inputRef={topic_ref}
-              {...register("topic", {
-                required: true,
-                minLength: 2,
-                maxLength: 20,
-              })}
-            />
-            {errors.topic?.type === "minLength" && <span>too short topic</span>}
-            {errors.topic?.type === "maxLength" && <span>too long topiv</span>}
-            {errors.topic?.type === "required" && <span>required</span>}
-          </div>
-          <div>
-            <TextField
-              id="standard-required"
-              variant="filled"
-              placeholder="system description"
-              inputRef={description_ref}
-              {...register("description", {
-                maxLength: 30,
-              })}
-            />
-            {errors.description?.type === "maxLength" && (
-              <span>too long description</span>
-            )}
-          </div>
-          <div>
-            <TextField
-              required
-              id="standard-required"
-              variant="filled"
-              label=" "
-              placeholder="communication details"
-              inputRef={communicationDetails_ref}
-              {...register("communicationDetails", {
-                required: true,
-                minLength: 10,
-                maxLength: 30,
-              })}
-            />
-            {errors.communicationDetails?.type === "minLength" && (
-              <span>too short</span>
-            )}
-            {errors.communicationDetails?.type === "maxLength" && (
-              <span>too long</span>
-            )}
-            {errors.communicationDetails?.type === "required" && (
-              <span>required</span>
-            )}
-          </div>
-          <div>
-          <TextField placeholder="imgUrl"/>
- 
-          </div>
+            <div>
+              <TextField
+                required
+                id="standard-required"
+                variant="filled"
+                label=" "
+                placeholder="system name"
+                inputRef={name_ref}
+                {...register("name", {
+                  required: true,
+                  minLength: 2,
+                  maxLength: 20,
+                })}
+              />
+              {errors.name?.type === "minLength" && <span>too short name</span>}
+              {errors.name?.type === "maxLength" && <span>too long name</span>}
+              {errors.name?.type === "required" && <span>required</span>}
+            </div>
+            <div>
+              <TextField
+                required
+                id="standard-required"
+                variant="filled"
+                label=" "
+                placeholder="system topic"
+                inputRef={topic_ref}
+                {...register("topic", {
+                  required: true,
+                  minLength: 2,
+                  maxLength: 20,
+                })}
+              />
+              {errors.topic?.type === "minLength" && (
+                <span>too short topic</span>
+              )}
+              {errors.topic?.type === "maxLength" && (
+                <span>too long topiv</span>
+              )}
+              {errors.topic?.type === "required" && <span>required</span>}
+            </div>
+            <div>
+              <TextField
+                id="standard-required"
+                variant="filled"
+                placeholder="system description"
+                inputRef={description_ref}
+                {...register("description", {
+                  maxLength: 30,
+                })}
+              />
+              {errors.description?.type === "maxLength" && (
+                <span>too long description</span>
+              )}
+            </div>
+            <div>
+              <TextField
+                required
+                id="standard-required"
+                variant="filled"
+                label=" "
+                placeholder="communication details"
+                inputRef={communicationDetails_ref}
+                {...register("communicationDetails", {
+                  required: true,
+                  minLength: 10,
+                  maxLength: 30,
+                })}
+              />
+              {errors.communicationDetails?.type === "minLength" && (
+                <span>too short</span>
+              )}
+              {errors.communicationDetails?.type === "maxLength" && (
+                <span>too long</span>
+              )}
+              {errors.communicationDetails?.type === "required" && (
+                <span>required</span>
+              )}
+            </div>
+            <div>
+              <TextField
+                placeholder="imgUrl"
+                inputRef={imgUrl_ref}
+                id="standard-required"
+                variant="filled"
+              />
+            </div>
           </div>
         </nav>
         <div>

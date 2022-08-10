@@ -26,7 +26,7 @@ export const post=async(newSystem:Isystem)=>{
         debugger;
         console.log(newSystem);
         const response= await axios.post('http://localhost:3333/system',newSystem);
-        return response.data.json();
+        return response.data;
     }catch(error){
         console.log('error in create system', error);
     }
