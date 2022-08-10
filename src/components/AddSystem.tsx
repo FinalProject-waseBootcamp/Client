@@ -30,11 +30,11 @@ export default function AddSystem() {
         communicationDetails: communicationDetails_ref.current?.value||'',
       };
       debugger
-      const newSystem:ISystem = await post(systemToAdd);
+      // const newSystem:ISystem = await post(systemToAdd);
       // const newUrl=new URL(`${basic_url}?uid=${newSystem.uid}&name=${newSystem.name}`);
-      const newUrl=new URL(`${basic_url}/${newSystem.uid}/${newSystem.name}`);
-      alert("your new url for system is: "+newUrl);
-      return newUrl;
+      // const newUrl=new URL(`${basic_url}/${newSystem.uid}/${newSystem.name}`);
+      // alert("your new url for system is: "+newUrl);
+      // return newUrl;
       debugger;
     } catch (err) {
       console.log(err);

@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import User from "./components/Users";
 import SuperLogin from "./components/SuperLogin";
 import EmailRegister from "./components/EmailRegister";
-import AddSystem from "./components/AddSystem";
 import System from "./components/System";
 
 function App() {
@@ -13,8 +12,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="" element={<AddSystem />} />
-          <Route path="/addsystem" element={<AddSystem />} />
+          <Route path="" element={<SuperLogin />} />
           <Route path="/login" element={<SuperLogin />} />
           <Route path="/user" element={<User />} />
           <Route path="/system/welcome/:name/:uid" element={<System />}>
