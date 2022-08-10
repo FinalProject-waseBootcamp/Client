@@ -1,9 +1,29 @@
-.newSystemInput{
- display: flex;   
- flex-direction: row;
- justify-content:center;
+.newSystemInput {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
-.newSystemTitle{
-    margin-bottom: 8vh;
-    text-align: left;
+.newSystemTitle {
+  margin-bottom: 8vh;
+  text-align: left;
+}
+#leftTopButton {
+  position: absolute;
+  left: 3vh;
+  top: 3vh;
+}
+#container{
+  background-color: rgba(247, 193, 155, 0.218);
+}
+#contributeDiv {
+  position: absolute;
+  bottom: 3vh;
+  left: 35vw;
+}
+#logo {
+  height: 20vh;
+  width: 12vw;
+  position: absolute;
+  left: 3vh;
+  bottom: 3vh;
 }

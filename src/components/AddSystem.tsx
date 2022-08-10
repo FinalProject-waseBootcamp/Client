@@ -8,15 +8,17 @@ import { System as ISystem } from "../utils/modals";
 import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { log } from "console";
+import swal from "sweetalert";
 
 const basic_url = new URL("http://localhost:3000/system/welcome");
+
 export default function AddSystem() {
-  debugger;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ISystem>();
+
   const name_ref = useRef<HTMLInputElement>();
   const topic_ref = useRef<HTMLInputElement>();
   const description_ref = useRef<HTMLInputElement>();
@@ -33,16 +35,13 @@ export default function AddSystem() {
         communicationDetails: communicationDetails_ref.current?.value || "",
         imgUrl: imgUrl_ref.current?.value || "",
       };
-      
-      debugger;
       const newSystem: ISystem = await post(systemToAdd);
-      console.log(newSystem);
-      
+      console.log("new system created: ",newSystem);
+
       // const newUrl=new URL(`${basic_url}?uid=${newSystem.uid}&name=${newSystem.name}`);
       const newUrl = new URL(`${basic_url}/${newSystem.name}/${newSystem.uid}`);
-      alert("your new url for system is: " + newUrl);
+      swal("your new url for system is:   "+ newUrl);
       return newUrl;
-      debugger;
     } catch (err) {
       console.log(err);
     }
@@ -67,6 +66,7 @@ export default function AddSystem() {
             <h5 className="newSystemTitle">TOPIC</h5>
             <h5 className="newSystemTitle">DESCRIPTION</h5>
             <h5 className="newSystemTitle">COMMUNICATION</h5>
+            <h5 className="newSystemTitle">SYSTEM IMAGE</h5>
           </div>
           <div>
             <div>
@@ -149,7 +149,7 @@ export default function AddSystem() {
             </div>
             <div>
               <TextField
-                placeholder="imgUrl"
+                placeholder="image Url"
                 inputRef={imgUrl_ref}
                 id="standard-required"
                 variant="filled"
