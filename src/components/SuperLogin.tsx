@@ -35,7 +35,7 @@ export default function SuperLogin() {
       >
         FORGOT YOUR PASSWORD ?
       </Button>
-      🥕
+      🤷‍♂️
       <Button
         variant="text"
         size="small"

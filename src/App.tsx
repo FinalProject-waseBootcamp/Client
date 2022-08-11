@@ -45,6 +45,7 @@ function App() {
             <Route path="/editSystem" element={<EditSystem />} />
           </Routes>
         </Router>
+        <img src={require("./utils/logo.jpg")} id="logo" alt="logo"></img>
       </div>
     </ThemeProvider>
   );
