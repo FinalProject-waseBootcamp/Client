@@ -1,3 +1,23 @@
+.nav{
+    position: sticky;
+    display: flex;
+    flex-direction: row;
+    top: 0;
+    min-height: 7vh;
+    background-color: #4c6a92;
+    padding: 1%;
+}
+#navTitle{
+  margin-left: 40vw;
+  letter-spacing: 5px;
+  font-weight: 900;
+  font-size: x-large;
+}
+#navButton{
+  position: absolute;
+  right: 4vw;
+  color: white;
+}
 .newSystemInput {
   display: flex;
   flex-direction: row;
@@ -5,7 +25,6 @@
 }
 .newSystemTitle {
   margin-bottom: 8vh;
-  text-align: left;
 }
 #leftTopButton {
   position: absolute;
@@ -13,7 +32,7 @@
   top: 3vh;
 }
 #container{
-  background-color: rgba(247, 193, 155, 0.218);
+  background-color: #d2e1f567;
 }
 #contributeDiv {
   position: absolute;

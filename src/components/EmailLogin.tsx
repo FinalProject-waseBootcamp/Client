@@ -1,16 +1,30 @@
-import React from "react";
+import { Button } from "@mui/material";
+import React, { useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import { auth } from "./firebase";
+import { auth, logInWithEmailAndPassword } from "../firebase";
 
 export default function EmailLogin() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
+    }
+    if (user){
+      // loginFromDB(user.uid);
+      navigate("/systems")
+    } ;
+  }, [user, loading]);
 
   async function handleSubmit() {
     // event.preventDefault();
 
-    await auth.signInWithEmailAndPassword(email, password).then(
+    // await auth.signInWithEmailAndPassword(email, password).then(
+      await logInWithEmailAndPassword(email, password).then(
       async (result) => {
         //3 - pick the result and store the token
         const token = await auth?.currentUser?.getIdToken(true);
@@ -29,12 +43,12 @@ export default function EmailLogin() {
     );
   }
   return (
-    <form onSubmit={() => handleSubmit}>
+    <form onSubmit={async() => await logInWithEmailAndPassword(email, password)}>
       <div>
-        <h3>Login with email</h3>
+        <h3>LOGIN</h3>
       </div>
       <div>
-        <label htmlFor="user">Enter your email: </label>
+        <label htmlFor="user">email: </label>
         <input
           name="email"
           type="email"
@@ -45,7 +59,7 @@ export default function EmailLogin() {
         />
       </div>
       <div>
-        <label htmlFor="pwd">Enter your password: </label>
+        <label htmlFor="pwd"> password: </label>
         <input
           name="password"
           type="password"
@@ -55,9 +69,7 @@ export default function EmailLogin() {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <div>
-        <input type="submit" value="Subscribe!" />
-      </div>
+        <Button size="medium" type="submit">SUBSCRIBE</Button>
     </form>
   );
 }
