@@ -1,44 +1,39 @@
-import React from "react";
+import { Button } from "@mui/material";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // import { withRouter } from "react-router-dom";
-import { auth } from "./firebase";
+import { auth,sendPasswordReset } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function ResetPassword() {
-  // constructor(props) {
-  //     super(props);
-  //     this.state = {
-  //         email: ''
-  //     };
 
-  //     this.handleChange = this.handleChange.bind(this);
-  //     this.handleSubmit = this.handleSubmit.bind(this);
-  //   }
   const [email, setEmail] = React.useState("");
-  // handleChange(event){
-  //     this.setState({
-  //         [event.target.name]: event.target.value
-  //     });
-  // }
+  const [user, loading, error] = useAuthState(auth);
+
   const navigate = useNavigate();
   async function handleSubmit() {
     // preventDefault();
-    await auth.sendPasswordResetEmail(email).then(
+    // await auth.sendPasswordResetEmail(email).then(
+      await sendPasswordReset(email).then(
       async (result) => {
-        // this.setState({
-        //   email: ""
-        // });
         setEmail("");
-        alert("Check you email and follow the reset-password link");
-        navigate("/login");
+        alert("Check your email and follow the reset-password link");
       },
       function (error) {
         alert(error);
       }
-    );
+    ).then(()=>{
+      navigate("/addSystem");
+    }).catch((ERR) => {alert(ERR);});
   }
-
+  useEffect(() => {
+    if (loading) return;
+    if (user) navigate("/systems");
+  }, [user, loading]);
   return (
-    <form onSubmit={() => handleSubmit}>
+    <form 
+    // onSubmit={() => handleSubmit}
+    >
       <div>
         <h3>Reset Password</h3>
       </div>
@@ -54,7 +49,7 @@ export default function ResetPassword() {
         />
       </div>
       <div>
-        <input type="submit" value="Subscribe!" />
+        <Button type="submit" onClick={() => sendPasswordReset(email)}>SUBSCRIBE</Button>
       </div>
     </form>
   );

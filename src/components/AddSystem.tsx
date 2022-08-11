@@ -36,11 +36,11 @@ export default function AddSystem() {
         imgUrl: imgUrl_ref.current?.value || "",
       };
       const newSystem: ISystem = await post(systemToAdd);
-      console.log("new system created: ",newSystem);
+      console.log("new system created: ", newSystem);
 
       // const newUrl=new URL(`${basic_url}?uid=${newSystem.uid}&name=${newSystem.name}`);
       const newUrl = new URL(`${basic_url}/${newSystem.name}/${newSystem._id}`);
-      swal("your new url for system is:   "+ newUrl);
+      swal("your new url for system is:   " + newUrl);
       return newUrl;
     } catch (err) {
       console.log(err);

@@ -25,7 +25,6 @@ export default function System() {
       >
         My systems
       </Button>
-      <img src={require('../utils/logo.png.jpg')} id="logo" alt='logo'></img>
     </>
   );
 }
