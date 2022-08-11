@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
@@ -14,17 +14,17 @@ export default function EmailLogin() {
       // maybe trigger a loading screen
       return;
     }
-    if (user){
+    if (user) {
       // loginFromDB(user.uid);
-      navigate("/systems")
-    } ;
+      navigate("/systems");
+    }
   }, [user, loading]);
 
   async function handleSubmit() {
     // event.preventDefault();
 
     // await auth.signInWithEmailAndPassword(email, password).then(
-      await logInWithEmailAndPassword(email, password).then(
+    await logInWithEmailAndPassword(email, password).then(
       async (result) => {
         //3 - pick the result and store the token
         const token = await auth?.currentUser?.getIdToken(true);
@@ -43,33 +43,47 @@ export default function EmailLogin() {
     );
   }
   return (
-    <form onSubmit={async() => await logInWithEmailAndPassword(email, password)}>
+    <form
+      onSubmit={async () => await logInWithEmailAndPassword(email, password)}
+    >
       <div>
         <h3>LOGIN</h3>
       </div>
-      <div>
-        <label htmlFor="user">email: </label>
-        <input
-          name="email"
-          type="email"
-          placeholder="insert a valid email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="pwd"> password: </label>
-        <input
-          name="password"
-          type="password"
-          placeholder="insert a password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-        <Button size="medium" type="submit">SUBSCRIBE</Button>
+      <nav id="loginBorder">
+        <div className="margin1">
+          <div>
+            <label htmlFor="email">email: </label>
+          </div>
+          <TextField
+            id="standard-required"
+            size="small"
+            name="email"
+            type="email"
+            placeholder="insert a valid email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="margin1">
+          <div>
+            <label htmlFor="password"> password: </label>
+          </div>
+          <TextField
+            id="standard-required"
+            size="small"
+            name="password"
+            type="password"
+            placeholder="insert a password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <Button variant="contained" size="small" type="submit" id="maillogin">
+          SUBSCRIBE
+        </Button>
+      </nav>
     </form>
   );
 }

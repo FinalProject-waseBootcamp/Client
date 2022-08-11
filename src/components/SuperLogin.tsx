@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-
+import './desigm.css'
 import Login from "./Login";
 import EmailRegister from "./EmailRegister";
 import EmailLogin from "./EmailLogin";
@@ -21,7 +21,7 @@ export default function SuperLogin() {
     if (user) navigate("/addSystem");
   }, [user, loading]);
   return (
-    <div>
+    <div id="externalLogin">
       <>
         <EmailLogin />
       </>
@@ -32,6 +32,7 @@ export default function SuperLogin() {
         variant="text"
         size="small"
         onClick={() => navigate("/resetPassword")}
+        className="margin1"
       >
         FORGOT YOUR PASSWORD ?
       </Button>
@@ -40,6 +41,7 @@ export default function SuperLogin() {
         variant="text"
         size="small"
         onClick={() => navigate("/emailRegister")}
+        className="margin1"
       >
         DON'T HAVE AN ACCOUNT ?
       </Button>
