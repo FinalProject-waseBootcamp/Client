@@ -15,33 +15,33 @@ export default function EmailLogin() {
       return;
     }
     if (user) {
-      // loginFromDB(user.uid);
       navigate("/systems");
     }
   }, [user, loading]);
 
-  async function handleSubmit() {
-    // event.preventDefault();
+  // async function handleSubmit() {
+  //   // event.preventDefault();
 
-    // await auth.signInWithEmailAndPassword(email, password).then(
-    await logInWithEmailAndPassword(email, password).then(
-      async (result) => {
-        //3 - pick the result and store the token
-        const token = await auth?.currentUser?.getIdToken(true);
+  //   // await auth.signInWithEmailAndPassword(email, password).then(
+  //   await logInWithEmailAndPassword(email, password)
+  //   .then(
+  //     async (result) => {
+  //       //3 - pick the result and store the token
+  //       const token = await auth?.currentUser?.getIdToken(true);
 
-        //4 - check if have token in the current user
-        if (token) {
-          //5 - put the token at localStorage (We'll use this to make requests)
-          localStorage.setItem("@token", token);
-          //6 - navigate user to the cat list
-          navigate("/cat-list");
-        }
-      },
-      function (error) {
-        alert(error);
-      }
-    );
-  }
+  //       //4 - check if have token in the current user
+  //       if (token) {
+  //         //5 - put the token at localStorage (We'll use this to make requests)
+  //         localStorage.setItem("@token", token);
+  //         //6 - navigate user to the cat list
+  //         navigate("/cat-list");
+  //       }
+  //     },
+  //     function (error) {
+  //       alert(error);
+  //     }
+  //   );
+  // }
   return (
     <form
       onSubmit={async () => await logInWithEmailAndPassword(email, password)}
