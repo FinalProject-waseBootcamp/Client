@@ -25,6 +25,11 @@ export default function AddSystem() {
   const communicationDetails_ref = useRef<HTMLInputElement>();
   const imgUrl_ref = useRef<HTMLInputElement>();
 
+  const openInNewTab = (url: string): void => {
+    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = null;
+  };
+
   const createSystem = async () => {
     try {
       const systemToAdd = {
@@ -38,9 +43,11 @@ export default function AddSystem() {
       const newSystem: ISystem = await post(systemToAdd);
       console.log("new system created: ", newSystem);
 
-      // const newUrl=new URL(`${basic_url}?uid=${newSystem.uid}&name=${newSystem.name}`);
       const newUrl = new URL(`${basic_url}/${newSystem.name}/${newSystem._id}`);
-      swal("your new url for system is:   " + newUrl);
+      swal(
+       "your new url for system is: " + newUrl
+      ).then(()=>window.open(newUrl,'_blank'));
+
       return newUrl;
     } catch (err) {
       console.log(err);

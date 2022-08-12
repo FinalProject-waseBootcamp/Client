@@ -56,7 +56,7 @@
   margin-bottom: 8vh;
 }
 #leftTopButton {
-  position: absolute;
+  position: fixed;
   left: 3vh;
   top: 3vh;
 }
@@ -71,7 +71,7 @@
 #logo {
   height: 13vh;
   width: 22vw;
-  position: absolute;
+  position:fixed;
   left: 2vh;
-  bottom: 3vh;
+  bottom: 4vh;
 }

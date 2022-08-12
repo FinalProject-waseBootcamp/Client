@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import EditSystem from "./components/system/EditSystem";
 import ResetPassword from "./components/logIn/ResetPassword";
 import Header from "./components/Header";
+import AdminSystems from "./components/system/AdminSystems";
 
 let theme = createTheme();
 theme = createTheme(theme, {
@@ -41,7 +42,7 @@ function App() {
             <Route path="/system/welcome/:name/:uid" element={<System />}>
               {/* <Route path="*" element={<System />} /> */}
             </Route>
-            <Route path="/mySystems" element={<MySystems />} />
+            <Route path="/adminSystems" element={<AdminSystems />} />
             <Route path="/editSystem" element={<EditSystem />} />
           </Routes>
         </Router>

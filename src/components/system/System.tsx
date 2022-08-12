@@ -21,7 +21,7 @@ export default function System() {
       <Button
         variant="contained"
         id="leftTopButton"
-        onClick={() => navigate("/mySystems")}
+        onClick={() => navigate("/adminSystems")}
       >
         My systems
       </Button>

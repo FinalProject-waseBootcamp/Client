@@ -12,7 +12,7 @@ import swal from "sweetalert";
 import Button from "@mui/material/Button";
 import { constants } from "fs";
 
-export default function MySystems() {
+export default function AdminSystems() {
   debugger;
   const [mySystems, setMySystems] = useState<System[]>([]);
   const navigate = useNavigate();

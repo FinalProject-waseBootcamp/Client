@@ -1,5 +1,5 @@
 import { Container, render, unmountComponentAtNode } from "react-dom";
-import EmailLogin from "./EmailLogin";
+import EmailLogin from "./logIn/EmailLogin";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 describe("<EmailLogin />", () => {
