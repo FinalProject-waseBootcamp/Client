@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
-import "./desigm.css";
-import { post } from "../api/system";
+import "../desigm.css";
+import { post } from "../../api/system";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { System as ISystem } from "../utils/modals";
+import { System as ISystem } from "../../utils/modals";
 
 import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";

@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // import { withRouter } from "react-router-dom";
-import { auth,sendPasswordReset } from "../firebase";
+import { auth,sendPasswordReset } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function ResetPassword() {

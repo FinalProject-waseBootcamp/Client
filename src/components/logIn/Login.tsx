@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 // import { auth, firebase } from './firebase';
-import { logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
+import { logInWithEmailAndPassword, signInWithGoogle } from "../../firebase";
 import { Button } from "@mui/material";
 
 export default function Login() {
