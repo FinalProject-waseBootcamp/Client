@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { System } from "../utils/modals";
+import { System } from "../../utils/modals";
 import Stack from "@mui/material/Stack";
 import swal from "sweetalert";
 import Button from "@mui/material/Button";
