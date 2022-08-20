@@ -13,7 +13,7 @@ import Button from "@mui/material/Button";
 import { constants } from "fs";
 
 export default function AdminSystems() {
-  debugger;
+
   const [mySystems, setMySystems] = useState<System[]>([]);
   const navigate = useNavigate();
 
@@ -22,7 +22,6 @@ export default function AdminSystems() {
   }, []);
 
   const deleteSystem = async (uid: string) => {
-    debugger;
     try {
       swal({
         title: "Are you sure?",
@@ -31,22 +30,16 @@ export default function AdminSystems() {
         buttons: ["Cancel", "Ok"],
         dangerMode: true,
       }).then(async (willDelete) => {
-        debugger;
         if (willDelete) {
-          debugger;
           const res = await axios.delete(`http://localhost:3333/system/${uid}`);
-          debugger;
           const status = await res.status;
-          debugger;
           if (status === 200) {
-            debugger;
             swal("Poof! Your business has been deleted!", {
               icon: "success",
             });
             getSystems();
           }
         } else {
-          debugger;
           swal("Your business is safe!");
         }
       });
@@ -55,13 +48,12 @@ export default function AdminSystems() {
     }
   };
 
-  //get uid manager from mobix
-  const managerId = "from mobx";
+  //get manager uid from mobix
+  const adminId = "from mobx";
 
   const getSystems = async () => {
     try {
-      debugger;
-      const res = await axios.get(`http://localhost:3333/system/${managerId}`);
+      const res = await axios.get(`http://localhost:3333/system?adminId=${adminId}`);
       const _mySystems: System[] = await res.data;
       setMySystems(_mySystems);
     } catch (error) {
@@ -77,7 +69,7 @@ export default function AdminSystems() {
         component="div"
         sx={{ textAlign: "center", padding: "10px" }}
       >
-        systems of admin with id [{managerId}]
+        systems of admin with id [{adminId}]
       </Typography>
       <Stack
         padding={3}
@@ -113,13 +105,12 @@ export default function AdminSystems() {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="medium" onClick={() => navigate("/editSystem")}>
+                <Button size="medium" onClick={() => navigate("/editSystem",{state:{uid:system._id}})}>
                   Edit system settings
                 </Button>
                 <Button
                   size="medium"
                   onClick={() => {
-                    debugger;
                     console.log(system._id);
                     deleteSystem(system._id || "");
                   }}

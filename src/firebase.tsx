@@ -40,7 +40,9 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
-import { Navigate, useNavigate } from "react-router-dom";
+import * as dotenv from "dotenv"
+// const dotenv = require('dotenv');
+// dotenv.config();
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyACOl3OJgiJpk5luBai21eY1TVhHq3gOSo",

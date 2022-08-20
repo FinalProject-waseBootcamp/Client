@@ -5,9 +5,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import User from "./components/Users";
 import SuperLogin from "./components/logIn/SuperLogin";
 import EmailRegister from "./components/logIn/EmailRegister";
-import System from "./components/system/System";
 import AddSystem from "./components/system/AddSystem";
-import MySystems from "./components/system/AdminSystems";
+import MySystem from "./components/system/System";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import EditSystem from "./components/system/EditSystem";
 import ResetPassword from "./components/logIn/ResetPassword";
@@ -39,7 +38,7 @@ function App() {
             <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/user" element={<User />} />
             <Route path="/addSystem" element={<AddSystem />} />
-            <Route path="/system/welcome/:name/:uid" element={<System />}>
+            <Route path="/system/welcome/:name/:uid" element={<MySystem />}>
               {/* <Route path="*" element={<System />} /> */}
             </Route>
             <Route path="/adminSystems" element={<AdminSystems />} />
