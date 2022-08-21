@@ -2,7 +2,9 @@ import { User } from '../utils/modals';
 import { makeAutoObservable } from 'mobx';
 import axios from 'axios';
 
-
+  // "mobx": "^6.6.1"
+    // // "mobx-react": "^7.5.2",
+    // // "mobx-react-lite": "^3.4.0"
 
 const addUser=async(userToSave:User)=>{
     try {
