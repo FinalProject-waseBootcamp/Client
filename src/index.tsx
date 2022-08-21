@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM, { createRoot } from 'react-dom/client';
+import "@mui/material";
+import "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';

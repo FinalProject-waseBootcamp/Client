@@ -43,7 +43,8 @@ export default function EditSystem() {
         topic: topic_ref.current?.value||'',
         description: description_ref?.current?.value||'',
         communicationDetails: communicationDetails_ref?.current?.value||'',
-        imgUrl : imgUrl_ref.current?.value || ''
+        imgUrl : imgUrl_ref.current?.value || '',
+        siteUrl:currentSystem?.siteUrl||''
       }
       swal({
         title: "sure?",

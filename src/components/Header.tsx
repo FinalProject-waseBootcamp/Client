@@ -1,9 +1,10 @@
-import { Button } from "@mui/material";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { logout } from "../firebase";
 import { User } from "../utils/modals";
-import {Roles} from "../utils/modals"
+import { Roles } from "../utils/modals";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
+
 
 export default function Header() {
   const mockUser: User = {
@@ -27,7 +28,7 @@ export default function Header() {
         {user && (
           <nav id="navUser">
             <Button
-            color="secondary"
+              color="secondary"
               onClick={() => {
                 signOut();
               }}

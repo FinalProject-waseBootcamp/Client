@@ -22,4 +22,5 @@ export interface System {
   description: string;
   communicationDetails: string;
   imgUrl : string;
+  siteUrl: string;
 }

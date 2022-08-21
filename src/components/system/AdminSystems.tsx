@@ -103,6 +103,9 @@ export default function AdminSystems() {
                 <Typography variant="body2" color="text.secondary">
                   description: {system.description}
                 </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  to the <a href={system.siteUrl}>site</a>
+                </Typography>
               </CardContent>
               <CardActions>
                 <Button size="medium" onClick={() => navigate("/editSystem",{state:{uid:system._id}})}>

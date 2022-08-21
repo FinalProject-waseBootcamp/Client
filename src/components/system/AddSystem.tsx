@@ -40,11 +40,15 @@ export default function AddSystem() {
         description: description_ref.current?.value || "",
         communicationDetails: communicationDetails_ref.current?.value || "",
         imgUrl: imgUrl_ref.current?.value || "",
+        siteUrl:""
       };
       const newSystem: ISystem = await post(systemToAdd);
+      const newUrl = 
+      // new URL(
+        `${basic_url}/${newSystem.name}/${newSystem._id}`
+        // );
+      newSystem.siteUrl=newUrl;
       console.log("new system created: ", newSystem);
-
-      const newUrl = new URL(`${basic_url}/${newSystem.name}/${newSystem._id}`);
       swal("your new url for system is: " + newUrl).then(() =>
         window.open(newUrl, "_blank")
       );
