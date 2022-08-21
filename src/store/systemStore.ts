@@ -1,18 +1,19 @@
 import { User } from '../utils/modals';
-import { makeAutoObservable } from 'mobx';
+// @ts-ignore
+import  makeAutoObservable  from 'mobx';
 import axios from 'axios';
 
   // "mobx": "^6.6.1"
     // // "mobx-react": "^7.5.2",
     // // "mobx-react-lite": "^3.4.0"
 
-const addUser=async(userToSave:User)=>{
+async function addUser(userToSave: User) {
     try {
         const res = await axios.post(`http://localhost:3333/user/create`, userToSave);
         let userList = await res.data;
         return userList;
-      } 
-      catch (error) { console.log(error); }
+    }
+    catch (error) { console.log(error); }
 }
 const getUser=async(id:string)=>{
     debugger

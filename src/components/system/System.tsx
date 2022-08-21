@@ -10,8 +10,8 @@ import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/icons-material/Menu";
-import { Directions } from "@material-ui/icons";
+// import Menu from "@mui/icons-material/Menu";
+// import Directions  from "@material-ui/icons";
 // import Search from "@mui/icons-material/Search";
 // import Directions from "@mui/icons-material/Directions";
 
@@ -49,7 +49,7 @@ export default function MySystem() {
           }}
         >
           <IconButton sx={{ p: "10px" }} aria-label="menu">
-            <Menu />
+            {/* <Menu /> */}
           </IconButton>
           <InputBase
             sx={{ ml: 1, flex: 1 }}
@@ -65,7 +65,7 @@ export default function MySystem() {
             sx={{ p: "10px" }}
             aria-label="directions"
           >
-            <Directions />
+            {/* <Directions /> */}
           </IconButton>
         </Paper>
       </Container>
