@@ -1,4 +1,4 @@
-enum Roles {
+export enum Roles {
   MAIN_ADMIN,
   SYSTEM_ADMIN,
   LOCATION_USER,
@@ -22,4 +22,5 @@ export interface System {
   description: string;
   communicationDetails: string;
   imgUrl : string;
+  siteUrl: string;
 }

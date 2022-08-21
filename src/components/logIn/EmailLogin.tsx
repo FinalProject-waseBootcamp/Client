@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { auth, logInWithEmailAndPassword } from "../../firebase";
 
 export default function EmailLogin() {
+  debugger
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
+  
   useEffect(() => {
     if (loading) {
       // maybe trigger a loading screen

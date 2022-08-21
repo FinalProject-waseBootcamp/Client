@@ -13,8 +13,10 @@
   font-weight: 900;
   font-size: x-large;
 }
-#navButton{
+#navUser{
   position: absolute;
+  display: flex;
+  flex-direction: row;
   right: 4vw;
   color: white;
 }

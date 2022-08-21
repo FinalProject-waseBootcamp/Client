@@ -6,6 +6,8 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@firebase/app": "^0.7.30",
+    "@material-ui/icons": "^4.11.3",
+    "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/user-event": "^13.5.0",
@@ -26,6 +28,7 @@
     "react-hook-form": "^7.34.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "styled-components": "^5.3.5",
     "sweetalert": "^2.1.2",
     "typescript": "^4.7.4",
     "web-vitals": "^2.1.4"
@@ -41,11 +44,6 @@
       "react-app",
       "react-app/jest"
     ]
-  },
-  "browser": {
-    "fs": false,
-    "path": false,
-    "os": false
   },
   "browserslist": {
     "production": [

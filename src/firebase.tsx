@@ -40,7 +40,7 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
-import * as dotenv from "dotenv"
+// import * as dotenv from "dotenv"
 // const dotenv = require('dotenv');
 // dotenv.config();
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
