@@ -95,13 +95,13 @@ export default function AdminSystems() {
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  {system.topic}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
                   {system.name}
                 </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  topic: {system.topic}
+                </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {system.description}
+                  description: {system.description}
                 </Typography>
               </CardContent>
               <CardActions>

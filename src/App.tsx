@@ -20,7 +20,7 @@ theme = createTheme(theme, {
       main: "#0d47a1",
     },
     secondary: {
-      main: "#ff6e40",
+      main: "#nnn",
     },
   },
 });
