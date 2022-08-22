@@ -1,5 +1,8 @@
 import { System } from '../utils/modals';
-import { makeAutoObservable } from 'mobx';
+// @ts-ignore
+import  {makeAutoObservable}  from 'mobx';
+// import {observable, action, computed, makeObservable} from "mobx";
+
 import axios from 'axios';
 
 
@@ -43,3 +46,5 @@ constructor(){
 const userStore = new Store();
 
 export default userStore ;
+
+
