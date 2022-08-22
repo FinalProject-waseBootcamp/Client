@@ -1,8 +1,6 @@
 import { System } from '../utils/modals';
-// @ts-ignore
 import  {makeAutoObservable}  from 'mobx';
 // import {observable, action, computed, makeObservable} from "mobx";
-
 import axios from 'axios';
 
 
