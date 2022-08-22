@@ -13,11 +13,12 @@ import Button from "@mui/material/Button";
 import { constants } from "fs";
 
 export default function AdminSystems() {
-
+  debugger
   const [mySystems, setMySystems] = useState<System[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
+    debugger
     getSystems();
   }, []);
 
@@ -60,7 +61,7 @@ export default function AdminSystems() {
       console.log(error);
     }
   };
-
+debugger
   return (
     <div id="allMyBusiness">
       <Typography
@@ -104,7 +105,7 @@ export default function AdminSystems() {
                   description: {system.description}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  to the <a href={system.siteUrl}>site</a>
+                  to the <a href={system.siteUrl} target="_blank">site</a>
                 </Typography>
               </CardContent>
               <CardActions>

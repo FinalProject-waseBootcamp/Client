@@ -6,7 +6,6 @@ import TextField from "@mui/material/TextField";
 import { System as ISystem } from "../../utils/modals";
 import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { log } from "console";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 
