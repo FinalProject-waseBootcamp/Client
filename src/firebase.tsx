@@ -40,6 +40,7 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
+import { Roles } from "./utils/modals";
 // import * as dotenv from "dotenv"
 // const dotenv = require('dotenv');
 // dotenv.config();
@@ -92,7 +93,7 @@ const registerWithEmailAndPassword = async (name:string, email:string, password:
       uid: user.uid,
       name,
       authProvider: "local",
-      email,
+      email
     });
   } catch (err:any) {
     console.error(err);

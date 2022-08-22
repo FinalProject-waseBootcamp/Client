@@ -1,25 +1,54 @@
 import { Button, TextField } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, logInWithEmailAndPassword } from "../../firebase";
+import userStore from '../../store/userStore'
+import { User } from "../../utils/modals";
 
 export default function EmailLogin() {
   debugger
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [user, loading, error] = useAuthState(auth);
+  const [userFromDb, setUserToDb] = useState<any>();
   const navigate = useNavigate();
   
   useEffect(() => {
     if (loading) {
-      // maybe trigger a loading screen
       return;
     }
     if (user) {
-      navigate("/systems");
+      loginToDB(user.uid);
+      user.getIdToken().then((value=>{
+        console.log(value);
+        userStore.user=user;
+      }))
+      console.log("userStore.user :",userStore.user);
     }
   }, [user, loading]);
+  const loginToDB = async (uid: string) => {
+    try { 
+      if(!userStore.user._id){
+       await addUserToDb(uid)
+      }     
+      await userStore.getUser(uid);        
+      navigate("/addSystem")
+    } catch (error) { console.log(error); }
+  }
+  const addUserToDb = async (uid: string) => {
+    const userToDb: any = {
+      _id: uid,
+      email:email_ref.current?.value||'',
+      password:password_ref.current?.value||''
+    }
+
+    try {
+      debugger;
+     const res= await userStore.addUser(userToDb);        
+      setUserToDb(res);
+    } catch (error) { console.log(error); }
+  }
 
   // async function handleSubmit() {
   //   // event.preventDefault();
@@ -44,6 +73,8 @@ export default function EmailLogin() {
   //     }
   //   );
   // }
+  const email_ref=useRef<HTMLInputElement>();
+  const password_ref=useRef<HTMLInputElement>();
   return (
     <form
       onSubmit={async () => await logInWithEmailAndPassword(email, password)}
@@ -64,6 +95,7 @@ export default function EmailLogin() {
             placeholder="insert a valid email"
             required
             value={email}
+            inputRef={email_ref}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -79,6 +111,7 @@ export default function EmailLogin() {
             placeholder="insert a password"
             required
             value={password}
+            inputRef={password_ref}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>

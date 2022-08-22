@@ -12,7 +12,7 @@ interface Ilocation {
 }
 
 export default function EditSystem() {
-  debugger;
+
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state as Ilocation;
@@ -35,7 +35,7 @@ export default function EditSystem() {
   };
 
   const updateSystem = async () => {
-    debugger
+
     try {
       const updatedSystem:System = {
         _id: uid,
@@ -47,7 +47,7 @@ export default function EditSystem() {
         imgUrl : imgUrl_ref.current?.value || '',
         siteUrl:currentSystem?.siteUrl||''
       }
-      debugger
+
       swal({
         title: "sure?",
         icon: "warning",
