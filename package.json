@@ -29,6 +29,7 @@
     "react-firebase-hooks": "^5.0.3",
     "react-hook-form": "^7.34.0",
     "react-router-dom": "^6.3.0",
+    "react-router-link": "^2.0.2",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.5",
     "sweetalert": "^2.1.2",
@@ -61,6 +62,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^13.3.0",
+    "@types/react-router-dom": "^5.3.3",
     "dotenv-webpack": "^8.0.1",
     "react-test-renderer": "^18.2.0"
   }

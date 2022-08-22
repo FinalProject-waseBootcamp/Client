@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import "../desigm.css";
+import "../design.css";
 import { post } from "../../api/system";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -8,8 +8,12 @@ import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const basic_url = new URL("http://localhost:3000/system/welcome");
+const basic_url = 
+// new URL(
+  "http://localhost:3000/system/welcome"
+  // );
 
 export default function AddSystem() {
   const {
@@ -31,6 +35,7 @@ export default function AddSystem() {
   // };
 
   const createSystem = async () => {
+    debugger
     try {
       const systemToAdd = {
         adminId: "from mobx",
@@ -39,15 +44,28 @@ export default function AddSystem() {
         description: description_ref.current?.value || "",
         communicationDetails: communicationDetails_ref.current?.value || "",
         imgUrl: imgUrl_ref.current?.value || "",
-        siteUrl:""
+        siteUrl:basic_url
       };
       const newSystem: ISystem = await post(systemToAdd);
+      const uid=newSystem._id||'';
+      console.log("new system created: ", newSystem);
       const newUrl = 
       // new URL(
         `${basic_url}/${newSystem.name}/${newSystem._id}`
         // );
-      newSystem.siteUrl=newUrl;
-      console.log("new system created: ", newSystem);
+        debugger
+      const updatedSystem={
+        ...newSystem,
+        siteUrl:newUrl
+      }
+      debugger
+      try{
+        debugger
+        await axios.put(`http://localhost:3333/system/${uid}`,updatedSystem);
+        debugger
+      }catch(err){
+        console.log(err);
+      }
       swal("your new url for system is: " + newUrl).then(() =>
         window.open(newUrl, "_blank")
       );

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import '../desigm.css'
+import '../design.css'
 import Login from "./Login";
 import EmailRegister from "./EmailRegister";
 import EmailLogin from "./EmailLogin";
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import { Button, Link } from "@mui/material";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../../firebase";
-import { Auth } from "@firebase/auth";
+// import { Auth } from "@firebase/auth";
 
 export default function SuperLogin() {
   const [user, loading, error] = useAuthState(auth);

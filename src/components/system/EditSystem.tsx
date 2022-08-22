@@ -35,6 +35,7 @@ export default function EditSystem() {
   };
 
   const updateSystem = async () => {
+    debugger
     try {
       const updatedSystem:System = {
         _id: uid,
@@ -46,6 +47,7 @@ export default function EditSystem() {
         imgUrl : imgUrl_ref.current?.value || '',
         siteUrl:currentSystem?.siteUrl||''
       }
+      debugger
       swal({
         title: "sure?",
         icon: "warning",
@@ -68,7 +70,7 @@ export default function EditSystem() {
         }
       })
     } catch (err) {
-        console.log(err);
+        alert(err);
     }
   }
   

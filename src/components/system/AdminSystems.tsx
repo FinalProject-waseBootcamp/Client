@@ -10,7 +10,8 @@ import { System } from "../../utils/modals";
 import Stack from "@mui/material/Stack";
 import swal from "sweetalert";
 import Button from "@mui/material/Button";
-import { constants } from "fs";
+import { Link } from "react-router-dom";
+// import { constants } from "fs";
 
 export default function AdminSystems() {
   debugger
@@ -57,6 +58,7 @@ export default function AdminSystems() {
       const res = await axios.get(`http://localhost:3333/system?adminId=${adminId}`);
       const _mySystems: System[] = await res.data;
       setMySystems(_mySystems);
+      console.log(_mySystems[0]);
     } catch (error) {
       console.log(error);
     }
@@ -105,7 +107,8 @@ debugger
                   description: {system.description}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  to the <a href={system.siteUrl} target="_blank">site</a>
+                  to the <a href={system.siteUrl}>site</a>
+                  {/* site: {system.siteUrl} */}
                 </Typography>
               </CardContent>
               <CardActions>
