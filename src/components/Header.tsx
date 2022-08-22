@@ -14,6 +14,7 @@ export default function Header() {
     email: "string",
     role: Roles.SYSTEM_ADMIN,
     phone: "string",
+    password:"string"
   };
   const [user, setUser] = useState<User>(mockUser);
   const navigate = useNavigate();

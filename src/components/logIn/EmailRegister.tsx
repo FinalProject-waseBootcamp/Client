@@ -7,6 +7,7 @@ import { JsxElement } from "typescript";
 import { Button, TextField } from "@mui/material";
 import { registerWithEmailAndPassword } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import axios from "axios";
 
 export default function EmailRegister() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,13 @@ export default function EmailRegister() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
+
+  async function createUser(){
+    const newUser={
+      
+    }
+    const response= await axios.post('http://localhost:3333/user',newUser);
+  }
 
   // const handleSubmit = async () => {
   //   await auth.createUserWithEmailAndPassword(email, password).then(
@@ -49,9 +57,10 @@ export default function EmailRegister() {
   }, [user, loading]);
   return (
     <form
-      onSubmit={async () =>
-        await registerWithEmailAndPassword(name, email, password)
-      }
+      onSubmit={async () => {
+        await registerWithEmailAndPassword(name, email, password);
+        createUser();
+      }}
     >
       <div id="externalLogin">
         <div>
