@@ -11,16 +11,17 @@ import Stack from "@mui/material/Stack";
 import swal from "sweetalert";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-// import { constants } from "fs";
+import userStore from "../../store/userStore";
+import systemStore from "../../store/systemStore";
 
 export default function AdminSystems() {
-  debugger
+
   const [mySystems, setMySystems] = useState<System[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    debugger
-    getSystems();
+    systemStore.loadSystems();
+    // getSystems();
   }, []);
 
   const deleteSystem = async (uid: string) => {
@@ -39,7 +40,8 @@ export default function AdminSystems() {
             swal("Poof! Your business has been deleted!", {
               icon: "success",
             });
-            getSystems();
+            // getSystems();
+            systemStore.loadSystems();
           }
         } else {
           swal("Your business is safe!");
@@ -50,20 +52,19 @@ export default function AdminSystems() {
     }
   };
 
-  //get manager uid from mobix
-  const adminId = "from mobx";
+  const adminId = userStore.user.uid;
 
-  const getSystems = async () => {
-    try {
-      const res = await axios.get(`http://localhost:3333/system?adminId=${adminId}`);
-      const _mySystems: System[] = await res.data;
-      setMySystems(_mySystems);
-      console.log(_mySystems[0]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-debugger
+  // const getSystems = async () => {
+  //   try {
+  //     const res = await axios.get(`http://localhost:3333/system?adminId=${adminId}`);
+  //     const _mySystems: System[] = await res.data;
+  //     setMySystems(_mySystems);
+  //     console.log(_mySystems[0]);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   return (
     <div id="allMyBusiness">
       <Typography
@@ -87,7 +88,8 @@ debugger
         >
           add system
         </Button>
-        {mySystems?.length > 0 &&
+        {/* {mySystems?.length > 0 && */}
+        {systemStore.systems?.length > 0 &&
           mySystems.map((system: System) => (
             <Card key={system._id}>
               <CardMedia

@@ -1,4 +1,4 @@
-import { User } from '../utils/modals';
+import { Roles, User } from '../utils/modals';
 // import  makeAutoObservable  from 'mobx';
 import {makeAutoObservable} from 'mobx';
 import axios from 'axios';
@@ -10,8 +10,8 @@ import axios from 'axios';
 async function addUser(userToSave: User) {
     try {
         const res = await axios.post(`http://localhost:3333/user`, userToSave);
-        let userList = await res.data;
-        return userList;
+        let user = await res.data;
+        return user;
     }
     catch (error) { console.log(error); }
 }
@@ -27,7 +27,16 @@ const getUser=async(id:string)=>{
    
 
 class Store{
-    user:any=[];
+    user:any;
+    // :User={
+    //     uid: '',
+    //     firstName: '',
+    //     lastName: '',
+    //     email: '',
+    //     password: '',
+    //     role:Roles.MAIN_ADMIN,
+    //     phone: ''
+    // };
     
     async addUser(user:User){
         await addUser(user);
@@ -35,11 +44,12 @@ class Store{
         console.log(this.user)
     }
     async getUser(id:string){
-       const user= await getUser(id);
+       const user:User= await getUser(id);
         this.user=user;
         console.log(user)
       return user 
     }
+
     constructor(){
         makeAutoObservable(this);
     }

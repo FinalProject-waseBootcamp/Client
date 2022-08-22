@@ -1,5 +1,5 @@
 import React from "react";
-import { Search, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router";
@@ -10,10 +10,10 @@ import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-// import Menu from "@mui/icons-material/Menu";
+import Menu from "@mui/icons-material/Menu";
 // import Directions  from "@material-ui/icons";
-// import Search from "@mui/icons-material/Search";
-// import Directions from "@mui/icons-material/Directions";
+import Search from "@mui/icons-material/Search";
+import Directions from "@mui/icons-material/Directions";
 
 export default function MySystem() {
   const { name, uid } = useParams();
@@ -49,7 +49,7 @@ export default function MySystem() {
           }}
         >
           <IconButton sx={{ p: "10px" }} aria-label="menu">
-            {/* <Menu /> */}
+            <Menu />
           </IconButton>
           <InputBase
             sx={{ ml: 1, flex: 1 }}
@@ -57,7 +57,7 @@ export default function MySystem() {
             inputProps={{ "aria-label": "search google maps" }}
           />
           <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-            {/* <Search /> */}
+            <Search />
           </IconButton>
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
           <IconButton
@@ -65,7 +65,7 @@ export default function MySystem() {
             sx={{ p: "10px" }}
             aria-label="directions"
           >
-            {/* <Directions /> */}
+            <Directions />
           </IconButton>
         </Paper>
       </Container>

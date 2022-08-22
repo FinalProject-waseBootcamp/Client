@@ -4,19 +4,20 @@ import { User } from "../utils/modals";
 import { Roles } from "../utils/modals";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import userStore from "../store/userStore";
 
 
 export default function Header() {
-  const mockUser: User = {
-    uid: "string",
-    firstName: "user",
-    lastName: "name",
-    email: "string",
-    role: Roles.SYSTEM_ADMIN,
-    phone: "string",
-    password:"string"
-  };
-  const [user, setUser] = useState<User>(mockUser);
+  // const mockUser: User = {
+  //   uid: "string",
+  //   firstName: "user",
+  //   lastName: "name",
+  //   email: "string",
+  //   role: Roles.SYSTEM_ADMIN,
+  //   phone: "string",
+  //   password:"string"
+  // };
+  // const [user, setUser] = useState<User>(mockUser);
   const navigate = useNavigate();
   const signOut = () => {
     logout();
@@ -26,7 +27,7 @@ export default function Header() {
     <>
       <nav className="nav">
         <h3 id="navTitle">Build your system</h3>
-        {user && (
+        {userStore.user && (
           <nav id="navUser">
             <Button
               color="secondary"
@@ -36,7 +37,7 @@ export default function Header() {
             >
               LOG OUT
             </Button>
-            <p>| {user.firstName + " " + user.lastName}</p>
+            <p>| {userStore.user.firstName + " " + userStore.user.lastName}</p>
           </nav>
         )}
       </nav>
