@@ -32,7 +32,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Router>
-          <Header />
+          {/* <Header /> */}
           <Routes>
             <Route path="" element={<SuperLogin />} />
             <Route path="/login" element={<SuperLogin />} />

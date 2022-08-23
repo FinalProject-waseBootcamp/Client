@@ -161,10 +161,17 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/icons-material/Menu";
+import Search from "@mui/icons-material/Search";
+import Directions from "@mui/icons-material/Directions";
 
 const mapStyles = {
-  width: "60%",
-  height: "90%",
+  width: "3vw",
+  height: "5vh",
 };
 interface Film {
   title: string;
@@ -207,9 +214,8 @@ const SimpleMap: React.FC = (props: any) => {
     <>
       <Box sx={{ flexGrow: 1, height: "100%" }}>
         <Grid container spacing={2} sx={{ height: "100%" }}>
-          <Grid item  md={6} sx={{ height: "70vh" }}>
+          <Grid item md={6} sx={{ height: "70vh" }}>
             <GoogleMapReact
-              //  style={mapStyles}
               bootstrapURLKeys={{
                 key: "AIzaSyAMPFO6Sc4Ihhl2ciCChm6Am1QVlMtDMb0",
               }}
@@ -226,49 +232,77 @@ const SimpleMap: React.FC = (props: any) => {
             </GoogleMapReact>
           </Grid>
           <Grid item xs={6} md={4}>
-            <Typography
+            {/* <Typography
               sx={{ textAlign: "center" }}
               gutterBottom
               variant="h4"
               component="div"
             >
               here you can search location business of your system
-            </Typography>
-
-            <Autocomplete
-              id="asynchronous-demo"
-              sx={{ width: 300 }}
-              open={open}
-              onOpen={() => {
-                setOpen(true);
+            </Typography> */}
+            <Paper
+              component="form"
+              sx={{
+                p: "2px 4px",
+                display: "flex",
+                alignItems: "center",
+                width: 400,
               }}
-              onClose={() => {
-                setOpen(false);
-              }}
-              isOptionEqualToValue={(option, value) =>
-                option.title === value.title
-              }
-              getOptionLabel={(option) => option.title}
-              options={options}
-              loading={loading}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Asynchronous"
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <React.Fragment>
-                        {loading ? (
-                          <CircularProgress color="inherit" size={20} />
-                        ) : null}
-                        {params.InputProps.endAdornment}
-                      </React.Fragment>
-                    ),
-                  }}
-                />
-              )}
-            />
+            >
+              <IconButton sx={{ p: "10px" }} aria-label="menu">
+                <Menu />
+              </IconButton>
+              {/* <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Search Google Maps"
+            inputProps={{ "aria-label": "search google maps" }}
+          /> */}
+              <Autocomplete
+                id="asynchronous-demo"
+                sx={{ width: 300 }}
+                open={open}
+                onOpen={() => {
+                  setOpen(true);
+                }}
+                onClose={() => {
+                  setOpen(false);
+                }}
+                isOptionEqualToValue={(option, value) =>
+                  option.title === value.title
+                }
+                getOptionLabel={(option) => option.title}
+                options={options}
+                loading={loading}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Asynchronous"
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <React.Fragment>
+                          {loading ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : null}
+                          {params.InputProps.endAdornment}
+                        </React.Fragment>
+                      ),
+                    }}
+                  />
+                )}
+              />
+              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+                <Search />
+              </IconButton>
+              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+              <IconButton
+                color="primary"
+                sx={{ p: "10px" }}
+                aria-label="directions"
+              >
+                <Directions />
+              </IconButton>
+            </Paper>
           </Grid>
         </Grid>
       </Box>

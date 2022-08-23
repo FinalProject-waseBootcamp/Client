@@ -9,6 +9,7 @@ import { Button, Link } from "@mui/material";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../../firebase";
 import userStore from "../../store/userStore";
+import Header from "../Header";
 // import { Auth } from "@firebase/auth";
 
 export default function SuperLogin() {
@@ -49,6 +50,8 @@ export default function SuperLogin() {
     //   console.log(error); }
   }
   return (
+    <>
+      <Header />
     <div id="externalLogin">
       <>
         <EmailLogin />
@@ -74,5 +77,6 @@ export default function SuperLogin() {
         DON'T HAVE AN ACCOUNT ?
       </Button>
     </div>
+    </>
   );
 }

@@ -6,13 +6,6 @@ import { useNavigate } from "react-router";
 import  {Container}  from "@mui/system";
 import axios from "axios";
 import { System } from "../../utils/modals";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/icons-material/Menu";
-import Search from "@mui/icons-material/Search";
-import Directions from "@mui/icons-material/Directions";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { getAuth } from "firebase/auth";
@@ -48,35 +41,7 @@ const user = auth.currentUser;
       {/* here customers can search for their closest location of the object 👇*/}
       <Container id="container">
         <h3>locations</h3>
-        <Paper
-          component="form"
-          sx={{
-            p: "2px 4px",
-            display: "flex",
-            alignItems: "center",
-            width: 400,
-          }}
-        >
-          <IconButton sx={{ p: "10px" }} aria-label="menu">
-            <Menu />
-          </IconButton>
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Search Google Maps"
-            inputProps={{ "aria-label": "search google maps" }}
-          />
-          <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-            <Search />
-          </IconButton>
-          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-          <IconButton
-            color="primary"
-            sx={{ p: "10px" }}
-            aria-label="directions"
-          >
-            <Directions />
-          </IconButton>
-        </Paper>
+        <Maps></Maps>
       </Container>
       {/* user can become location_user by contribute his object and define his location 👇*/}
       <div id="contributeDiv">
@@ -84,14 +49,14 @@ const user = auth.currentUser;
         <Button>SIGN IN</Button>
       </div>
       {/* for admin only 👇*/}
-      {user?.uid&&
+      {/* {user?.uid&&
       <Button
         variant="contained"
         id="leftTopButton"
         onClick={() => navigate("/adminSystems")}
       >
         My systems
-      </Button>}
+      </Button>} */}
     </>
   );
 }

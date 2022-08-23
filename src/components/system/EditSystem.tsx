@@ -6,6 +6,7 @@ import { Box, TextField, Button } from "@mui/material";
 import { System as ISystem } from "../../utils/modals";
 import { useForm } from "react-hook-form";
 import swal from "sweetalert";
+import Header from "../Header";
 
 interface Ilocation {
   uid: string;
@@ -91,6 +92,8 @@ export default function EditSystem() {
 
   return (
     <div>
+     <Header />
+
       {currentSystem && (
         <>
           <h2>edit {currentSystem.name} system</h2>

@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import userStore from "../../store/userStore";
 import systemStore from "../../store/systemStore";
 import { getAuth } from "firebase/auth";
+import Header from "../Header";
 
 export default function AdminSystems() {
   const auth = getAuth();
@@ -68,6 +69,9 @@ export default function AdminSystems() {
   };
 
   return (
+    <>         
+    <Header />
+    
     <div id="allMyBusiness">
       <Typography
         gutterBottom
@@ -132,5 +136,6 @@ export default function AdminSystems() {
           ))}
       </Stack>
     </div>
+    </>
   );
 }

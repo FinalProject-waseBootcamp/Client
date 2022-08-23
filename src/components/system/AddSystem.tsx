@@ -12,11 +12,12 @@ import axios from "axios";
 import systemStore from "../../store/systemStore";
 import userStore from "../../store/userStore";
 import { getAuth } from "firebase/auth";
+import Header from "../Header";
 
-const basic_url = 
-// new URL(
-  "http://localhost:3000/system/welcome"
-  // );
+const basic_url =
+  // new URL(
+  "http://localhost:3000/system/welcome";
+// );
 
 export default function AddSystem() {
   const auth = getAuth();
@@ -40,36 +41,36 @@ export default function AddSystem() {
   // };
 
   const createSystem = async () => {
-    debugger
+    debugger;
     try {
       const systemToAdd = {
-        adminId: user?.uid||"",
+        adminId: user?.uid || "",
         name: name_ref.current?.value || "",
         topic: topic_ref.current?.value || "",
         description: description_ref.current?.value || "",
         communicationDetails: communicationDetails_ref.current?.value || "",
         imgUrl: imgUrl_ref.current?.value || "",
-        siteUrl:basic_url
+        siteUrl: basic_url,
       };
       const newSystem: ISystem = await post(systemToAdd);
-      const uid=newSystem._id||'';
+      const uid = newSystem._id || "";
       console.log("new system created: ", newSystem);
-      const newUrl = 
-      // new URL(
-        `${basic_url}/${newSystem.name}/${newSystem._id}`
-        // );
-        debugger
-      const updatedSystem={
+      const newUrl =
+        // new URL(
+        `${basic_url}/${newSystem.name}/${newSystem._id}`;
+      // );
+      debugger;
+      const updatedSystem = {
         ...newSystem,
-        siteUrl:newUrl
-      }
-      debugger
+        siteUrl: newUrl,
+      };
+      debugger;
       systemStore.addSystem(updatedSystem);
-      try{
-        debugger
-        await axios.put(`http://localhost:3333/system/${uid}`,updatedSystem);
-        debugger
-      }catch(err){
+      try {
+        debugger;
+        await axios.put(`http://localhost:3333/system/${uid}`, updatedSystem);
+        debugger;
+      } catch (err) {
         console.log(err);
       }
       swal("your new url for system is: " + newUrl).then(() =>
@@ -84,6 +85,8 @@ export default function AddSystem() {
 
   return (
     <>
+      <Header />
+
       <h2>welcome</h2>
       <Button
         variant="contained"
