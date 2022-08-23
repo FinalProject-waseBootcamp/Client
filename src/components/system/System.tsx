@@ -16,7 +16,6 @@ import Directions from "@mui/icons-material/Directions";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { getAuth } from "firebase/auth";
-import Map from "../Map";
 
 
 
