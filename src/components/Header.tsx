@@ -5,9 +5,12 @@ import { Roles } from "../utils/modals";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import userStore from "../store/userStore";
+import { getAuth } from "firebase/auth";
 
 
 export default function Header() {
+  const auth = getAuth();
+  const user = auth.currentUser;
   // const mockUser: User = {
   //   uid: "string",
   //   firstName: "user",
@@ -26,10 +29,10 @@ export default function Header() {
   return (
     <>
       <nav className="nav">
+        <img src={user?.photoURL||''}></img>
         <h3 id="navTitle">Build your system</h3>
-        {userStore.user && (
-          <nav id="navUser">
-            <Button
+
+        <Button
               color="secondary"
               onClick={() => {
                 signOut();
@@ -37,6 +40,9 @@ export default function Header() {
             >
               LOG OUT
             </Button>
+        {userStore.user && (
+          <nav id="navUser">
+           
             <p>| {userStore.user.firstName + " " + userStore.user.lastName}</p>
           </nav>
         )}

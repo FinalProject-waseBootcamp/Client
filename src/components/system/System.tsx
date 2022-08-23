@@ -13,8 +13,16 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/icons-material/Menu";
 import Search from "@mui/icons-material/Search";
 import Directions from "@mui/icons-material/Directions";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase";
+import { getAuth } from "firebase/auth";
+
+
 
 export default function MySystem() {
+  // const [user, loading, error] = useAuthState(auth);
+  const auth = getAuth();
+const user = auth.currentUser;
   const { name, uid } = useParams();
   const navigate = useNavigate();
   const [currentSystem, setCurrentSystem] = React.useState<System>();
@@ -74,13 +82,14 @@ export default function MySystem() {
         <Button>SIGN IN</Button>
       </div>
       {/* for admin only 👇*/}
+      {user?.uid&&
       <Button
         variant="contained"
         id="leftTopButton"
         onClick={() => navigate("/adminSystems")}
       >
         My systems
-      </Button>
+      </Button>}
     </>
   );
 }

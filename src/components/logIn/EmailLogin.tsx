@@ -11,44 +11,55 @@ export default function EmailLogin() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [user, loading, error] = useAuthState(auth);
-  const [userFromDb, setUserToDb] = useState<any>();
+  // const [userFromDb, setUserToDb] = useState<any>();
   const navigate = useNavigate();
   
   useEffect(() => {
     if (loading) {
+      debugger
       return;
     }
     if (user) {
+      debugger
       loginToDB(user.uid);
       user.getIdToken().then((value=>{
         console.log(value);
-        userStore.user=user;
+        userStore.getUser(user.uid);
       }))
       console.log("userStore.user :",userStore.user);
     }
   }, [user, loading]);
   const loginToDB = async (uid: string) => {
+    debugger
+    await userStore.getUser(uid); 
     try { 
       if(!userStore.user._id){
-       await addUserToDb(uid)
+      //  await addUserToDb(uid)
+      debugger
+      console.log(userStore.user)
+      debugger
+      navigate("/register");
       }     
-      await userStore.getUser(uid);        
+      // await userStore.getUser(uid);   
+      debugger     
       navigate("/addSystem")
-    } catch (error) { console.log(error); }
+    } catch (error) { 
+      debugger
+      console.log(error); }
   }
-  const addUserToDb = async (uid: string) => {
-    const userToDb: any = {
-      _id: uid,
-      email:email_ref.current?.value||'',
-      password:password_ref.current?.value||''
-    }
+  // const addUserToDb = async (uid: string) => {
+  //   const userToDb: any = {
+  //     _id: uid,
+  //     email:email_ref.current?.value||'',
+  //     password:password_ref.current?.value||''
+  //   }
 
-    try {
-      debugger;
-     const res= await userStore.addUser(userToDb);        
-      setUserToDb(res);
-    } catch (error) { console.log(error); }
-  }
+  //   try {
+  //     debugger;
+  //    const res= await userStore.addUser(userToDb);        
+  //     setUserToDb(res);
+  //   } catch (error) { console.log(error); }
+  // }
 
   // async function handleSubmit() {
   //   // event.preventDefault();
@@ -77,7 +88,11 @@ export default function EmailLogin() {
   const password_ref=useRef<HTMLInputElement>();
   return (
     <form
-      onSubmit={async () => await logInWithEmailAndPassword(email, password)}
+      onSubmit={async () =>{
+        debugger
+        const user= await logInWithEmailAndPassword(email, password);
+        debugger
+    }}
     >
       <div>
         <h3>LOGIN</h3>

@@ -90,7 +90,7 @@ export default function AddSystem() {
         My systems
       </Button>
       {adminSystemsMount > 4 ? (
-        <p>You own too many systems. you can delete one to create another</p>
+        <p>You own too many systems. you can delete one for creating another</p>
       ) : (
         <>
           <h4>enter details for new system</h4>

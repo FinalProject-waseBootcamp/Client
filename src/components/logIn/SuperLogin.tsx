@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import { Button, Link } from "@mui/material";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../../firebase";
+import userStore from "../../store/userStore";
 // import { Auth } from "@firebase/auth";
 
 export default function SuperLogin() {
@@ -15,11 +16,39 @@ export default function SuperLogin() {
   const navigate = useNavigate();
   useEffect(() => {
     if (loading) {
-      // maybe trigger a loading screen
       return;
     }
-    if (user) navigate("/addSystem");
+    if (user) {
+      debugger
+      loginToDB(user.uid);
+      user.getIdToken().then((value=>{
+        console.log(value);
+        userStore.getUser(user.uid);
+      }))
+      console.log("userStore.user :",userStore.user);
+    // }
+      // navigate("/addSystem");
+    }
   }, [user, loading]);
+
+  const loginToDB = async (uid: string) => {
+    debugger
+    await userStore.getUser(uid); 
+    try { 
+      if(!userStore.user._id){
+      //  await addUserToDb(uid)
+      debugger
+      console.log(userStore.user)
+      debugger
+      navigate("/register");
+      }     
+      // await userStore.getUser(uid);   
+      debugger     
+      navigate("/addSystem")
+    } catch (error) { 
+      debugger
+      console.log(error); }
+  }
   return (
     <div id="externalLogin">
       <>
