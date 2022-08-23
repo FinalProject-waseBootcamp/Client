@@ -89,15 +89,11 @@ const Maps: React.FC = (props: any) => {
                 }
               }
             />
-            
-           
-
           </Grid>
           <Grid item xs={6} md={4}>
             <Typography sx={{ textAlign: 'center' }} gutterBottom variant="h4" component="div">
               here you can search  location business of your system
             </Typography>
-
             <Autocomplete
               id="asynchronous-demo"
               sx={{ width: 300 }}
