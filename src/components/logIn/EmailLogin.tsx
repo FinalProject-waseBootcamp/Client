@@ -23,6 +23,7 @@ export default function EmailLogin() {
       debugger
       // loginToDB(user.uid);
       user.getIdToken().then((value=>{
+        debugger
         console.log(value);
         userStore.addUser(user);
       }))

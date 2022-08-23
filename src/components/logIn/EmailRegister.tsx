@@ -73,7 +73,7 @@ export default function EmailRegister() {
   useEffect(() => {
     if (loading) return;
     if (user) {
-      addUserToDb(user.uid);
+      // addUserToDb(user.uid);
       user.getIdToken().then((value=>{
         console.log(value);
         userStore.addUser(user);
@@ -88,17 +88,18 @@ export default function EmailRegister() {
       onSubmit={async () => {
         const name=firstName+' '+lastName;
         await registerWithEmailAndPassword(name, email, password);
-        const newUser:User={
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password,
-          role: Roles.SYSTEM_ADMIN,
-          phone: phone
-        }
-        try{
-          await axios.post('http://localhost:3333/user',newUser)
-        }catch(e){ alert(e); }    
+      
+        // try{
+        //   const newUser:User={
+        //     firstName: firstName,
+        //     lastName: lastName,
+        //     email: email,
+        //     password: password,
+        //     role: Roles.SYSTEM_ADMIN,
+        //     phone: phone
+        //   }
+        //   await axios.post('http://localhost:3333/user',newUser)
+        // }catch(e){ alert(e); }    
       }}
     >
       <div id="externalLogin">

@@ -11,39 +11,28 @@ import { getAuth } from "firebase/auth";
 export default function Header() {
   const auth = getAuth();
   const user = auth.currentUser;
-  // const mockUser: User = {
-  //   uid: "string",
-  //   firstName: "user",
-  //   lastName: "name",
-  //   email: "string",
-  //   role: Roles.SYSTEM_ADMIN,
-  //   phone: "string",
-  //   password:"string"
-  // };
-  // const [user, setUser] = useState<User>(mockUser);
   const navigate = useNavigate();
-  const signOut = () => {
-    logout();
+  const signOut = async() => {
+    await logout();
+    userStore.addUser(null);
     navigate("/login");
   };
   return (
     <>
       <nav className="nav">
-        <img src={user?.photoURL||''}></img>
+        <img src={userStore.user?.photoURL||''}></img>
         <h3 id="navTitle">Build your system</h3>
-
-        <Button
+        {(userStore.user) && (
+          <nav id="navUser">
+             <Button
               color="secondary"
               onClick={() => {
                 signOut();
               }}
             >
-              LOG OUT
+              LOG OUT 
             </Button>
-        {userStore.user && (
-          <nav id="navUser">
-           
-            <p>| {userStore.user.firstName + " " + userStore.user.lastName}</p>
+            <p>| {userStore.user?.displayName}</p>
           </nav>
         )}
       </nav>

@@ -80,12 +80,15 @@ const signInWithGoogle = async () => {
 };
 const logInWithEmailAndPassword = async (email:string, password:string) => {
   try {
+    debugger
     const res=await signInWithEmailAndPassword(auth, email, password);
+    debugger
     const user=res.user;
+    debugger
     return user;
-  } catch (err:any) {
-    console.error(err);
-    alert(err.message);
+  } catch (err) {
+    debugger
+    alert(err);
   }
 };
 const registerWithEmailAndPassword = async (name:string, email:string, password:string) => {

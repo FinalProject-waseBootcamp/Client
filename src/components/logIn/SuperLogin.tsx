@@ -21,12 +21,12 @@ export default function SuperLogin() {
     if (user) {
       debugger
       // loginToDB(user.uid);
-      user.getIdToken().then((value=>{
+      user.getIdToken().then(value=>{
         console.log(value);
         userStore.addUser(user);
-      }))
-      console.log("userStore.user :",userStore.user);
-      navigate("/addSystem");
+        navigate("/addSystem");
+        // alert("userStore.user :"+userStore.user.displayName+" photo: "+userStore.user.photoURL);
+      })
     }
   }, [user, loading]);
 
