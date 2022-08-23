@@ -12,7 +12,6 @@ import Header from "./components/Header";
 import AdminSystems from "./components/system/AdminSystems";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Map from "./components/Map";
 import Maps from "./components/Maps";
 
 
@@ -46,10 +45,7 @@ function App() {
             </Route>
             <Route path="/adminSystems" element={<AdminSystems />} />
             <Route path="/editSystem" element={<EditSystem />} />
-            <Route path="/map" element={<Map />} />
             <Route path="/maps" element={<Maps />} />
-
-
           </Routes>
         </Router>
         <img src={require("./utils/logo.jpg")} id="logo" alt="logo"></img>
