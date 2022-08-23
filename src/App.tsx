@@ -46,6 +46,7 @@ function App() {
             <Route path="/adminSystems" element={<AdminSystems />} />
             <Route path="/editSystem" element={<EditSystem />} />
             <Route path="/maps" element={<Maps />} />
+            <Route path="/addMap" element={<map />} />
           </Routes>
         </Router>
         <img src={require("./utils/logo.jpg")} id="logo" alt="logo"></img>
