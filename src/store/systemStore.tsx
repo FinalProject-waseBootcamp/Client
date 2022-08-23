@@ -1,7 +1,5 @@
-import { System, User } from "../utils/modals";
-// @ts-ignore
+import { System } from "../utils/modals";
 import { makeAutoObservable } from "mobx";
-// import {observable, action, computed, makeObservable} from "mobx";
 import axios from "axios";
 import userStore from "./userStore";
 
