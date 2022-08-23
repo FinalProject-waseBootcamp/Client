@@ -8,20 +8,24 @@ import { Button, TextField } from "@mui/material";
 import { registerWithEmailAndPassword } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import axios from "axios";
+import { Roles, User } from "../../utils/modals";
+import userStore from "../../store/userStore";
 
 export default function EmailRegister() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
   const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
 
-  async function createUser(){
-    const newUser={
+  // async function createUser(){
+  //   const newUser={
       
-    }
-    const response= await axios.post('http://localhost:3333/user',newUser);
-  }
+  //   }
+  //   const response= await axios.post('http://localhost:3333/user',newUser);
+  // }
 
   // const handleSubmit = async () => {
   //   await auth.createUserWithEmailAndPassword(email, password).then(
@@ -48,18 +52,53 @@ export default function EmailRegister() {
   //     }
   //   );
   // };
+  
+  
+  const addUserToDb = async (uid: string) => {
+    const userToDb: User = {
+      uid: uid,
+      email:email,
+      password:password,
+      firstName:firstName,
+      lastName:lastName,
+      phone:phone,
+      role:Roles.SYSTEM_ADMIN
+    }
+    try {
+      debugger;
+     const res=await userStore.addUser(userToDb);   
+     debugger     
+    } catch (error) { console.log(error); }
+  }
   useEffect(() => {
     if (loading) return;
     if (user) {
-      // addUserToDb(user.uid);
+      addUserToDb(user.uid);
+      user.getIdToken().then((value=>{
+        console.log(value);
+        userStore.getUser(user.uid);
+      }))
+      console.log("userStore.user :",userStore.user);
       navigate("/addSystem");
     }
   }, [user, loading]);
+
   return (
     <form
       onSubmit={async () => {
+        const name=firstName+' '+lastName;
         await registerWithEmailAndPassword(name, email, password);
-        createUser();
+        const newUser:User={
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+          role: Roles.SYSTEM_ADMIN,
+          phone: phone
+        }
+        try{
+          await axios.post('http://localhost:3333/user',newUser)
+        }catch(e){ alert(e); }    
       }}
     >
       <div id="externalLogin">
@@ -67,20 +106,33 @@ export default function EmailRegister() {
           <h3>Register with email</h3>
         </div>
         <div>
-          <label htmlFor="user">Enter your name: </label>
+          <label htmlFor="firstName">Enter your first name: </label>
           <TextField
             id="standard-required"
             size="small"
-            name="name"
+            name="firstName"
             type="text"
-            placeholder="insert your name"
+            placeholder="insert your first name"
             required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
         <div>
-          <label htmlFor="user">Enter your email: </label>
+          <label htmlFor="lastName">Enter your last name: </label>
+          <TextField
+            id="standard-required"
+            size="small"
+            name="lastName"
+            type="text"
+            placeholder="insert your last name"
+            required
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="email">Enter your email: </label>
           <TextField
             id="standard-required"
             size="small"
@@ -97,12 +149,25 @@ export default function EmailRegister() {
           <TextField
             id="standard-required"
             size="small"
-            name="password"
+            name="pwd"
             type="password"
             placeholder="insert a password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="phone">Enter your phone number: </label>
+          <TextField
+            id="standard-required"
+            size="small"
+            name="phone"
+            type="text"
+            placeholder="insert a phone number"
+            required
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
         </div>
         <Button type="submit">SUBSCRIBE</Button>

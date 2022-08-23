@@ -5,6 +5,7 @@ import { logInWithEmailAndPassword, signInWithGoogle } from "../../firebase";
 import { Button } from "@mui/material";
 
 export default function Login() {
+  debugger
   // const navigate = useNavigate();
   // async function googleLogin() {
   //   //1 - init Google Auth Provider

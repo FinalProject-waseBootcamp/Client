@@ -40,7 +40,8 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
-import { Roles } from "./utils/modals";
+import userStore from "./store/userStore";
+import { Roles, User } from "./utils/modals";
 // import * as dotenv from "dotenv"
 // const dotenv = require('dotenv');
 // dotenv.config();
@@ -79,7 +80,9 @@ const signInWithGoogle = async () => {
 };
 const logInWithEmailAndPassword = async (email:string, password:string) => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const res=await signInWithEmailAndPassword(auth, email, password);
+    const user=res.user;
+    return user;
   } catch (err:any) {
     console.error(err);
     alert(err.message);
