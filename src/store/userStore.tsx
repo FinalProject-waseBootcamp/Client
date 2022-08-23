@@ -39,17 +39,18 @@ class Store{
     //     phone: ''
     // };
     
-    async addUser(user:User){
-        await addUser(user);
+    async addUser(user:any){
+        // await addUser(user);
+        debugger
         this.user=user;
         console.log(this.user)
     }
-    async getUser(id:string){
-       const user:User= await getUser(id);
-        this.user=user;
-        console.log(user)
-      return user 
-    }
+    // async getUser(id:string){
+    //    const user:User= await getUser(id);
+    //     this.user=user;
+    //     console.log(user)
+    //   return user 
+    // }
 
     constructor(){
         makeAutoObservable(this);

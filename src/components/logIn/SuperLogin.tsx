@@ -23,7 +23,7 @@ export default function SuperLogin() {
       // loginToDB(user.uid);
       user.getIdToken().then((value=>{
         console.log(value);
-        userStore.getUser(user.uid);
+        userStore.addUser(user);
       }))
       console.log("userStore.user :",userStore.user);
       navigate("/addSystem");
@@ -31,8 +31,8 @@ export default function SuperLogin() {
   }, [user, loading]);
 
   const loginToDB = async (uid: string) => {
-    debugger
-    await userStore.getUser(uid); 
+    // debugger
+    // await userStore.getUser(uid); 
     // try { 
     //   if(!userStore.user){
     //   //  await addUserToDb(uid)

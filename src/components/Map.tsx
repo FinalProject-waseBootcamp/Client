@@ -13,7 +13,6 @@ const render = (status: Status) => {
 };
 
 
-
 const Map: React.FC<MapProps> = ({ onClick, onIdle, children, ...options }) => {
 
     const ref = useRef<HTMLDivElement>(null);

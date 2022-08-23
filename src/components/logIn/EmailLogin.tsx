@@ -21,17 +21,17 @@ export default function EmailLogin() {
     }
     if (user) {
       debugger
-      loginToDB(user.uid);
+      // loginToDB(user.uid);
       user.getIdToken().then((value=>{
         console.log(value);
-        userStore.getUser(user.uid);
+        userStore.addUser(user);
       }))
       console.log("userStore.user :",userStore.user);
     }
   }, [user, loading]);
   const loginToDB = async (uid: string) => {
     debugger
-    await userStore.getUser(uid); 
+    // await userStore.getUser(uid); 
     try { 
       if(!userStore.user._id){
       //  await addUserToDb(uid)
