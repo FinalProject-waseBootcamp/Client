@@ -13,15 +13,17 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import userStore from "../../store/userStore";
 import systemStore from "../../store/systemStore";
+import { getAuth } from "firebase/auth";
 
 export default function AdminSystems() {
-
+  const auth = getAuth();
+  const user = auth.currentUser;
   const [mySystems, setMySystems] = useState<System[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    systemStore.loadSystems();
-    // getSystems();
+    // systemStore.loadSystems();
+    getSystems();
   }, []);
 
   const deleteSystem = async (uid: string) => {
@@ -52,24 +54,24 @@ export default function AdminSystems() {
     }
   };
 
-  const adminId = userStore.user.uid;
+  const adminId = user?.uid;
 
-  // const getSystems = async () => {
-  //   try {
-  //     const res = await axios.get(`http://localhost:3333/system?adminId=${adminId}`);
-  //     const _mySystems: System[] = await res.data;
-  //     setMySystems(_mySystems);
-  //     console.log(_mySystems[0]);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const getSystems = async () => {
+    try {
+      const res = await axios.get(`http://localhost:3333/system?adminId=${adminId}`);
+      const _mySystems: System[] = await res.data;
+      setMySystems(_mySystems);
+      console.log(_mySystems[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div id="allMyBusiness">
       <Typography
         gutterBottom
-        variant="h2"
+        variant="h4"
         component="div"
         sx={{ textAlign: "center", padding: "10px" }}
       >
@@ -89,7 +91,7 @@ export default function AdminSystems() {
           add system
         </Button>
         {/* {mySystems?.length > 0 && */}
-        {systemStore.systems?.length > 0 &&
+        {mySystems?.length > 0 &&
           mySystems.map((system: System) => (
             <Card key={system._id}>
               <CardMedia

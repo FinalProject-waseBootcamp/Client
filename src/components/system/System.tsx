@@ -16,6 +16,7 @@ import Directions from "@mui/icons-material/Directions";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { getAuth } from "firebase/auth";
+import Map from "../Map";
 
 
 
@@ -75,6 +76,7 @@ const user = auth.currentUser;
             <Directions />
           </IconButton>
         </Paper>
+        {/* <Map/> */}
       </Container>
       {/* user can become location_user by contribute his object and define his location 👇*/}
       <div id="contributeDiv">

@@ -20,34 +20,33 @@ export default function SuperLogin() {
     }
     if (user) {
       debugger
-      loginToDB(user.uid);
+      // loginToDB(user.uid);
       user.getIdToken().then((value=>{
         console.log(value);
         userStore.getUser(user.uid);
       }))
       console.log("userStore.user :",userStore.user);
-    // }
-      // navigate("/addSystem");
+      navigate("/addSystem");
     }
   }, [user, loading]);
 
   const loginToDB = async (uid: string) => {
     debugger
     await userStore.getUser(uid); 
-    try { 
-      if(!userStore.user._id){
-      //  await addUserToDb(uid)
-      debugger
-      console.log(userStore.user)
-      debugger
-      navigate("/register");
-      }     
-      // await userStore.getUser(uid);   
-      debugger     
-      navigate("/addSystem")
-    } catch (error) { 
-      debugger
-      console.log(error); }
+    // try { 
+    //   if(!userStore.user){
+    //   //  await addUserToDb(uid)
+    //   debugger
+    //   console.log(userStore.user)
+    //   debugger
+    //   navigate("/register");
+    //   }     
+    //   // await userStore.getUser(uid);   
+    //   debugger     
+      // navigate("/addSystem")
+    // } catch (error) { 
+    //   debugger
+    //   console.log(error); }
   }
   return (
     <div id="externalLogin">

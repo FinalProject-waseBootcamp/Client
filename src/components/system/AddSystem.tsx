@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import systemStore from "../../store/systemStore";
 import userStore from "../../store/userStore";
+import { getAuth } from "firebase/auth";
 
 const basic_url = 
 // new URL(
@@ -18,6 +19,8 @@ const basic_url =
   // );
 
 export default function AddSystem() {
+  const auth = getAuth();
+  const user = auth.currentUser;
   const {
     register,
     handleSubmit,
@@ -40,7 +43,7 @@ export default function AddSystem() {
     debugger
     try {
       const systemToAdd = {
-        adminId: userStore.user.uid,
+        adminId: user?.uid||"",
         name: name_ref.current?.value || "",
         topic: topic_ref.current?.value || "",
         description: description_ref.current?.value || "",
