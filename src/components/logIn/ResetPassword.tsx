@@ -32,7 +32,7 @@ export default function ResetPassword() {
   }
   useEffect(() => {
     if (loading) return;
-    if (user) navigate("/systems");
+    if (user) navigate("/addSystem");
   }, [user, loading]);
   return (
     <form
@@ -56,7 +56,7 @@ export default function ResetPassword() {
           />
         </div>
         <div>
-          <Button type="submit" onClick={() => sendPasswordReset(email)}>
+          <Button onClick={() => sendPasswordReset(email)}>
             SUBSCRIBE
           </Button>
         </div>

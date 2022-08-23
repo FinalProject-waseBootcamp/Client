@@ -75,7 +75,7 @@ export default function AdminSystems() {
         component="div"
         sx={{ textAlign: "center", padding: "10px" }}
       >
-        systems of  [{userStore.user?.displayName}]
+        systems of {userStore.user?.displayName}
       </Typography>
       <Stack
         padding={3}
@@ -111,7 +111,7 @@ export default function AdminSystems() {
                   description: {system.description}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  to the <a href={system.siteUrl}>site</a>
+                  to the <a href={system.siteUrl} target="_blank">site</a>
                 </Typography>
               </CardContent>
               <CardActions>

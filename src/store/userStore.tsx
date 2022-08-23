@@ -45,6 +45,9 @@ class Store{
         this.user=user;
         console.log(this.user)
     }
+    async logOut(){
+        this.user=null;
+    }
     // async getUser(id:string){
     //    const user:User= await getUser(id);
     //     this.user=user;
