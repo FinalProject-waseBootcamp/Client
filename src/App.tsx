@@ -12,7 +12,7 @@ import Header from "./components/Header";
 import AdminSystems from "./components/system/AdminSystems";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Maps from "./components/Maps";
+import Maps from "./components/Maps/Maps";
 
 
 let theme = createTheme();

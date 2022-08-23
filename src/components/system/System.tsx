@@ -9,7 +9,7 @@ import { System } from "../../utils/modals";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { getAuth } from "firebase/auth";
-import Maps from "../Maps";
+import Maps from "../Maps/Maps";
 
 
 
