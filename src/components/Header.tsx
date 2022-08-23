@@ -14,7 +14,7 @@ export default function Header() {
   const navigate = useNavigate();
   const signOut = async() => {
     await logout();
-    userStore.addUser(null);
+    userStore.logOut();
     navigate("/login");
   };
   return (

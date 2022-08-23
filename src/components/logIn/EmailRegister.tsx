@@ -22,7 +22,7 @@ export default function EmailRegister() {
 
   // async function createUser(){
   //   const newUser={
-      
+
   //   }
   //   const response= await axios.post('http://localhost:3333/user',newUser);
   // }
@@ -52,55 +52,56 @@ export default function EmailRegister() {
   //     }
   //   );
   // };
-  
-  
-  const addUserToDb = async (uid: string) => {
-    const userToDb: User = {
-      uid: uid,
-      email:email,
-      password:password,
-      firstName:firstName,
-      lastName:lastName,
-      phone:phone,
-      role:Roles.SYSTEM_ADMIN
-    }
-    try {
-      debugger;
-     const res=await userStore.addUser(userToDb);   
-     debugger     
-    } catch (error) { console.log(error); }
-  }
+
+  // const addUserToDb = async (uid: string) => {
+  //   const userToDb: User = {
+  //     uid: uid,
+  //     email: email,
+  //     password: password,
+  //     firstName: firstName,
+  //     lastName: lastName,
+  //     phone: phone,
+  //     role: Roles.SYSTEM_ADMIN,
+  //   };
+  //   try {
+  //     debugger;
+  //     const res = await userStore.addUser(userToDb);
+  //     debugger;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   useEffect(() => {
     if (loading) return;
     if (user) {
       // addUserToDb(user.uid);
-      user.getIdToken().then((value=>{
+      user.getIdToken().then((value) => {
         console.log(value);
         userStore.addUser(user);
-      }))
-      console.log("userStore.user :",userStore.user);
+      });
+      console.log("userStore.user :", userStore.user);
       navigate("/addSystem");
     }
   }, [user, loading]);
 
   return (
     <form
-      onSubmit={async () => {
-        const name=firstName+' '+lastName;
-        await registerWithEmailAndPassword(name, email, password);
-      
-        // try{
-        //   const newUser:User={
-        //     firstName: firstName,
-        //     lastName: lastName,
-        //     email: email,
-        //     password: password,
-        //     role: Roles.SYSTEM_ADMIN,
-        //     phone: phone
-        //   }
-        //   await axios.post('http://localhost:3333/user',newUser)
-        // }catch(e){ alert(e); }    
-      }}
+    // onSubmit={async () => {
+    //   const name=firstName+' '+lastName;
+    //   await registerWithEmailAndPassword(name, email, password);
+
+    // try{
+    //   const newUser:User={
+    //     firstName: firstName,
+    //     lastName: lastName,
+    //     email: email,
+    //     password: password,
+    //     role: Roles.SYSTEM_ADMIN,
+    //     phone: phone
+    //   }
+    //   await axios.post('http://localhost:3333/user',newUser)
+    // }catch(e){ alert(e); }
+    // }}
     >
       <div id="externalLogin">
         <div>
@@ -171,7 +172,14 @@ export default function EmailRegister() {
             onChange={(e) => setPhone(e.target.value)}
           />
         </div>
-        <Button type="submit">SUBSCRIBE</Button>
+        <Button
+          onClick={async () => {
+            const name = firstName + " " + lastName;
+            await registerWithEmailAndPassword(name, email, password);
+          }}
+        >
+          SUBSCRIBE
+        </Button>
       </div>
     </form>
   );

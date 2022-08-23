@@ -28,26 +28,22 @@ export default function EmailLogin() {
         userStore.addUser(user);
       }))
       console.log("userStore.user :",userStore.user);
+      navigate("/addSystem");
     }
   }, [user, loading]);
-  const loginToDB = async (uid: string) => {
-    debugger
-    // await userStore.getUser(uid); 
-    try { 
-      if(!userStore.user._id){
-      //  await addUserToDb(uid)
-      debugger
-      console.log(userStore.user)
-      debugger
-      navigate("/register");
-      }     
-      // await userStore.getUser(uid);   
-      debugger     
-      navigate("/addSystem")
-    } catch (error) { 
-      debugger
-      console.log(error); }
-  }
+  // const loginToDB = async (uid: string) => {
+  //   // await userStore.getUser(uid); 
+  //   try { 
+  //     if(!userStore.user._id){
+  //     //  await addUserToDb(uid)
+  //     console.log(userStore.user)
+  //     navigate("/register");
+  //     }     
+  //     // await userStore.getUser(uid);        
+  //     navigate("/addSystem")
+  //   } catch (error) { 
+  //     console.log(error); }
+  // }
   // const addUserToDb = async (uid: string) => {
   //   const userToDb: any = {
   //     _id: uid,
@@ -89,11 +85,9 @@ export default function EmailLogin() {
   const password_ref=useRef<HTMLInputElement>();
   return (
     <form
-      onSubmit={async () =>{
-        debugger
-        const user= await logInWithEmailAndPassword(email, password);
-        debugger
-    }}
+    //   onSubmit={async () =>{
+    //     const user= await logInWithEmailAndPassword(email, password);
+    // }}
     >
       <div>
         <h3>LOGIN</h3>
@@ -131,7 +125,9 @@ export default function EmailLogin() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <Button variant="contained" size="small" type="submit" id="maillogin">
+        <Button variant="contained" size="small"  id="maillogin"
+         onClick={async()=>await logInWithEmailAndPassword(email, password)
+         }>
           SUBSCRIBE
         </Button>
       </nav>
