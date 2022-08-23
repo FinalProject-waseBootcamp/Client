@@ -33,7 +33,7 @@ export default function EmailLogin() {
        await addUserToDb(uid)
       }     
       await userStore.getUser(uid);        
-      navigate("/addSystem")
+      // navigate("/addSystem")
     } catch (error) { console.log(error); }
   }
   const addUserToDb = async (uid: string) => {
@@ -77,7 +77,10 @@ export default function EmailLogin() {
   const password_ref=useRef<HTMLInputElement>();
   return (
     <form
-      onSubmit={async () => await logInWithEmailAndPassword(email, password)}
+      onSubmit={async () => {
+        const a = await logInWithEmailAndPassword(email, password)
+        console.log(a);
+      }}
     >
       <div>
         <h3>LOGIN</h3>
