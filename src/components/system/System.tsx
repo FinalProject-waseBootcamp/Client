@@ -9,7 +9,7 @@ import { System } from "../../utils/modals";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { getAuth } from "firebase/auth";
-import Maps from "../Maps";
+import Maps from "../Maps/Maps";
 
 
 
@@ -35,6 +35,12 @@ const user = auth.currentUser;
     getCurrentSystem();
   }, []);
 
+const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
+
+  const onClick = (e: google.maps.MapMouseEvent) => {
+    // avoid directly mutating state
+    setClicks([...clicks, e.latLng!]);
+  };
   return (
     <>
       <h1>WELCOME TO {name} SYSTEM</h1>
@@ -46,7 +52,7 @@ const user = auth.currentUser;
       {/* user can become location_user by contribute his object and define his location 👇*/}
       <div id="contributeDiv">
         <h5>HAVE THAT OBJECT TOO ? SIGN IN AND PEOPLE WILL BE HELPED BY YOU</h5>
-        <Button>SIGN IN</Button>
+        <Button>SIGN IN TO ADD LOCATION</Button>
       </div>
       {/* for admin only 👇*/}
       {/* {user?.uid&&

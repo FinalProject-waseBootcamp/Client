@@ -12,7 +12,9 @@ import Header from "./components/Header";
 import AdminSystems from "./components/system/AdminSystems";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Maps from "./components/Maps";
+import Maps from "./components/Maps/Maps";
+import  MyAutocomplete from './components/Maps/AutoComplete';
+import AddLocation from "./components/Maps/AddLocation";
 
 
 let theme = createTheme();
@@ -46,6 +48,8 @@ function App() {
             <Route path="/adminSystems" element={<AdminSystems />} />
             <Route path="/editSystem" element={<EditSystem />} />
             <Route path="/maps" element={<Maps />} />
+            <Route path="/auto" element={<MyAutocomplete />} />
+            <Route path="/addLocation" element={<AddLocation />} />
           </Routes>
         </Router>
         <img src={require("./utils/logo.jpg")} id="logo" alt="logo"></img>

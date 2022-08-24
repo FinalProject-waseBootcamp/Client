@@ -92,8 +92,7 @@ export default function EditSystem() {
 
   return (
     <div>
-     <Header />
-
+      <Header></Header>
       {currentSystem && (
         <>
           <h2>edit {currentSystem.name} system</h2>
