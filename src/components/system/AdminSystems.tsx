@@ -23,7 +23,6 @@ export default function AdminSystems() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // systemStore.loadSystems();
     getSystems();
   }, []);
 
@@ -43,7 +42,6 @@ export default function AdminSystems() {
             swal("Poof! Your business has been deleted!", {
               icon: "success",
             });
-            // getSystems();
             systemStore.loadSystems();
           }
         } else {
@@ -94,7 +92,6 @@ export default function AdminSystems() {
         >
           add system
         </Button>
-        {/* {mySystems?.length > 0 && */}
         {mySystems?.length > 0 &&
           mySystems.map((system: System) => (
             <Card key={system._id}>

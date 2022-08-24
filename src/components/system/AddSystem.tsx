@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import "../design.css";
+import "../css/design.css";
 import { post } from "../../api/system";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -14,10 +14,7 @@ import userStore from "../../store/userStore";
 import { getAuth } from "firebase/auth";
 import Header from "../Header";
 
-const basic_url =
-  // new URL(
-  "http://localhost:3000/system/welcome";
-// );
+const basic_url ="http://localhost:3000/system/welcome";
 
 export default function AddSystem() {
   const auth = getAuth();
@@ -35,10 +32,7 @@ export default function AddSystem() {
   const imgUrl_ref = useRef<HTMLInputElement>();
   const [adminSystemsMount, setMount] = useState(0);
 
-  // const openInNewTab = (url: string): void => {
-  //   const newWindow = window.open(url, "_blank", "noopener,noreferrer");
-  //   if (newWindow) newWindow.opener = null;
-  // };
+
 
   const createSystem = async () => {
     debugger;
@@ -56,20 +50,15 @@ export default function AddSystem() {
       const uid = newSystem._id || "";
       console.log("new system created: ", newSystem);
       const newUrl =
-        // new URL(
         `${basic_url}/${newSystem.name}/${newSystem._id}`;
-      // );
-      debugger;
       const updatedSystem = {
         ...newSystem,
         siteUrl: newUrl,
       };
-      debugger;
+
       systemStore.addSystem(updatedSystem);
       try {
-        debugger;
         await axios.put(`http://localhost:3333/system/${uid}`, updatedSystem);
-        debugger;
       } catch (err) {
         console.log(err);
       }
@@ -86,7 +75,6 @@ export default function AddSystem() {
   return (
     <>
       <Header />
-
       <h2>welcome</h2>
       <Button
         variant="contained"

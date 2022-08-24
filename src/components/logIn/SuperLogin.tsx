@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import '../design.css'
+import '../css/design.css'
 import Login from "./Login";
 import EmailRegister from "./EmailRegister";
 import EmailLogin from "./EmailLogin";

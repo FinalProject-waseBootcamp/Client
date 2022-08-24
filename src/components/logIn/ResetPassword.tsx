@@ -1,7 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import { withRouter } from "react-router-dom";
 import { auth, sendPasswordReset } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -11,8 +10,6 @@ export default function ResetPassword() {
 
   const navigate = useNavigate();
   async function handleSubmit() {
-    // preventDefault();
-    // await auth.sendPasswordResetEmail(email).then(
     await sendPasswordReset(email)
       .then(
         async (result) => {
@@ -36,7 +33,6 @@ export default function ResetPassword() {
   }, [user, loading]);
   return (
     <form
-    // onSubmit={() => handleSubmit}
     >
       <div id="externalLogin">
         <div>

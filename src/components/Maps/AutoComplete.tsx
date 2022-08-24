@@ -1,20 +1,10 @@
 import { ChangeEvent } from "react";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
+import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption, } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import swal from "sweetalert";
-import { title } from "process";
 import AddMarkerForm from "./AddMarkerForm";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
-import useOnclickOutside from "react-cool-onclickoutside";
+import usePlacesAutocomplete, {getGeocode,getLatLng,} from "use-places-autocomplete";
+
 
 export default function MyAutoComplete() {
   const {
@@ -28,18 +18,17 @@ export default function MyAutoComplete() {
     setValue(e.target.value);
   };
 
-  const handleSelect = 
-//   (val: string): void => {
+  const handleSelect =
+    //   (val: string): void => {
     // setValue(val, false);
     // alert("in select :" + val);
-    (description: string):void => {
-    // =>() => {
-    // When user selects a place, we can replace the keyword without request data from API
-    // by setting the second parameter to "false"
+    (description: string): void => {
+      // =>() => {
+      // When user selects a place, we can replace the keyword without request data from API
+      // by setting the second parameter to "false"
       setValue(description, false);
-    //   clearSuggestions();
-
-    // Get latitude and longitude via utility functions
+      //   clearSuggestions();
+      // Get latitude and longitude via utility functions
       getGeocode({ address: description })
         .then((results) => getLatLng(results[0]))
         .then(({ lat, lng }) => {
@@ -49,21 +38,21 @@ export default function MyAutoComplete() {
           console.log("😱 Error: ", error);
         });
 
-    swal({
-      title: `Want to define ${description} as your location?`,
-      buttons: ["Cancel", "Ok"],
-      dangerMode: true,
-    }).then(async (willDDefine) => {
-      if (willDDefine) {
-        return (
-          <>
-            <p>enter details for this marker</p>
-            <AddMarkerForm />
-          </>
-        );
-      }
-    });
-  };
+      swal({
+        title: `Want to define ${description} as your location?`,
+        buttons: ["Cancel", "Ok"],
+        dangerMode: true,
+      }).then(async (willDDefine) => {
+        if (willDDefine) {
+          return (
+            <>
+              <p>enter details for this marker</p>
+              <AddMarkerForm />
+            </>
+          );
+        }
+      });
+    };
 
   const renderSuggestions = (): JSX.Element => {
     const suggestions = data.map(({ place_id, description }: any) => (
@@ -85,10 +74,6 @@ export default function MyAutoComplete() {
 
   return (
     <div className="App">
-      {/* <h1 className="title">USE-PLACES-AUTOCOMPLETE</h1> */}
-      {/* <p className="subtitle">
-        React hook for Google Maps Places Autocomplete.
-      </p> */}
       <Combobox onSelect={handleSelect} aria-labelledby="demo">
         <ComboboxInput
           style={{ width: 300, maxWidth: "90%" }}
