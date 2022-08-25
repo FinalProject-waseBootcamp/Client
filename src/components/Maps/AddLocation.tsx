@@ -20,17 +20,19 @@ const AddLocation: React.FC = (props: any) => {
           width: 500,
         }}
       >
-        <IconButton sx={{ p: "10px" }} aria-label="menu">
+        {/* <IconButton sx={{ p: "10px" }} aria-label="menu">
           <Menu />
-        </IconButton>
-        <AutoComplete></AutoComplete>
-        <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+        </IconButton> */}
+
+        <AutoComplete/>
+
+        {/* <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
           <Search />
         </IconButton>
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
         <IconButton color="primary" sx={{ p: "10px" }} aria-label="directions">
           <Directions />
-        </IconButton>
+        </IconButton> */}
       </Paper>
     </div>
   );

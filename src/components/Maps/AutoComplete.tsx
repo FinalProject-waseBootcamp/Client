@@ -4,6 +4,7 @@ import "@reach/combobox/styles.css";
 import swal from "sweetalert";
 import AddMarkerForm from "./AddMarkerForm";
 import usePlacesAutocomplete, {getGeocode,getLatLng,} from "use-places-autocomplete";
+import { useNavigate } from "react-router";
 
 
 export default function MyAutoComplete() {
@@ -12,8 +13,9 @@ export default function MyAutoComplete() {
     value,
     suggestions: { status, data },
     setValue,
+    clearSuggestions,
   } = usePlacesAutocomplete();
-
+const navigate=useNavigate();
   const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   };
@@ -27,7 +29,7 @@ export default function MyAutoComplete() {
       // When user selects a place, we can replace the keyword without request data from API
       // by setting the second parameter to "false"
       setValue(description, false);
-      //   clearSuggestions();
+        clearSuggestions();
       // Get latitude and longitude via utility functions
       getGeocode({ address: description })
         .then((results) => getLatLng(results[0]))
@@ -41,17 +43,10 @@ export default function MyAutoComplete() {
       swal({
         title: `Want to define ${description} as your location?`,
         buttons: ["Cancel", "Ok"],
-        dangerMode: true,
-      }).then(async (willDDefine) => {
-        if (willDDefine) {
-          return (
-            <>
-              <p>enter details for this marker</p>
-              <AddMarkerForm />
-            </>
-          );
-        }
-      });
+      })
+      // .then(async (willDefine) => {
+      //   return willDefine;
+      // });
     };
 
   const renderSuggestions = (): JSX.Element => {

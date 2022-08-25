@@ -85,6 +85,22 @@ const Maps: React.FC = (props: any) => {
     setOpenModal(true);
   } 
   const handleClose = () => setOpenModal(false);
+  let markers=[{
+    lat:34,
+    lng:32,
+    name:"",
+    color:""
+  },{
+    lat:33,
+    lng:32,
+    name:"",
+    color:""
+  },{
+    lat:32,
+    lng:32,
+    name:"",
+    color:""
+  },]
   return (
     <>
       <Box sx={{ flexGrow: 1, height: "100%" }}>
@@ -98,14 +114,11 @@ const Maps: React.FC = (props: any) => {
               defaultZoom={zoom}
               options={getMapOptions}
             >
-              {/* <Marker
-                lat={11.0168}
-                lng={76.9558}
-                name="My Marker"
-                color="blue"
-              /> */}
               {clicks.map((latLng, i) => (
                 <Marker key={i} position={latLng} />
+              ))}
+               {markers.map((marker) => (
+                <Marker />
               ))}
             </GoogleMapReact>
           </Grid>
@@ -188,7 +201,8 @@ const Maps: React.FC = (props: any) => {
                 Add Location🎯
               </Button>
             </Paper>
-            <Modal
+            {openModal&&<AddLocation />}
+            {/* <Modal
                 keepMounted
                 open={openModal}
                 onClose={handleClose}
@@ -198,14 +212,14 @@ const Maps: React.FC = (props: any) => {
                 <Box sx={style}>
                     <AddLocation/>
                 </Box>
-            </Modal>
-            <h3>
+            </Modal> */}
+            {/* <h3>
               {clicks.length === 0 ? "Click on map to add markers" : "Clicks"}
             </h3>
             {clicks.map((latLng, i) => (
               <pre key={i}>{JSON.stringify(latLng.toJSON(), null, 2)}</pre>
             ))}
-            <button onClick={() => setClicks([])}>Clear</button>
+            <button onClick={() => setClicks([])}>Clear</button> */}
           </Grid>
         </Grid>
       </Box>

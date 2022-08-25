@@ -11,17 +11,22 @@ import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../../firebas
 import userStore from "../../store/userStore";
 import Header from "../Header";
 // import { Auth } from "@firebase/auth";
+import { getAuth,onAuthStateChanged, setPersistence, signInWithRedirect, inMemoryPersistence, GoogleAuthProvider } from "firebase/auth";
+
 
 export default function SuperLogin() {
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
-  useEffect(() => {
+  // useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
     if (loading) {
       return;
     }
-    if (user) {
+    else if (user) {
       debugger
-      // loginToDB(user.uid);
+
+          // localStorage.setItem('user','true');
+          
       user.getIdToken().then(value=>{
         console.log(value);
         userStore.addUser(user);
@@ -29,7 +34,15 @@ export default function SuperLogin() {
         // alert("userStore.user :"+userStore.user.displayName+" photo: "+userStore.user.photoURL);
       })
     }
-  }, [user, loading]);
+    else {
+      // User is signed out
+      // ...
+      // localStorage.removeItem('user');
+
+      navigate('/login');
+    }
+  })
+  // }, [user, loading]);
 
   const loginToDB = async (uid: string) => {
     // debugger
