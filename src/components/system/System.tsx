@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router";
-import  {Container}  from "@mui/system";
+import { Container } from "@mui/system";
 import axios from "axios";
 import { System } from "../../utils/modals";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -15,9 +15,8 @@ import Maps from "../Maps/Maps";
 
 
 export default function MySystem() {
-  // const [user, loading, error] = useAuthState(auth);
   const auth = getAuth();
-const user = auth.currentUser;
+  const user = auth.currentUser;
   const { name, uid } = useParams();
   const navigate = useNavigate();
   const [currentSystem, setCurrentSystem] = React.useState<System>();
@@ -35,10 +34,9 @@ const user = auth.currentUser;
     getCurrentSystem();
   }, []);
 
-const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
+  const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
 
   const onClick = (e: google.maps.MapMouseEvent) => {
-    // avoid directly mutating state
     setClicks([...clicks, e.latLng!]);
   };
   return (

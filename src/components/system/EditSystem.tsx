@@ -62,9 +62,7 @@ export default function EditSystem() {
             swal("Your system details has been updated!", {
               icon: "success",
             });
-            // setCurrentSystem(res.data);
             navigate('/adminSystems')
-            // return res.data as System;
           }
         } else {
           swal("Your system is safe!");
@@ -101,7 +99,6 @@ export default function EditSystem() {
             sx={{
               "& .MuiTextField-root": { m: 1, width: "25ch" },
             }}
-            // noValidate
             autoComplete="on"
             onSubmit={handleSubmit(updateSystem)}
           >
