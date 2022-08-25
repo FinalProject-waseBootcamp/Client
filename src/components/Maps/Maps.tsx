@@ -3,7 +3,6 @@ import GoogleMapReact from "google-map-react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Button, Modal } from "@mui/material";
-import Marker from "./Marker";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -18,10 +17,13 @@ import Search from "@mui/icons-material/Search";
 import Directions from "@mui/icons-material/Directions";
 import { useNavigate } from "react-router";
 import AddLocation from "./AddLocation";
-const mapStyles = {
-  width: "3vw",
-  height: "5vh",
-};
+import { Marker as Mark } from "../../utils/modals";
+import Marker from "./Marker";
+import markerStore from "../../store/markerStore";
+// const mapStyles = {
+//   width: "3vw",
+//   height: "5vh",
+// };
 interface Film {
   title: string;
   year: number;
@@ -33,35 +35,36 @@ function sleep(delay = 0) {
   });
 }
 const style = {
-  position: 'absolute',
-  top: '70%',
-  left: '70%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "70%",
+  left: "70%",
+  transform: "translate(-50%, -50%)",
   width: 100,
   height: 200,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  bgcolor: "background.paper",
+  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
 
 const Maps: React.FC = (props: any) => {
   const navigate = useNavigate();
-  const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
+  // const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
+  const [open, setOpen] = useState(false);
+  const [options, setOptions] = useState<readonly Film[]>([]);
+  const loading = open && options.length === 0;
+  const [center, setCenter] = useState({ lat: 32.0461, lng: 35.5166 });
+  const [zoom, setZoom] = useState(9);
+  const [openModal, setOpenModal] = React.useState(false);
 
-  const onClick = (e: google.maps.MapMouseEvent) => {
-    // avoid directly mutating state
-    setClicks([...clicks, e.latLng!]);
-  };
-  // useEffect(() => {
-  //   getMarkers();
-  // }, []);
-
-  // const getMarkers = () => {};
-
+  // const onClick = (e: google.maps.MapMouseEvent) => {
+  //   debugger
+  //   // avoid directly mutating state
+  //   setClicks([...clicks, e.latLng!]);
+  // };
   const getMapOptions = (maps: any) => {
     return {
-      onClick:{onClick},
+      // onClick: { onClick },
       disableDefaultUI: true,
       mapTypeControl: true,
       streetViewControl: true,
@@ -74,33 +77,15 @@ const Maps: React.FC = (props: any) => {
       ],
     };
   };
-  const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState<readonly Film[]>([]);
-  const loading = open && options.length === 0;
-  const [center, setCenter] = useState({ lat: 31.0461, lng: 34.8516 });
-  const [zoom, setZoom] = useState(11);
-  const [openModal, setOpenModal] = React.useState(false);
-  const handleOpen = () =>{
-    debugger
+  // useEffect(() => {
+  //   console.log(clicks);
+  // }, [clicks]);
+
+  const handleOpen = () => {
+    debugger;
     setOpenModal(true);
-  } 
+  };
   const handleClose = () => setOpenModal(false);
-  let markers=[{
-    lat:34,
-    lng:32,
-    name:"",
-    color:""
-  },{
-    lat:33,
-    lng:32,
-    name:"",
-    color:""
-  },{
-    lat:32,
-    lng:32,
-    name:"",
-    color:""
-  },]
   return (
     <>
       <Box sx={{ flexGrow: 1, height: "100%" }}>
@@ -114,12 +99,18 @@ const Maps: React.FC = (props: any) => {
               defaultZoom={zoom}
               options={getMapOptions}
             >
-              {clicks.map((latLng, i) => (
+              {/* {clicks.map((latLng, i) => (
                 <Marker key={i} position={latLng} />
+              ))} */}
+              {markerStore.markers.map((marker) => (
+                <Marker
+                  lat={marker.lat}
+                  lng={marker.lng}
+                  name={marker.name}
+                  color={marker.color}
+                />
               ))}
-               {markers.map((marker) => (
-                <Marker />
-              ))}
+
             </GoogleMapReact>
           </Grid>
           <Grid item xs={6} md={4}>
@@ -201,7 +192,7 @@ const Maps: React.FC = (props: any) => {
                 Add Location🎯
               </Button>
             </Paper>
-            {openModal&&<AddLocation />}
+            {openModal && <AddLocation />}
             {/* <Modal
                 keepMounted
                 open={openModal}

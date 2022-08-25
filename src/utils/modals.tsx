@@ -25,3 +25,13 @@ export interface System {
   imgUrl : string;
   siteUrl: string;
 }
+export interface Marker{
+  lat:number,
+  lng:number,
+  name:string 
+  color?:string
+}
+export interface Map{
+  zoom:number;
+  center:{ lat:number,lng:number}
+}
