@@ -10,9 +10,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { getAuth } from "firebase/auth";
 import Maps from "../Maps/Maps";
-
-
-
+import markerStore from "../../store/markerStore";
 
 export default function MySystem() {
   const auth = getAuth();
@@ -43,11 +41,28 @@ export default function MySystem() {
     <>
       <h1>WELCOME TO {name} SYSTEM</h1>
       {/* here customers can search for their closest location of the object 👇*/}
-      <Container id="container">
-        <h3>locations</h3>
-        <Maps></Maps>
-      </Container>
-      {/* user can become location_user by contribute his object and define his location 👇*/}
+      {/* <Container id="container"> */}
+      {/* <h3>locations</h3> */}
+      <nav className="main">
+        <div id="mapDiv">
+          <Maps />
+        </div>
+        {/* </Container> */}
+        {/* user can become location_user by contribute his object and define his location 👇*/}
+        <div id="markerList">
+          <ul>
+            {markerStore.markers.map((marker, i) => {
+              return (
+                <div key={i}>
+                  <li>
+                    {marker.name} | {marker.address}
+                  </li>
+                </div>
+              );
+            })}
+          </ul>
+        </div>
+      </nav>
       <div id="contributeDiv">
         <h5>HAVE THAT OBJECT TOO ? SIGN IN AND PEOPLE WILL BE HELPED BY YOU</h5>
         <Button>SIGN IN TO ADD LOCATION</Button>

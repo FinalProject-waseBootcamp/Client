@@ -20,10 +20,7 @@ import AddLocation from "./AddLocation";
 import { Marker as Mark } from "../../utils/modals";
 import Marker from "./Marker";
 import markerStore from "../../store/markerStore";
-// const mapStyles = {
-//   width: "3vw",
-//   height: "5vh",
-// };
+
 interface Film {
   title: string;
   year: number;
@@ -49,19 +46,43 @@ const style = {
 
 const Maps: React.FC = (props: any) => {
   const navigate = useNavigate();
-  // const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<readonly Film[]>([]);
   const loading = open && options.length === 0;
-  const [center, setCenter] = useState({ lat: 32.0461, lng: 35.5166 });
-  const [zoom, setZoom] = useState(9);
+  const [zoom, setZoom] = useState(13);
   const [openModal, setOpenModal] = React.useState(false);
+  const [currentLocation, seturrentLocation] = React.useState({
+    lat: 32,
+    lng: 30,
+  });
+  const [markers, setMarkers] = useState<Mark[]>([...markerStore.markers]);
 
-  // const onClick = (e: google.maps.MapMouseEvent) => {
-  //   debugger
-  //   // avoid directly mutating state
-  //   setClicks([...clicks, e.latLng!]);
+  // const [activeMarker, setactiveMarker] = useState<any>();
+  // const [selectedPlace, setselectedPlace] = useState<any>();
+  // const [showingInfoWindow, setshowingInfoWindow] = useState<boolean>();
+  // const onMarkerClick = (props: any, marker: any) => {
+  //   setactiveMarker(marker);
+  //   setselectedPlace(props);
+  //   setshowingInfoWindow(true);
   // };
+
+  // const onInfoWindowClose = () => {
+  //   setactiveMarker(null);
+  //   setshowingInfoWindow(false);
+  // };
+
+  // const onMapClicked = () => {
+  //   if (showingInfoWindow) {
+  //     setactiveMarker(null);
+  //     setshowingInfoWindow(false);
+  //   }
+  // };
+
+  useEffect(() => {
+    debugger;
+    setMarkers(markerStore.markers);
+  }, [markerStore.markers]);
+
   const getMapOptions = (maps: any) => {
     return {
       // onClick: { onClick },
@@ -77,51 +98,55 @@ const Maps: React.FC = (props: any) => {
       ],
     };
   };
-  // useEffect(() => {
-  //   console.log(clicks);
-  // }, [clicks]);
+
+  const apiIsLoaded = (map: any, maps: any) => {
+    navigator?.geolocation.getCurrentPosition(
+      ({ coords: { latitude: lat, longitude: lng,} }) => {
+        const pos = { lat, lng };
+        seturrentLocation(pos);
+      }
+    );
+  };
 
   const handleOpen = () => {
     debugger;
     setOpenModal(true);
   };
   const handleClose = () => setOpenModal(false);
+
   return (
     <>
-      <Box sx={{ flexGrow: 1, height: "100%" }}>
-        <Grid container spacing={2} sx={{ height: "100%" }}>
-          <Grid item md={6} sx={{ height: "70vh" }}>
+      <Box sx={{ height: "100%", width: "100%" }}>
+        <Grid
+          container
+          spacing={2}
+          sx={{ height: "100%", width: "100%", justifyItems: "right" }}
+        >
+          <Grid item md={6} sx={{ height: "70vh", width: "100vw" }}>
             <GoogleMapReact
               bootstrapURLKeys={{
                 key: "AIzaSyAMPFO6Sc4Ihhl2ciCChm6Am1QVlMtDMb0",
               }}
-              defaultCenter={center}
+              center={currentLocation}
               defaultZoom={zoom}
-              options={getMapOptions}
+              onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps)}
+              // onClick={onMapClicked}
+              // options={getMapOptions}
             >
-              {/* {clicks.map((latLng, i) => (
-                <Marker key={i} position={latLng} />
-              ))} */}
-              {markerStore.markers.map((marker) => (
+              {markerStore.markers?.map((marker, i) => (
                 <Marker
+                  key={i}
                   lat={marker.lat}
                   lng={marker.lng}
                   name={marker.name}
                   color={marker.color}
+                  address={marker.address}
+                  // onClick={onMarkerClick}
                 />
               ))}
-
             </GoogleMapReact>
           </Grid>
           <Grid item xs={6} md={4}>
-            {/* <Typography
-              sx={{ textAlign: "center" }}
-              gutterBottom
-              variant="h4"
-              component="div"
-            >
-              here you can search location business of your system
-            </Typography> */}
             <Paper
               component="form"
               sx={{
@@ -134,11 +159,6 @@ const Maps: React.FC = (props: any) => {
               <IconButton sx={{ p: "10px" }} aria-label="menu">
                 <Menu />
               </IconButton>
-              {/* <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Search Google Maps"
-            inputProps={{ "aria-label": "search google maps" }}
-          /> */}
               <Autocomplete
                 id="asynchronous-demo"
                 sx={{ width: 300 }}
@@ -193,6 +213,9 @@ const Maps: React.FC = (props: any) => {
               </Button>
             </Paper>
             {openModal && <AddLocation />}
+            <div>
+             your current location: {currentLocation.lat+' , '+currentLocation.lng}
+            </div>
             {/* <Modal
                 keepMounted
                 open={openModal}

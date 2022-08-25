@@ -28,7 +28,8 @@ export interface System {
 export interface Marker{
   lat:number,
   lng:number,
-  name:string 
+  name:string ,
+  address:string,
   color?:string
 }
 export interface Map{

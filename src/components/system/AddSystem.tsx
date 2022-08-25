@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import "../css/design.css";
+import "../../css/design.css";
 import { post } from "../../api/system";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -14,7 +14,7 @@ import userStore from "../../store/userStore";
 import { getAuth } from "firebase/auth";
 import Header from "../Header";
 
-const basic_url ="http://localhost:3000/system/welcome";
+const basic_url = "http://localhost:3000/system/welcome";
 
 export default function AddSystem() {
   const auth = getAuth();
@@ -32,8 +32,6 @@ export default function AddSystem() {
   const imgUrl_ref = useRef<HTMLInputElement>();
   const [adminSystemsMount, setMount] = useState(0);
 
-
-
   const createSystem = async () => {
     debugger;
     try {
@@ -49,8 +47,7 @@ export default function AddSystem() {
       const newSystem: ISystem = await post(systemToAdd);
       const uid = newSystem._id || "";
       console.log("new system created: ", newSystem);
-      const newUrl =
-        `${basic_url}/${newSystem.name}/${newSystem._id}`;
+      const newUrl = `${basic_url}/${newSystem.name}/${newSystem._id}`;
       const updatedSystem = {
         ...newSystem,
         siteUrl: newUrl,

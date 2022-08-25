@@ -1,17 +1,16 @@
-.marker {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 18px;
-  height: 18px;
-  background-color: #000;
-  border: 2px solid #fff;
-  border-radius: 100%;
-  user-select: none;
-  transform: translate(-50%, -50%);
-  /* &:hover {
-    z-index: 1;
-  } */
+.main{
+display: flex;
+flex-wrap: nowrap
+/* grid-template-columns: 2; */
+;
+}
+/* #mapDiv{
+  grid-area: 1/5;
+  margin-right: 0%;
+  
+} */
+#markerList{
+/* grid-area: 1/2; */
 }
 .nav{
     position: sticky;
@@ -79,6 +78,8 @@
 }
 #container{
   background-color: #d2e1f567;
+  width: 100vw;
+  padding: 0;
 }
 #contributeDiv {
   position: absolute;

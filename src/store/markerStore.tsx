@@ -9,27 +9,36 @@ class Store {
         lat: 32.0461,
         lng: 35.5166,
         name: "S.T.",
+        address:"adress",
         color: "blue",
       },
       {
         lat: 34,
         lng: 32,
-        name: "o",
+        name: "Noga",
+        address:"adress",
         color: "red",
       },
       {
         lat: 33,
         lng: 32,
-        name: "r",
+        name: "Moshe",
         color: "orange",
+        address:"adress",
       },
       {
         lat: 32,
         lng: 32,
-        name: "a",
+        name: "ora",
         color: "green",
+        address:"adress",
       }
     );
+  }
+  addMarker(marker:Marker){
+    debugger
+    this.markers.push(marker);
+    debugger
   }
 }
 const markerStore = new Store();

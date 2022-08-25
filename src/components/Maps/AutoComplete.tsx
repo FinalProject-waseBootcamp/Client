@@ -1,11 +1,21 @@
-import { ChangeEvent } from "react";
-import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption, } from "@reach/combobox";
+import { ChangeEvent, useEffect, useState } from "react";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+} from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import swal from "sweetalert";
 import AddMarkerForm from "./AddMarkerForm";
-import usePlacesAutocomplete, {getGeocode,getLatLng,} from "use-places-autocomplete";
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
 import { useNavigate } from "react-router";
-
+import markerStore from "../../store/markerStore";
+import { Marker } from "../../utils/modals";
 
 export default function MyAutoComplete() {
   const {
@@ -15,39 +25,51 @@ export default function MyAutoComplete() {
     setValue,
     clearSuggestions,
   } = usePlacesAutocomplete();
-const navigate=useNavigate();
+  const navigate = useNavigate();
   const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   };
+  useEffect(() =>{
 
-  const handleSelect =
-    //   (val: string): void => {
-    // setValue(val, false);
-    // alert("in select :" + val);
-    (description: string): void => {
-      // =>() => {
-      // When user selects a place, we can replace the keyword without request data from API
-      // by setting the second parameter to "false"
+  })
+
+  let newMarker: Marker;
+  const handleSelect = async (description: string): Promise<void> => {
+    // =>() => {
+    // When user selects a place, we can replace the keyword without request data from API
+    // by setting the second parameter to "false"
+    const doing = () => {
       setValue(description, false);
-        clearSuggestions();
+      clearSuggestions();
+      debugger;
       // Get latitude and longitude via utility functions
-      getGeocode({ address: description })
+      getGeocode({ address: description})
         .then((results) => getLatLng(results[0]))
         .then(({ lat, lng }) => {
           console.log("📍 Coordinates: ", { lat, lng });
+          debugger;
+         newMarker = { lat: lat, lng: lng, address: description, name: "ora" };
+          debugger;
         })
         .catch((error) => {
+          debugger;
           console.log("😱 Error: ", error);
         });
-
-      swal({
-        title: `Want to define ${description} as your location?`,
-        buttons: ["Cancel", "Ok"],
-      })
-      // .then(async (willDefine) => {
-      //   return willDefine;
-      // });
     };
+    await doing();
+    swal({
+      title: `Want to define ${description} as your location?`,
+      buttons: ["Cancel", "Ok"],
+    }).then(async (willDefine) => {
+      debugger;
+      if (willDefine) {
+        debugger;
+        markerStore.addMarker(newMarker);
+        debugger;
+        navigate('/maps')
+      }
+    });
+  };
 
   const renderSuggestions = (): JSX.Element => {
     const suggestions = data.map(({ place_id, description }: any) => (
