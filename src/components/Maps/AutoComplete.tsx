@@ -13,7 +13,7 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import markerStore from "../../store/markerStore";
 import { Marker } from "../../utils/modals";
 
@@ -29,9 +29,10 @@ export default function MyAutoComplete() {
   const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   };
-  useEffect(() =>{
+  // useEffect(() =>{
 
-  })
+  // })
+  const { name, uid } = useParams();
 
   let newMarker: Marker;
   const handleSelect = async (description: string): Promise<void> => {
@@ -66,7 +67,7 @@ export default function MyAutoComplete() {
         debugger;
         markerStore.addMarker(newMarker);
         debugger;
-        navigate('/maps')
+        navigate(`/system/welcome/${name}/${uid}`);
       }
     });
   };

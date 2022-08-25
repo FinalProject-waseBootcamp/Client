@@ -51,7 +51,7 @@ export default function MySystem() {
         {/* user can become location_user by contribute his object and define his location 👇*/}
         <div id="markerList">
           <ul>
-            {markerStore.markers.map((marker, i) => {
+            {markerStore.markers?.map((marker, i) => {
               return (
                 <div key={i}>
                   <li>
