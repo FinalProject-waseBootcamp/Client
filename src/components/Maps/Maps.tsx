@@ -3,7 +3,6 @@ import GoogleMapReact from "google-map-react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Button, Modal } from "@mui/material";
-import Marker from "./Marker";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -18,10 +17,13 @@ import Search from "@mui/icons-material/Search";
 import Directions from "@mui/icons-material/Directions";
 import { useNavigate } from "react-router";
 import AddLocation from "./AddLocation";
-const mapStyles = {
-  width: "3vw",
-  height: "5vh",
-};
+import { Marker as Mark} from "../../utils/modals";
+import  Marker  from "./Marker";
+import markerStore from "../../store/markerStor";
+// const mapStyles = {
+//   width: "3vw",
+//   height: "5vh",
+// };
 interface Film {
   title: string;
   year: number;
@@ -48,43 +50,32 @@ const style = {
 const Maps: React.FC = (props: any) => {
   const navigate = useNavigate();
   const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
-
+  const [open, setOpen] = useState(false);
+  const [options, setOptions] = useState<readonly Film[]>([]);
+  const loading = open && options.length === 0;
+  const [center, setCenter] = useState({ lat: 32.0461, lng:35.5166 });
+  const [zoom, setZoom] = useState(9);
+  const [openModal, setOpenModal] = React.useState(false);
+ 
   const onClick = (e: google.maps.MapMouseEvent) => {
     // avoid directly mutating state
     setClicks([...clicks, e.latLng!]);
   };
-  // useEffect(() => {
-  //   getMarkers();
-  // }, []);
-
-  // const getMarkers = () => {};
-
   const getMapOptions = (maps: any) => {
     return {
       onClick:{onClick},
       disableDefaultUI: true,
       mapTypeControl: true,
       streetViewControl: true,
-      styles: [
-        {
-          featureType: "poi",
-          elementType: "labels",
-          stylers: [{ visibility: "on" }],
-        },
-      ],
+      styles: [{ featureType: "poi", elementType: "labels",stylers: [{ visibility: "on" }],},],
     };
   };
-  const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState<readonly Film[]>([]);
-  const loading = open && options.length === 0;
-  const [center, setCenter] = useState({ lat: 31.0461, lng: 34.8516 });
-  const [zoom, setZoom] = useState(11);
-  const [openModal, setOpenModal] = React.useState(false);
+  useEffect(() => { console.log(clicks); }, [clicks] )
+    const handleClose = () => setOpenModal(false);
   const handleOpen = () =>{
     debugger
     setOpenModal(true);
   } 
-  const handleClose = () => setOpenModal(false);
   return (
     <>
       <Box sx={{ flexGrow: 1, height: "100%" }}>
@@ -98,14 +89,20 @@ const Maps: React.FC = (props: any) => {
               defaultZoom={zoom}
               options={getMapOptions}
             >
-              {/* <Marker
-                lat={11.0168}
-                lng={76.9558}
-                name="My Marker"
-                color="blue"
-              /> */}
-              {clicks.map((latLng, i) => (
-                <Marker key={i} position={latLng} />
+              {/* <Marker */}
+                {/* // lat={11.0168}
+                // lng={76.9558}
+                // position={center}
+                // name="My Marker"
+                // color="blue" */}
+              {/* /> */}
+              {markerStore.markers.map((marker) => (
+                <Marker 
+                lat={marker.lat}
+                lng={marker.lng}
+                name={marker.name}
+                color={marker.color}
+                 />
               ))}
             </GoogleMapReact>
           </Grid>
