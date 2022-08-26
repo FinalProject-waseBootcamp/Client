@@ -38,15 +38,15 @@ export default function EditSystem() {
   const updateSystem = async () => {
 
     try {
-      const updatedSystem:System = {
+      const updatedSystem: System = {
         _id: uid,
-        adminId: currentSystem?.adminId||'',
-        name: name_ref.current?.value||'',
-        topic: topic_ref.current?.value||'',
-        description: description_ref?.current?.value||'',
-        communicationDetails: communicationDetails_ref?.current?.value||'',
-        imgUrl : imgUrl_ref.current?.value || '',
-        siteUrl:currentSystem?.siteUrl||''
+        adminId: currentSystem?.adminId || '',
+        name: name_ref.current?.value || '',
+        topic: topic_ref.current?.value || '',
+        description: description_ref?.current?.value || '',
+        communicationDetails: communicationDetails_ref?.current?.value || '',
+        imgUrl: imgUrl_ref.current?.value || '',
+        siteUrl: currentSystem?.siteUrl || ''
       }
 
       swal({
@@ -56,7 +56,7 @@ export default function EditSystem() {
         dangerMode: true,
       }).then(async (willUpdate) => {
         if (willUpdate) {
-          const res = await axios.put(`http://localhost:3333/system/${uid}`,updatedSystem);
+          const res = await axios.put(`http://localhost:3333/system/${uid}`, updatedSystem);
           const status = await res.status;
           if (status === 200) {
             swal("Your system details has been updated!", {
@@ -69,10 +69,10 @@ export default function EditSystem() {
         }
       })
     } catch (err) {
-        alert(err);
+      alert(err);
     }
   }
-  
+
 
   React.useEffect(() => {
     async function setSystem() {

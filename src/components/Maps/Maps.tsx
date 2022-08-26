@@ -49,11 +49,11 @@ const Maps: React.FC = (props: any) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<readonly Film[]>([]);
   const loading = open && options.length === 0;
-  const [zoom, setZoom] = useState(13);
+  const [zoom, setZoom] = useState(18);
   const [openModal, setOpenModal] = React.useState(false);
-  const [currentLocation, seturrentLocation] = React.useState({
-    lat: 32,
-    lng: 30,
+  const [currentLocation, setcurrentLocation] = React.useState({
+    lat: 31.8040448 , 
+    lng: 35.1141888,
   });
   const [markers, setMarkers] = useState<Mark[]>([...markerStore.markers]);
 
@@ -85,7 +85,7 @@ const Maps: React.FC = (props: any) => {
 
   const getMapOptions = (maps: any) => {
     return {
-      // onClick: { onClick },
+      //  onClick: { onClick },
       disableDefaultUI: true,
       mapTypeControl: true,
       streetViewControl: true,
@@ -103,7 +103,8 @@ const Maps: React.FC = (props: any) => {
     navigator?.geolocation.getCurrentPosition(
       ({ coords: { latitude: lat, longitude: lng,} }) => {
         const pos = { lat, lng };
-        seturrentLocation(pos);
+        console.log(`Geolocation: ${pos}}`);
+        setcurrentLocation(pos);
       }
     );
   };
