@@ -13,18 +13,24 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import userStore from "../../store/userStore";
 import systemStore from "../../store/systemStore";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Header from "../Header";
 
 export default function AdminSystems() {
-  const auth = getAuth();
-  const user = auth.currentUser;
+  let auth = getAuth();
+  let user = auth.currentUser;
   const [mySystems, setMySystems] = useState<System[]>([]);
+  const [adminId, setAdminId] = useState(user?.uid);
+
   const navigate = useNavigate();
 
-  useEffect(() => {
+  onAuthStateChanged(auth, (user) => {
+    auth = getAuth();
+    user = auth.currentUser;
+    userStore.addUser(user);
+    setAdminId(user?.uid);
     getSystems();
-  }, []);
+  });
 
   const deleteSystem = async (uid: string) => {
     try {
@@ -53,11 +59,11 @@ export default function AdminSystems() {
     }
   };
 
-  const adminId = user?.uid;
-
   const getSystems = async () => {
     try {
-      const res = await axios.get(`http://localhost:3333/system?adminId=${adminId}`);
+      const res = await axios.get(
+        `http://localhost:3333/system?adminId=${adminId}`
+      );
       const _mySystems: System[] = await res.data;
       setMySystems(_mySystems);
       console.log(_mySystems[0]);
@@ -67,72 +73,80 @@ export default function AdminSystems() {
   };
 
   return (
-    <>         
-    <Header />
-    
-    <div id="allMyBusiness">
-      <Typography
-        gutterBottom
-        variant="h4"
-        component="div"
-        sx={{ textAlign: "center", padding: "10px" }}
-      >
-        systems of {user?.displayName}
-      </Typography>
-      <Stack
-        padding={3}
-        direction="row"
-        spacing={5}
-        sx={{ "& .MuiCard-root": { m: 5 }, flexWrap: "wrap" }}
-      >
-        <Button
-          variant="contained"
-          id="leftTopButton"
-          onClick={() => navigate("/addSystem")}
+    <>
+      <Header />
+
+      <div id="allMyBusiness">
+        <Typography
+          gutterBottom
+          variant="h4"
+          component="div"
+          sx={{ textAlign: "center", padding: "10px" }}
         >
-          add system
-        </Button>
-        {mySystems?.length > 0 &&
-          mySystems.map((system: System) => (
-            <Card key={system._id}>
-              <CardMedia
-                component="img"
-                alt="system"
-                height="140"
-                image={system.imgUrl}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {system.name}
-                </Typography>
-                <Typography variant="body1" color="text.secondary">
-                  topic: {system.topic}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  description: {system.description}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  to the <a href={system.siteUrl} target="_blank">site</a>
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="medium" onClick={() => navigate("/editSystem",{state:{uid:system._id}})}>
-                  Edit system settings
-                </Button>
-                <Button
-                  size="medium"
-                  onClick={() => {
-                    console.log(system._id);
-                    deleteSystem(system._id || "");
-                  }}
-                >
-                  Delete this system
-                </Button>
-              </CardActions>
-            </Card>
-          ))}
-      </Stack>
-    </div>
+          systems of {userStore.user?.displayName}
+        </Typography>
+        <Stack
+          padding={3}
+          direction="row"
+          spacing={5}
+          sx={{ "& .MuiCard-root": { m: 5 }, flexWrap: "wrap" }}
+        >
+          <Button
+            variant="contained"
+            id="leftTopButton"
+            onClick={() => navigate("/addSystem")}
+          >
+            add system
+          </Button>
+          {mySystems?.length > 0 &&
+            mySystems.map((system: System) => (
+              <Card key={system._id}>
+                <CardMedia
+                  component="img"
+                  alt="system"
+                  height="140"
+                  image={system.imgUrl}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {system.name}
+                  </Typography>
+                  <Typography variant="body1" color="text.secondary">
+                    topic: {system.topic}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    description: {system.description}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    to the{" "}
+                    <a href={system.siteUrl} target="_blank">
+                      site
+                    </a>
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    size="medium"
+                    onClick={() =>
+                      navigate("/editSystem", { state: { uid: system._id } })
+                    }
+                  >
+                    Edit system settings
+                  </Button>
+                  <Button
+                    size="medium"
+                    onClick={() => {
+                      console.log(system._id);
+                      deleteSystem(system._id || "");
+                    }}
+                  >
+                    Delete this system
+                  </Button>
+                </CardActions>
+              </Card>
+            ))}
+        </Stack>
+      </div>
     </>
   );
 }

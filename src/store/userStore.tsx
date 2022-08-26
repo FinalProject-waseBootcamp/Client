@@ -25,7 +25,6 @@ import axios from 'axios';
 class Store{
     user:any;
    
-    
     async addUser(user:any){
         this.user=user;
         console.log(this.user)
