@@ -48,7 +48,7 @@ class Store {
   }
   async SearchMarker(name: string) {
     debugger
-      this.currentMarker = this.markers.find((m) => m.name === name) || null;
+      this.currentMarker = this.markers.find((marker) => marker.name === name) || null;
   }
 }
 const markerStore = new Store();

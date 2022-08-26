@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import logo from "./logo.svg";
 import "./App.css";
 import User from "./components/Users";
@@ -15,6 +15,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Maps from "./components/Maps/Maps";
 import  MyAutocomplete from './components/Maps/AutoComplete';
 import AddLocation from "./components/Maps/AddLocation";
+import { onAuthStateChanged,getAuth } from "firebase/auth";
+import userStore from "./store/userStore";
 
 
 let theme = createTheme();
@@ -28,6 +30,20 @@ theme = createTheme(theme, {
     },
   },
 });
+
+// useEffect(() =>{
+// let auth = getAuth();
+// let user = auth.currentUser;
+// userStore.addUser(user);
+
+//   onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     // User is signed in.
+//   } else {
+//     // No user is signed in.
+//   }
+// });
+// })
 
 function App() {
   return (

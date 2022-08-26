@@ -17,53 +17,39 @@ import {
 } from "firebase/auth";
 
 export default function Header() {
+  const [currentUser, setCurrentUser] = useState<any>();
+
   let auth = getAuth();
   let user = auth.currentUser;
-
-  // useEffect(() => {
-  // const  isNull=async()=>{
-  //   if (user == null) {
-  //     user = await auth.instance.onAuthStateChanged.first;
-  //   }
-  // }
-  // }, [])
-
-  // const userLocal = JSON.parse(localStorage.getItem('user')||'');
-  // userLocal ? <SignedInLinks/> : <SignedOutLinks/>;
-
-  // Revoke all refresh tokens for a specified user for whatever reason.
-  // Retrieve the timestamp of the revocation, in seconds since the epoch.
-  // getAuth()
-  // .revokeRefreshTokens(uid)
-  // .then(() => {
-  //   return getAuth().getUser(uid);
-  // })
-  // .then((userRecord) => {
-  //   return new Date(userRecord.tokensValidAfterTime).getTime() / 1000;
-  // })
-  // .then((timestamp) => {
-  //   console.log(`Tokens revoked at: ${timestamp}`);
-  // });
+  onAuthStateChanged(auth, (user) => {
+    auth = getAuth();
+    user = auth.currentUser;
+    userStore.addUser(user);
+    setCurrentUser(user);
+  });
 
   const navigate = useNavigate();
   const signOut = async () => {
     await logout();
     userStore.logOut();
-    // localStorage.removeItem('user');
+    setCurrentUser(null);
   };
   return (
     <>
       <nav className="nav">
-        <img
-          src={
-            // userStore.user?.photoURL
-            user?.photoURL || ""
-          }
-        ></img>
+        {/* {currentUser?.photoURL && ( */}
+        {user?.photoURL&&(
+          <img
+            src={
+              userStore.user?.photoURL
+              // currentUser.photoURL
+            }
+          ></img>
+        )}
         <h3 id="navTitle">Build your system</h3>
         {
-          // (userStore.user)
-          user && (
+          // currentUser && (
+          userStore.user&&(
             <nav id="navUser">
               <Button
                 color="secondary"
@@ -75,8 +61,8 @@ export default function Header() {
                 LOG OUT
               </Button>
               <p>
-                |{/* {userStore.user?.displayName} */}
-                {user.displayName}
+                |{userStore.user?.displayName}
+                {/* {currentUser.displayName} */}
               </p>
             </nav>
           )
