@@ -1,17 +1,16 @@
 .main{
 display: flex;
-flex-wrap: nowrap
+flex-wrap: nowrap;
 /* grid-template-columns: 2; */
-;
 }
 /* #mapDiv{
   grid-area: 1/5;
   margin-right: 0%;
   
 } */
-#markerList{
-/* grid-area: 1/2; */
-}
+/* #markerList{
+grid-area: 1/2;
+} */
 .nav{
     position: sticky;
     display: flex;

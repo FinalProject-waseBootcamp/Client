@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -17,9 +17,10 @@ import Search from "@mui/icons-material/Search";
 import Directions from "@mui/icons-material/Directions";
 import { useNavigate } from "react-router";
 import AddLocation from "./AddLocation";
-import { Marker as Mark } from "../../utils/modals";
+import { Marker as Mark, Position } from "../../utils/modals";
 import Marker from "./Marker";
 import markerStore from "../../store/markerStore";
+import { SocketAddress } from "net";
 
 interface Film {
   title: string;
@@ -50,13 +51,15 @@ const Maps: React.FC = (props: any) => {
   const [options, setOptions] = useState<readonly Film[]>([]);
   const loading = open && options.length === 0;
   const [zoom, setZoom] = useState(18);
-  const [openModal, setOpenModal] = React.useState(false);
-  const [currentLocation, setcurrentLocation] = React.useState({
+  const [openModal, setOpenModal] = useState(false);
+  const [address, setAddress] = useState("");
+  const [currentLocation, setcurrentLocation] = useState({
     lat: 31.8040448 , 
     lng: 35.1141888,
   });
+  const [center, setCenter] = useState<Position>(currentLocation);
   const [markers, setMarkers] = useState<Mark[]>([...markerStore.markers]);
-
+  const marker_ref = useRef<HTMLInputElement>();
   // const [activeMarker, setactiveMarker] = useState<any>();
   // const [selectedPlace, setselectedPlace] = useState<any>();
   // const [showingInfoWindow, setshowingInfoWindow] = useState<boolean>();
@@ -101,10 +104,23 @@ const Maps: React.FC = (props: any) => {
 
   const apiIsLoaded = (map: any, maps: any) => {
     navigator?.geolocation.getCurrentPosition(
-      ({ coords: { latitude: lat, longitude: lng,} }) => {
-        const pos = { lat, lng };
-        console.log(`Geolocation: ${pos}}`);
-        setcurrentLocation(pos);
+      async ({ coords: { latitude: lat, longitude: lng } }) => {
+        console.log("lat"+lat+"lng"+lng)
+        const position = { lat, lng };
+        seturrentLocation(position);
+        await fetch(
+          "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key=AIzaSyDuj7uje4eVa30MdHZOmm1sfyfKF22AKnE"
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((res) => {
+            console.log(res.results[0]);
+            return res.results[0];
+          })
+          .then((results) => {
+            setAddress(results.formatted_address);
+          });
       }
     );
   };
@@ -114,6 +130,22 @@ const Maps: React.FC = (props: any) => {
     setOpenModal(true);
   };
   const handleClose = () => setOpenModal(false);
+  const searchMarker = async () => {
+    debugger;
+    console.log(marker_ref.current);
+    const markName = marker_ref.current?.innerText || "";
+    await markerStore.SearchMarker(markName);
+    debugger;
+    if (markerStore.currentMarker != null) {
+      debugger;
+      const pos: Position = {
+        lat: markerStore.currentMarker?.lat,
+        lng: markerStore.currentMarker?.lng,
+      };
+      setCenter(pos);
+      setZoom(15);
+    }
+  };
 
   return (
     <>
@@ -180,6 +212,7 @@ const Maps: React.FC = (props: any) => {
                   <TextField
                     {...params}
                     label="Search for a location "
+                    inputRef={marker_ref}
                     InputProps={{
                       ...params.InputProps,
                       endAdornment: (
@@ -194,7 +227,12 @@ const Maps: React.FC = (props: any) => {
                   />
                 )}
               />
-              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+              <IconButton
+                type="button"
+                onClick={searchMarker}
+                sx={{ p: "10px" }}
+                aria-label="search"
+              >
                 <Search />
               </IconButton>
               <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
@@ -215,7 +253,9 @@ const Maps: React.FC = (props: any) => {
             </Paper>
             {openModal && <AddLocation />}
             <div>
-             your current location: {currentLocation.lat+' , '+currentLocation.lng}
+              <h4>your current location:</h4>
+              <h5>{currentLocation.lat + " , " + currentLocation.lng}</h5>
+              <h5>{address}</h5>
             </div>
             {/* <Modal
                 keepMounted

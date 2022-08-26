@@ -53,7 +53,7 @@ export default function AdminSystems() {
     }
   };
 
-  const adminId = userStore.user?.uid;
+  const adminId = user?.uid;
 
   const getSystems = async () => {
     try {
@@ -77,7 +77,7 @@ export default function AdminSystems() {
         component="div"
         sx={{ textAlign: "center", padding: "10px" }}
       >
-        systems of {userStore.user?.displayName}
+        systems of {user?.displayName}
       </Typography>
       <Stack
         padding={3}

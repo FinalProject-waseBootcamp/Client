@@ -32,7 +32,11 @@ export interface Marker{
   address:string,
   color?:string
 }
+export interface Position{
+  lat:number,
+  lng:number
+}
 export interface Map{
   zoom:number;
-  center:{ lat:number,lng:number}
+  center:Position
 }
