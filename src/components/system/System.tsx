@@ -1,16 +1,17 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router";
-import { Button } from "@mui/material";
 import { useNavigate } from "react-router";
 import { Container } from "@mui/system";
 import axios from "axios";
-import { System } from "../../utils/modals";
+import { Position, System } from "../../utils/modals";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { getAuth } from "firebase/auth";
 import Maps from "../Maps/Maps";
 import markerStore from "../../store/markerStore";
+import mapStore from "../../store/mapStore";
+import { Button } from "@mui/material";
 
 export default function MySystem() {
   const auth = getAuth();
@@ -32,11 +33,12 @@ export default function MySystem() {
     getCurrentSystem();
   }, []);
 
-  const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
+  // const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
 
-  const onClick = (e: google.maps.MapMouseEvent) => {
-    setClicks([...clicks, e.latLng!]);
-  };
+  // const onClick = (e: google.maps.MapMouseEvent) => {
+  //   setClicks([...clicks, e.latLng!]);
+  // };
+
   return (
     <>
       <h1>WELCOME TO {name} SYSTEM</h1>
@@ -52,8 +54,12 @@ export default function MySystem() {
         <div id="markerList">
           <ul>
             {markerStore.markers?.map((marker, i) => {
+              const newCenter: Position = { lat: marker.lat, lng: marker.lng };
               return (
-                <div key={i}>
+                <div
+                  key={i}
+                  //  onClick={mapStore.center=newCenter}
+                >
                   <li>
                     {marker.name} | {marker.address}
                   </li>
