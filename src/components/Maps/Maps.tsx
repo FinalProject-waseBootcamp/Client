@@ -107,7 +107,7 @@ const Maps: React.FC = (props: any) => {
       async ({ coords: { latitude: lat, longitude: lng } }) => {
         console.log("lat"+lat+"lng"+lng)
         const position = { lat, lng };
-        seturrentLocation(position);
+        setcurrentLocation(position);
         await fetch(
           "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key=AIzaSyDuj7uje4eVa30MdHZOmm1sfyfKF22AKnE"
         )
