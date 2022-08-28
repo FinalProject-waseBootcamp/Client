@@ -41,7 +41,7 @@ export const getByIds = async (managerId: string,systemId :string)=> {
 
 export const putManager = async (managerId: string, updatedManager: Managers) => {
     try {
-        await axios.put(`http://localhost:3333/system//manager?id=${managerId}`, updatedManager);
+        await axios.put(`http://localhost:3333/system/manager?id=${managerId}`, updatedManager);
     } catch (err) {
         console.log(err);
     }
@@ -49,7 +49,7 @@ export const putManager = async (managerId: string, updatedManager: Managers) =>
 
 export const deleteManager = async (managerId: string) => {
     try {
-        await axios.delete(`http://localhost:3333/system//managers?id=${managerId}`);
+        await axios.delete(`http://localhost:3333/system/managers?id=${managerId}`);
     } catch (err) {
         console.log(err);
     }

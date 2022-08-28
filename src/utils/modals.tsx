@@ -61,7 +61,7 @@ export interface Map{
   center:Position
 }
 
-export interface Requests {
+export interface Request {
   firstName: string
   lastName: string
   email: string
