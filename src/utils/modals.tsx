@@ -1,7 +1,7 @@
 export enum Roles {
   MAIN_ADMIN,
-  SYSTEM_ADMIN,
-  LOCATION_USER,
+  ADMIN,
+  MANAGER,
   USER,
 }
 
@@ -38,6 +38,15 @@ export interface Marker{
   email?: string,
   phone?: string,
 }
+export interface Managers  {
+  user_id:  string,
+  systemId: string,
+  active: boolean,
+  display_name: string,
+  role: Roles,
+  invitation_sent: string;
+}
+
 export interface Position{
   lat:number,
   lng:number
