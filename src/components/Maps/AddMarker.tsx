@@ -24,7 +24,7 @@ import Grid from '@mui/material/Grid';
 import SaveIcon from '@mui/icons-material/Save';
 import swal from 'sweetalert';
 import { textAlign } from '@mui/system';
-
+import MyAutoComplete from './AutoComplete';
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -104,39 +104,7 @@ const addMarker = () => {
             <IconButton sx={{ p: "10px" }} aria-label="menu">
                 <Menu />
             </IconButton>
-            <Autocomplete
-                id="asynchronous-demo"
-                sx={{ width: 300 }}
-                open={open}
-                onOpen={() => {
-                    setOpen(true)
-
-                }}
-                onClose={() => {
-                    setOpen(false);
-                }}
-                isOptionEqualToValue={(option, value) => option.name === value.name}
-                getOptionLabel={(option) => option.name}
-                onSelect={handleSelect}
-                options={options}
-                loading={loading}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        label="Asynchronous"
-                        inputRef={inputNameMarker}
-                        InputProps={{
-                            ...params.InputProps,
-                            endAdornment: (
-                                <React.Fragment>
-                                    {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                    {params.InputProps.endAdornment}
-                                </React.Fragment>
-                            ),
-                        }}
-                    />
-                )}
-            />
+            <MyAutoComplete/>
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
             <IconButton
                 color="primary"
@@ -191,7 +159,6 @@ const addMarker = () => {
                 <DialogActions>
                     <Button onClick={addMarker} autoFocus>
                         <IconButton type="button" sx={{ p: "10px" }} aria-label="save">
-                            <SaveIcon />
                         </IconButton>
                         save
                     </Button>
