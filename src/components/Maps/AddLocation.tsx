@@ -21,6 +21,7 @@ const AddLocation: React.FC = (props: any) => {
         }}
       >
         <AutoComplete/>
+        New Location
       </Paper>
     </div>
   );

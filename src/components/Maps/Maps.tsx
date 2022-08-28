@@ -295,6 +295,7 @@ const Maps: React.FC = (props: any) => {
               </IconButton>
               <Button
                 variant="contained"
+                sx={{padding:2,width:"5vw"}}
                 // id="leftTopButton"
                 onClick={handleOpen}
               >

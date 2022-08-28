@@ -20,6 +20,7 @@ import { useNavigate, useParams } from "react-router";
 import mapStore from "../../store/mapStore";
 import { Position } from "../../utils/modals";
 import markerStore from "../../store/markerStore";
+import { noop } from "mobx/dist/internal";
 
 export default function MyAutoComplete() {
   const {
@@ -134,11 +135,12 @@ const { name, uid } = useParams();
     <div className="App">
       <Combobox onSelect={handleSelect} aria-labelledby="demo">
         <ComboboxInput
-          style={{ width: 300, maxWidth: "90%" }}
+          style={{ width: 300, maxWidth: "90%",border:0,padding:4 }}
           defaultValue={mapStore.currentAddress.address}
           value={value}
           onChange={handleInput}
           disabled={!ready}
+
         />
         <ComboboxPopover>
           <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>

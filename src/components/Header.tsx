@@ -15,6 +15,8 @@ import {
   inMemoryPersistence,
   GoogleAuthProvider,
 } from "firebase/auth";
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 
 export default function Header() {
   const [currentUser, setCurrentUser] = useState<any>();
@@ -39,12 +41,15 @@ export default function Header() {
       <nav className="nav">
         {/* {currentUser?.photoURL && ( */}
         {user?.photoURL&&(
-          <img
-            src={
-              userStore.user?.photoURL
-              // currentUser.photoURL
-            }
-          ></img>
+           <Stack direction="row" >
+           <Avatar alt="profile" src={userStore.user?.photoURL} sx={{ width: 56, height: 56 }}/>
+         </Stack>
+          // <img
+          //   src={
+          //     userStore.user?.photoURL
+          //     // currentUser.photoURL
+          //   }
+          // ></img>
         )}
         <h3 id="navTitle">Build your system</h3>
         {
