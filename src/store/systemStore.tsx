@@ -28,6 +28,7 @@ const getSystems = async (managerId: string) => {
 
 class Store {
   systems: System[] = [];
+  currentSystem:System| null= null;
 
   async loadSystems() {
     debugger;

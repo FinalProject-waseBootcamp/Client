@@ -53,9 +53,9 @@ const Maps: React.FC = (props: any) => {
   const [zoom, setZoom] = useState(18);
   const [openModal, setOpenModal] = useState(false);
   const [address, setAddress] = useState("");
-  const [currentLocation, setcurrentLocation] = useState({
-    lat: 31.8040448 , 
-    lng: 35.1141888,
+  const [currentLocation, setCurrentLocation] = useState({
+    lat: 32,
+    lng: 30,
   });
   const [center, setCenter] = useState<Position>(currentLocation);
   const [markers, setMarkers] = useState<Mark[]>([...markerStore.markers]);
@@ -88,7 +88,6 @@ const Maps: React.FC = (props: any) => {
 
   const getMapOptions = (maps: any) => {
     return {
-      //  onClick: { onClick },
       disableDefaultUI: true,
       mapTypeControl: true,
       streetViewControl: true,
@@ -105,9 +104,9 @@ const Maps: React.FC = (props: any) => {
   const apiIsLoaded = (map: any, maps: any) => {
     navigator?.geolocation.getCurrentPosition(
       async ({ coords: { latitude: lat, longitude: lng } }) => {
-        console.log("lat"+lat+"lng"+lng)
+        console.log("lat: " + lat + ", lng: " + lng);
         const position = { lat, lng };
-        setcurrentLocation(position);
+        setCurrentLocation(position);
         await fetch(
           "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key=AIzaSyDuj7uje4eVa30MdHZOmm1sfyfKF22AKnE"
         )
@@ -126,10 +125,12 @@ const Maps: React.FC = (props: any) => {
   };
 
   const handleOpen = () => {
-    debugger;
     setOpenModal(true);
   };
-  const handleClose = () => setOpenModal(false);
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+
   const searchMarker = async () => {
     debugger;
     console.log(marker_ref.current);
@@ -180,6 +181,11 @@ const Maps: React.FC = (props: any) => {
             </GoogleMapReact>
           </Grid>
           <Grid item xs={6} md={4}>
+            <div>
+              <h4>your current location:</h4>
+              <h5>{currentLocation.lat + " , " + currentLocation.lng}</h5>
+              <h5>{address}</h5>
+            </div>
             <Paper
               component="form"
               sx={{
@@ -211,14 +217,16 @@ const Maps: React.FC = (props: any) => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Search for a location "
+                    label="Location to search nearby"
+                    // placeholder={address}
+                    defaultValue={address}
                     inputRef={marker_ref}
                     InputProps={{
                       ...params.InputProps,
                       endAdornment: (
                         <React.Fragment>
                           {loading ? (
-                            <CircularProgress color="inherit" size={20} />
+                            <CircularProgress color="inherit" size={15} />
                           ) : null}
                           {params.InputProps.endAdornment}
                         </React.Fragment>
@@ -252,11 +260,6 @@ const Maps: React.FC = (props: any) => {
               </Button>
             </Paper>
             {openModal && <AddLocation />}
-            <div>
-              <h4>your current location:</h4>
-              <h5>{currentLocation.lat + " , " + currentLocation.lng}</h5>
-              <h5>{address}</h5>
-            </div>
             {/* <Modal
                 keepMounted
                 open={openModal}

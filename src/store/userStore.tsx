@@ -1,6 +1,7 @@
 import {  User } from '../utils/modals';
 import {makeAutoObservable} from 'mobx';
 import axios from 'axios';
+import { getAuth } from 'firebase/auth';
 
  
 // async function addUser(userToSave: User) {
@@ -34,6 +35,9 @@ class Store{
     }
     constructor(){
         makeAutoObservable(this);
+        let auth = getAuth();
+        let user = auth.currentUser;
+        this.user = user;
     }
 }
 

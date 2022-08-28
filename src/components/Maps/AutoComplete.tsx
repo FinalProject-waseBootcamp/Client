@@ -9,6 +9,7 @@ import {
 import "@reach/combobox/styles.css";
 import swal from "sweetalert";
 import AddMarkerForm from "./AddMarkerForm";
+import '../../css/Marker.css'
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -16,6 +17,10 @@ import usePlacesAutocomplete, {
 import { useNavigate, useParams } from "react-router";
 import markerStore from "../../store/markerStore";
 import { Marker } from "../../utils/modals";
+import axios from "axios";
+import systemStore from "../../store/systemStore";
+import userStore from "../../store/userStore";
+import { getAuth } from "firebase/auth";
 
 export default function MyAutoComplete() {
   const {
@@ -48,8 +53,9 @@ export default function MyAutoComplete() {
         .then((results) => getLatLng(results[0]))
         .then(({ lat, lng }) => {
           console.log("📍 Coordinates: ", { lat, lng });
+          console.log("userStore.user: ", userStore.user);
           debugger;
-         newMarker = { lat: lat, lng: lng, address: description, name: "ora" };
+         newMarker = { systemId: systemStore.currentSystem?._id||'',managerId:userStore.user?.uid, lat: lat, lng: lng, address: description, name: "name",description:"description", phone:"0504168639"};
           debugger;
         })
         .catch((error) => {
@@ -64,6 +70,11 @@ export default function MyAutoComplete() {
     }).then(async (willDefine) => {
       debugger;
       if (willDefine) {
+        debugger
+        try{
+          await axios.post('http://localhost:3333/marker',newMarker)
+        }catch(err){
+          alert("Error: " + err);}
         debugger;
         markerStore.addMarker(newMarker);
         debugger;
