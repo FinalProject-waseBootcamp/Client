@@ -21,6 +21,7 @@ import axios from "axios";
 import systemStore from "../../store/systemStore";
 import userStore from "../../store/userStore";
 import { getAuth } from "firebase/auth";
+import mapStore from "../../store/mapStore";
 
 export default function MyAutoComplete() {
   const {
@@ -82,6 +83,7 @@ export default function MyAutoComplete() {
         }
 
         debugger;
+        mapStore.center= { lat:newMarker.lat,lng:newMarker.lng };
         markerStore.addMarker(newMarker);
         debugger;
         navigate(`/system/welcome/${name}/${uid}`);

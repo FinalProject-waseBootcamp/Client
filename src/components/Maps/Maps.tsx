@@ -16,8 +16,8 @@ import Search from "@mui/icons-material/Search";
 import Directions from "@mui/icons-material/Directions";
 import { useNavigate } from "react-router";
 import AddLocation from "./AddLocation";
-import { Marker as Mark, Position } from "../../utils/modals";
 import Marker from "./Marker";
+import { Marker as MarkerModal, Position } from "../../utils/modals";
 import markerStore from "../../store/markerStore";
 import { SocketAddress } from "net";
 import MyAutoComplete from "./SearchLocation";
@@ -51,6 +51,7 @@ const Maps: React.FC = (props: any) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<readonly Film[]>([]);
   const loading = open && options.length === 0;
+  const [openInfo, setOpenInfo] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [address, setAddress] = useState("");
   const [currentLocation, setCurrentLocation] = useState<Position>({
@@ -59,9 +60,11 @@ const Maps: React.FC = (props: any) => {
   });
   const [center, setCenter] = useState<Position>(currentLocation);
   const [zoom, setZoom] = useState<number>(15);
-  const [markers, setMarkers] = useState<Mark[]>([...markerStore.markers]);
+  const [markers, setMarkers] = useState<MarkerModal[]>([
+    ...markerStore.markers,
+  ]);
   const marker_ref = useRef<HTMLInputElement>();
-  // const [activeMarker, setactiveMarker] = useState<any>();
+  const [activeMarker, setActiveMarker] = useState<MarkerModal | null>(null);
   // const [selectedPlace, setselectedPlace] = useState<any>();
   // const [showingInfoWindow, setshowingInfoWindow] = useState<boolean>();
   // const onMarkerClick = (props: any, marker: any) => {
@@ -70,10 +73,16 @@ const Maps: React.FC = (props: any) => {
   //   setshowingInfoWindow(true);
   // };
 
-  // const onInfoWindowClose = () => {
-  //   setactiveMarker(null);
-  //   setshowingInfoWindow(false);
-  // };
+  const onInfoWindowClose = () => {
+    mapStore.openInfo = false;
+    markerStore.currentMarker = null;
+    setOpenInfo(false);
+    setActiveMarker(null);
+  };
+  const onInfoWindowOpen = () => {
+    setActiveMarker(markerStore.currentMarker);
+    setOpenInfo(true);
+  };
 
   // const onMapClicked = () => {
   //   if (showingInfoWindow) {
@@ -81,6 +90,11 @@ const Maps: React.FC = (props: any) => {
   //     setshowingInfoWindow(false);
   //   }
   // };
+  useEffect(() => {
+    debugger;
+    mapStore.openInfo && onInfoWindowOpen();
+    // setOpenInfo(mapStore.openInfo);
+  }, [mapStore.openInfo]);
   useEffect(() => {
     debugger;
     setMarkers(markerStore.markers);
@@ -91,8 +105,8 @@ const Maps: React.FC = (props: any) => {
     setZoom(mapStore.zoom);
     setTimeout(() => {
       setZoom(15);
-    }, 5000)
-  }, [mapStore.center,mapStore.zoom]);
+    }, 5000);
+  }, [mapStore.center, mapStore.zoom]);
 
   const getMapOptions = (maps: any) => {
     return {
@@ -183,7 +197,7 @@ const Maps: React.FC = (props: any) => {
             <GoogleMapReact
               bootstrapURLKeys={{
                 key: "AIzaSyAMPFO6Sc4Ihhl2ciCChm6Am1QVlMtDMb0",
-                libraries: ["places"],
+                // libraries: ["places"],
               }}
               center={center}
               zoom={zoom}
@@ -287,6 +301,24 @@ const Maps: React.FC = (props: any) => {
               </Button>
             </Paper>
             {openModal && <AddLocation />}
+            {openInfo && (
+              <div id="markerInfo">
+                <h2>marker info</h2>
+                <h3>{markerStore.currentMarker?.name}</h3>
+                <h4>{markerStore.currentMarker?.description}</h4>
+                <h4>{markerStore.currentMarker?.notes}</h4>
+                <h4>
+                  address
+                  {markerStore.currentMarker?.address}
+                </h4>
+                <h4>
+                  communication details
+                  {markerStore.currentMarker?.email}
+                  {markerStore.currentMarker?.phone}
+                </h4>
+                <Button onClick={onInfoWindowClose}>close</Button>
+              </div>
+            )}
             {/* <Modal
                 keepMounted
                 open={openModal}
