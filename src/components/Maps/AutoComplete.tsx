@@ -1,19 +1,16 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
+import {Combobox,ComboboxInput,ComboboxPopover,ComboboxList,ComboboxOption,} from "@reach/combobox";
 import "@reach/combobox/styles.css";
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/icons-material/Menu";
+import Search from "@mui/icons-material/Search";
 import swal from "sweetalert";
 import AddMarkerForm from "./AddMarkerForm";
 import "../../css/Marker.css";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
+import usePlacesAutocomplete, { getGeocode,getLatLng,} from "use-places-autocomplete";
 import { useNavigate, useParams } from "react-router";
 import markerStore from "../../store/markerStore";
 import { Marker } from "../../utils/modals";
@@ -108,18 +105,46 @@ export default function MyAutoComplete() {
   };
 
   return (
-    <div className="App">
-      <Combobox onSelect={handleSelect} aria-labelledby="demo">
-        <ComboboxInput
-          style={{ width: 300, maxWidth: "90%" }}
-          value={value}
-          onChange={handleInput}
-          disabled={!ready}
-        />
-        <ComboboxPopover>
-          <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
-        </ComboboxPopover>
-      </Combobox>
-    </div>
+
+      // <div className="App">
+      //   <Combobox onSelect={handleSelect} aria-labelledby="demo">
+      //     <ComboboxInput
+      //       style={{ width: 300, maxWidth: "90%" }}
+      //       value={value}
+      //       onChange={handleInput}
+      //       disabled={!ready}
+      //     />
+      //     <ComboboxPopover>  
+      //       <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
+      //     </ComboboxPopover>
+      //   </Combobox>
+      
+      // </div>
+      <>
+      <Paper
+          component="form"
+          sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              width: 500,
+          }}
+      >
+          <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search Google Maps"
+              inputProps={{ 'aria-label': 'search google maps' }}
+              value={value}
+              onChange={handleInput}
+              disabled={!ready}
+
+          />
+          <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+              <Search />
+          </IconButton>
+      </Paper>
+      {status === "OK" && <div>{renderSuggestions()}</div>}
+  </>
+      
   );
 }

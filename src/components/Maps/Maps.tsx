@@ -22,6 +22,7 @@ import markerStore from "../../store/markerStore";
 import { SocketAddress } from "net";
 import MyAutoComplete from "./SearchLocation";
 import mapStore from "../../store/mapStore";
+import AddMarker from "./AddMarker";
 
 interface Film {
   title: string;
@@ -286,7 +287,7 @@ const Maps: React.FC = (props: any) => {
                 Add Location🎯
               </Button>
             </Paper>
-            {openModal && <AddLocation />}
+            {openModal && <MyAutoComplete />}
             {/* <Modal
                 keepMounted
                 open={openModal}

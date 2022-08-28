@@ -25,6 +25,8 @@ import SaveIcon from '@mui/icons-material/Save';
 import swal from 'sweetalert';
 import { textAlign } from '@mui/system';
 import MyAutoComplete from './AutoComplete';
+import userStore from '../../store/userStore';
+import systemStore from '../../store/systemStore';
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -44,7 +46,8 @@ const AddMarker = () => {
     const [options, setOptions] = useState<readonly MarkerUtil[]>([]);
     const loading = open && options.length === 0;
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-    const [openDialog, setOpenDialog] = useState(false);
+    const [openDialog, setOpenDialog] = useState(true);
+    const [openAuto, setOpenAuto] = useState(false);
     const [lat, setLat] = useState<number>(0);
     const [lng, setLng] = useState<number>(0);
     const [status, setStatus] = useState<string>("");
@@ -61,35 +64,43 @@ const AddMarker = () => {
         debugger;
     }
 
-const handleClickOpen = () => {
-    setOpenDialog(true);
-};
+    const handleClickOpen = () => {
+        setOpenDialog(true);
+    };
 
-const handleClose = () => {
-    setOpenDialog(false);
-};
+    const handleClose = () => {
+        setOpenDialog(false);
+    };
 
 
-const addMarker = () => {
-    debugger;
-    const newMarker: any = {
-        // "manager_id": systemStore.systems.???,
-        // "system_id": systemStore.systems.uid,
-        // "lat": markerStore.markers.lat,
-        // "address":
-        // "name": inputName.current?.value,
-        // "description": inputDescription.current?.value,
-        // // "color":
-        // "notes": inputNotes.current?.value,
-        // "email": inputEmail.current?.value,
-        // "phone": inputPhone.current?.value,     
+    const handleClickOpenAuto = () => {
+        setOpenAuto(true);
+    };
+
+    const handleCloseAuto = () => {
+        setOpenAuto(false);
+    };
+
+    const addMarker = () => {
+        debugger;
+        const newMarker: any = {
+            systemId: systemStore.currentSystem?._id || "",
+            managerId: userStore.user?.uid,
+            name: inputName.current?.value,
+            description: inputDescription.current?.value,
+            // // "color":
+            notes: inputNotes.current?.value,
+            email: inputEmail.current?.value,
+            phone: inputPhone.current?.value,
+        }
+        // console.log(markerStore.markers)
+        // markerStore.addMarker(newMarker);
+        // console.log(markerStore.markers)
+        swal("saved!", "now you can add your location!", "success");
+        handleClickOpenAuto();
+        handleClose()
+       return newMarker
     }
-    console.log(markerStore.markers)
-    markerStore.addMarker(newMarker);  
-    console.log(markerStore.markers)
-    swal("saved!", "your location added!", "success");
-    handleClose()
-}
     return (
         <Paper
             component="form"
@@ -100,21 +111,7 @@ const addMarker = () => {
                 width: 420,
             }}
         >
-            <IconButton sx={{ p: "10px" }} aria-label="menu">
-                <Menu />
-            </IconButton>
-            <MyAutoComplete/>
-            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton
-                color="primary"
-                sx={{ p: "10px" }}
-                aria-label="directions"
-            >
-                <Directions />
-            </IconButton>
-            <Button variant="contained" onClick={handleClickOpen}>
-                add Marker
-            </Button>
+            { openAuto &&< MyAutoComplete /> }
             <Dialog
                 fullScreen={fullScreen}
                 open={openDialog}
@@ -124,8 +121,9 @@ const addMarker = () => {
                 <DialogTitle id="responsive-dialog-title">
                     {"add your details location?"}
                 </DialogTitle>
-                <DialogContent sx={{ textAlign: "center"}}>
-                    <DialogContentText>
+                <DialogContent sx={{ textAlign: "center" }}>
+                    <DialogContentText sx={{ textAlign: "center" }}>
+                    < MyAutoComplete />
                         <React.Fragment>
                             <Grid item xs={4}>
                                 <TextField inputRef={inputName} id="filled-basic" label="name" variant="filled" />
@@ -142,10 +140,10 @@ const addMarker = () => {
                             <Grid item xs={4}>
                                 <TextField inputRef={inputcolor} id="filled-basic" label="color" variant="filled" />
                             </Grid>
-                            <br/>
+                            <br />
                             <Grid item xs={4} >
                                 <TextareaAutosize
-                                //inputRef={inputNotes}
+                                    // inputRef={inputNotes}
                                     aria-label="minimum height"
                                     minRows={3}
                                     placeholder="notes"
@@ -159,7 +157,7 @@ const addMarker = () => {
                     <Button onClick={addMarker} autoFocus>
                         <IconButton type="button" sx={{ p: "10px" }} aria-label="save">
                         </IconButton>
-                        save
+                        Save
                     </Button>
                     <Button onClick={handleClose} autoFocus>
                         Close
