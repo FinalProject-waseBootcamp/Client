@@ -25,7 +25,8 @@ export default function MySystem() {
 
   const navigate = useNavigate();
   const [currentSystem, setCurrentSystem] = React.useState<any>();
-  let cities:string[]=["בני ברק","ירושלים"];
+  const[cities,setCities]= React.useState<string[]>();
+  // let cities: string[] = [];
 
   const getCurrentSystem = async () => {
     try {
@@ -39,25 +40,34 @@ export default function MySystem() {
   };
 
   React.useEffect(() => {
-    debugger
+    debugger;
     getCurrentSystem();
     sortMarkersByCities();
   }, []);
 
-  const sortMarkersByCities = async() => {
-    debugger
+  const sortMarkersByCities = async () => {
+    debugger;
+    let arr:string[]=[];
     markerStore.markers.map((marker) => {
-      if(!cities.includes(marker.city)){
-        cities.push(marker.city);
+      if (!arr.includes(marker.city)) {
+        arr.push(marker.city);
       }
-    })
-  }
+    });
+    setCities(arr);
+    console.log(arr);
+    console.log(cities);
+    debugger
+  };
 
   // const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
 
   // const onClick = (e: google.maps.MapMouseEvent) => {
   //   setClicks([...clicks, e.latLng!]);
   // };
+  const handleSelect = () => {
+    debugger
+    alert("Please selectedPlace  ");
+  };
 
   return (
     <>
@@ -83,18 +93,22 @@ export default function MySystem() {
               "& ul": { padding: 0 },
             }}
             subheader={<li />}
+            onSelect={handleSelect}
           >
-            {cities.map((city,i) => (
+            {cities?.length && cities?.map((city:string, i:number) => (
               <li key={`section-${i}`}>
                 <ul>
                   <ListSubheader>{city}</ListSubheader>
-                  { markerStore.markers.map((item,i) => (
-                    item.city===city&&<>
-                    <ListItem key={`item-${i}-${item}`}>
-                      <ListItemText primary={item.address} />
-                    </ListItem>
-                    </>
-                  ))}
+                  {markerStore.markers.map(
+                    (item, i) =>
+                      item.city === city && (
+                        <>
+                          <ListItem key={`item-${i}-${item}`}>
+                            <ListItemText primary={item.address} />
+                          </ListItem>
+                        </>
+                      )
+                  )}
                 </ul>
               </li>
             ))}

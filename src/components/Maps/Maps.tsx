@@ -277,6 +277,7 @@ const Maps: React.FC = (props: any) => {
                   // )}
                   // /> */}
               <Paper component="form" sx={{ p: "1vw 2vw" }}>
+              Location to search nearBy
                 <MyAutoComplete />
               </Paper>
               <IconButton
