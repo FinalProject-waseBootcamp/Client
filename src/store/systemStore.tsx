@@ -1,11 +1,11 @@
 import { System } from "../utils/modals";
 import { makeAutoObservable } from "mobx";
-import axios from "axios";
+import {getById, post} from "../api/system";
 import userStore from "./userStore";
 
 const addSystem = async (system: System) => {
   try {
-    const res = await axios.post(`http://localhost:3333/system`, system);
+    const res = await post(system);
     const data = await res.data;
     console.log(data);
     return data;
@@ -16,10 +16,7 @@ const addSystem = async (system: System) => {
 
 const getSystems = async (managerId: string) => {
   try {
-    const res = await axios.get(
-      `http://localhost:3333/system?adminId=${managerId}`
-    );
-    let systemsList = await res.data;
+    const systemsList = await getById(managerId);
     return systemsList;
   } catch (error) {
     console.log(error);
@@ -27,8 +24,8 @@ const getSystems = async (managerId: string) => {
 };
 
 class Store {
-  systems: System[] = [];
-  currentSystem:System| null= null;
+  systems: System|any |null[] = [];
+  currentSystem:System|any |null= null;
 
   async loadSystems() {
     debugger;

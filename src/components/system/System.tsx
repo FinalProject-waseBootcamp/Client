@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router";
 import { Container } from "@mui/system";
-import axios from "axios";
 import { Position, System } from "../../utils/modals";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
@@ -13,18 +12,20 @@ import markerStore from "../../store/markerStore";
 import mapStore from "../../store/mapStore";
 import { Button } from "@mui/material";
 import systemStore from "../../store/systemStore";
+import { getById } from "../../api/system";
 
 export default function MySystem() {
   const auth = getAuth();
   const user = auth.currentUser;
-  const { name, uid } = useParams();
+  const { name , uid } : any = useParams();
+
   const navigate = useNavigate();
-  const [currentSystem, setCurrentSystem] = React.useState<System>();
+  const [currentSystem, setCurrentSystem] = React.useState<any>();
 
   const getCurrentSystem = async () => {
     try {
-      const response = await axios.get(`http://localhost:3333/system/${uid}`);
-      const currentSystem=response.data;
+      const response = await getById(uid);
+      const currentSystem=response;
       setCurrentSystem(currentSystem);
       systemStore.currentSystem=currentSystem;
     } catch (err) {
