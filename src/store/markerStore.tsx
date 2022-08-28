@@ -68,9 +68,9 @@ class Store {
  addMarker(marker: Marker) {
     this.markers.push(marker);
   }
-  async SearchMarker(name: string) {
-      this.currentMarker = this.markers.find((marker) => marker.name === name) || null;
-  }
+  // async SearchMarker(name: string) {
+  //     this.currentMarker = this.markers.find((marker) => marker.name === name) || null;
+  // }
 }
 const markerStore = new Store();
 export default markerStore;
