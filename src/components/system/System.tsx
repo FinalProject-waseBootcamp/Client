@@ -13,6 +13,23 @@ import mapStore from "../../store/mapStore";
 import { Button } from "@mui/material";
 import systemStore from "../../store/systemStore";
 import { getById } from "../../api/system";
+import Box from '@mui/material/Box';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import { FixedSizeList, ListChildComponentProps } from 'react-window';
+
+function renderRow(props: ListChildComponentProps) {
+  const { index, style } = props;
+
+  return (
+    <ListItem style={style} key={index} component="div" disablePadding>
+      <ListItemButton>
+        <ListItemText primary={`Item ${index + 1}`} />
+      </ListItemButton>
+    </ListItem>
+  );
+}
 
 export default function MySystem() {
   const auth = getAuth();
@@ -56,7 +73,20 @@ export default function MySystem() {
         {/* </Container> */}
         {/* user can become location_user by contribute his object and define his location 👇*/}
         <div id="markerList">
-          <ul>
+        <Box
+      sx={{ width: '100%', height: 400, maxWidth: 360, bgcolor: 'background.paper' }}
+    >
+      <FixedSizeList
+        height={400}
+        width={360}
+        itemSize={46}
+        itemCount={200}
+        overscanCount={5}
+      >
+        {renderRow}
+      </FixedSizeList>
+    </Box>
+          {/* <ul>
             {markerStore.markers?.map((marker, i) => {
               const newCenter: Position = { lat: marker.lat, lng: marker.lng };
               return (
@@ -70,7 +100,7 @@ export default function MySystem() {
                 </div>
               );
             })}
-          </ul>
+          </ul> */}
         </div>
       </nav>
       <div id="contributeDiv">
