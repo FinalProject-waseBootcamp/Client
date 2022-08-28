@@ -15,7 +15,7 @@ import Menu from "@mui/icons-material/Menu";
 import Search from "@mui/icons-material/Search";
 import Directions from "@mui/icons-material/Directions";
 import { useNavigate } from "react-router";
-import AddLocation from "./AddLocation";
+// import AddLocation from "./AddLocation";
 import Marker from "./Marker";
 import { Marker as MarkerModal, Position } from "../../utils/modals";
 import markerStore from "../../store/markerStore";
@@ -93,7 +93,7 @@ const Maps: React.FC = (props: any) => {
   // };
   useEffect(() => {
     debugger;
-    mapStore.openInfo ? onInfoWindowOpen():onInfoWindowClose();
+    mapStore.openInfo ? onInfoWindowOpen() : onInfoWindowClose();
     // setOpenInfo(mapStore.openInfo);
   }, [mapStore.openInfo]);
   useEffect(() => {
@@ -188,13 +188,13 @@ const Maps: React.FC = (props: any) => {
 
   return (
     <>
-      <Box sx={{ height: "100%", width: "100%" }}>
+      <Box sx={{ height: "100%", width: "100%",margin:0 }}>
         <Grid
           container
           spacing={2}
           sx={{ height: "100%", width: "100%", justifyItems: "right" }}
         >
-          <Grid item md={6} sx={{ height: "70vh", width: "100vw" }}>
+          <Grid item md={6} sx={{ height: "70vh", width: "100vh" }}>
             <GoogleMapReact
               bootstrapURLKeys={{
                 key: "AIzaSyAMPFO6Sc4Ihhl2ciCChm6Am1QVlMtDMb0",
@@ -219,7 +219,9 @@ const Maps: React.FC = (props: any) => {
               ))}
             </GoogleMapReact>
           </Grid>
-          <Grid item xs={6} md={4}>
+          <Grid
+           item xs={6} md={4}
+          >
             <div>
               <h4>your current location:</h4>
               <h6>({currentLocation?.lat + " , " + currentLocation?.lng})</h6>
@@ -295,14 +297,14 @@ const Maps: React.FC = (props: any) => {
               </IconButton>
               <Button
                 variant="contained"
-                sx={{padding:2,width:"5vw"}}
+                sx={{ padding: 2, width: "5vw" }}
                 // id="leftTopButton"
                 onClick={handleOpen}
               >
                 Add Location🎯
               </Button>
             </Paper>
-            {openModal && <AddMarker/>}
+            {openModal && <AddMarker />}
             {openInfo && (
               <div id="markerInfo">
                 <h2>marker info</h2>

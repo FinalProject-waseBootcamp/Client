@@ -58,6 +58,7 @@ export default function MyAutoComplete() {
             lat: lat,
             lng: lng,
             address: description,
+            city:"city",
             name: "name",
             description: "description",
             phone: "phone",
@@ -134,7 +135,7 @@ export default function MyAutoComplete() {
         {/* <div ref={ref}> */}
         <InputBase
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Search Google Maps"
+          placeholder="New Location"
           inputProps={{ 'aria-label': 'search google maps' }}
           value={value}
           onChange={handleInput}

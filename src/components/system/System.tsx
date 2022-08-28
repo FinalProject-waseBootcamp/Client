@@ -25,6 +25,7 @@ export default function MySystem() {
 
   const navigate = useNavigate();
   const [currentSystem, setCurrentSystem] = React.useState<any>();
+  let cities:string[]=["בני ברק","ירושלים"];
 
   const getCurrentSystem = async () => {
     try {
@@ -38,8 +39,19 @@ export default function MySystem() {
   };
 
   React.useEffect(() => {
+    debugger
     getCurrentSystem();
+    sortMarkersByCities();
   }, []);
+
+  const sortMarkersByCities = async() => {
+    debugger
+    markerStore.markers.map((marker) => {
+      if(!cities.includes(marker.city)){
+        cities.push(marker.city);
+      }
+    })
+  }
 
   // const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
 
@@ -72,14 +84,16 @@ export default function MySystem() {
             }}
             subheader={<li />}
           >
-            {[0, 1, 2, 3, 4].map((sectionId) => (
-              <li key={`section-${sectionId}`}>
+            {cities.map((city,i) => (
+              <li key={`section-${i}`}>
                 <ul>
-                  <ListSubheader>{`I'm sticky ${sectionId}`}</ListSubheader>
-                  {[0, 1, 2].map((item) => (
-                    <ListItem key={`item-${sectionId}-${item}`}>
-                      <ListItemText primary={`Item ${item}`} />
+                  <ListSubheader>{city}</ListSubheader>
+                  { markerStore.markers.map((item,i) => (
+                    item.city===city&&<>
+                    <ListItem key={`item-${i}-${item}`}>
+                      <ListItemText primary={item.address} />
                     </ListItem>
+                    </>
                   ))}
                 </ul>
               </li>

@@ -24,7 +24,7 @@ class Store {
 
  constructor() {
     makeAutoObservable(this);
-    // this.initMarkers();
+    this.initMarkers();
     // async function get(){
     //   const markers:Marker[]=await 
     //   this.markers=markers;
