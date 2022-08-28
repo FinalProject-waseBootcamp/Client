@@ -88,11 +88,9 @@ const addMarker = () => {
     console.log(markerStore.markers)
     markerStore.addMarker(newMarker);  
     console.log(markerStore.markers)
-
     swal("saved!", "your location added!", "success");
     handleClose()
 }
-
     return (
         <Paper
             component="form"
