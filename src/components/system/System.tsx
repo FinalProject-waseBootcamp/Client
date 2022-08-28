@@ -13,28 +13,15 @@ import mapStore from "../../store/mapStore";
 import { Button } from "@mui/material";
 import systemStore from "../../store/systemStore";
 import { getById } from "../../api/system";
-import Box from '@mui/material/Box';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import { FixedSizeList, ListChildComponentProps } from 'react-window';
-
-function renderRow(props: ListChildComponentProps) {
-  const { index, style } = props;
-
-  return (
-    <ListItem style={style} key={index} component="div" disablePadding>
-      <ListItemButton>
-        <ListItemText primary={`Item ${index + 1}`} />
-      </ListItemButton>
-    </ListItem>
-  );
-}
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListSubheader from "@mui/material/ListSubheader";
 
 export default function MySystem() {
   const auth = getAuth();
   const user = auth.currentUser;
-  const { name , uid } : any = useParams();
+  const { name, uid }: any = useParams();
 
   const navigate = useNavigate();
   const [currentSystem, setCurrentSystem] = React.useState<any>();
@@ -42,9 +29,9 @@ export default function MySystem() {
   const getCurrentSystem = async () => {
     try {
       const response = await getById(uid);
-      const currentSystem=response;
+      const currentSystem = response;
       setCurrentSystem(currentSystem);
-      systemStore.currentSystem=currentSystem;
+      systemStore.currentSystem = currentSystem;
     } catch (err) {
       console.log(err);
     }
@@ -62,7 +49,7 @@ export default function MySystem() {
 
   return (
     <>
-      <h1>WELCOME TO {currentSystem?.name||name} SYSTEM</h1>
+      <h1>WELCOME TO {currentSystem?.name || name} SYSTEM</h1>
       {/* here customers can search for their closest location of the object 👇*/}
       {/* <Container id="container"> */}
       {/* <h3>locations</h3> */}
@@ -73,19 +60,31 @@ export default function MySystem() {
         {/* </Container> */}
         {/* user can become location_user by contribute his object and define his location 👇*/}
         <div id="markerList">
-        <Box
-      sx={{ width: '100%', height: 400, maxWidth: 360, bgcolor: 'background.paper' }}
-    >
-      <FixedSizeList
-        height={400}
-        width={360}
-        itemSize={46}
-        itemCount={200}
-        overscanCount={5}
-      >
-        {renderRow}
-      </FixedSizeList>
-    </Box>
+          <List
+            sx={{
+              width: "100%",
+              maxWidth: 360,
+              bgcolor: "background.paper",
+              position: "relative",
+              overflow: "auto",
+              maxHeight: 300,
+              "& ul": { padding: 0 },
+            }}
+            subheader={<li />}
+          >
+            {[0, 1, 2, 3, 4].map((sectionId) => (
+              <li key={`section-${sectionId}`}>
+                <ul>
+                  <ListSubheader>{`I'm sticky ${sectionId}`}</ListSubheader>
+                  {[0, 1, 2].map((item) => (
+                    <ListItem key={`item-${sectionId}-${item}`}>
+                      <ListItemText primary={`Item ${item}`} />
+                    </ListItem>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </List>
           {/* <ul>
             {markerStore.markers?.map((marker, i) => {
               const newCenter: Position = { lat: marker.lat, lng: marker.lng };
