@@ -301,7 +301,7 @@ const Maps: React.FC = (props: any) => {
                 Add Location🎯
               </Button>
             </Paper>
-            {openModal && <MyAutoComplete />}
+            {openModal && <AddMarker/>}
             {openInfo && (
               <div id="markerInfo">
                 <h2>marker info</h2>
