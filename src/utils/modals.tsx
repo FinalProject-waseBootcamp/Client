@@ -4,7 +4,12 @@ export enum Roles {
   MANAGER,
   USER,
 }
-
+export enum Status {
+  SENT,
+  PENDING,
+  APPROVE,
+  REJECT
+}
 export interface User {
   uid?:string;
   firstName: string;
@@ -54,4 +59,15 @@ export interface Position{
 export interface Map{
   zoom:number;
   center:Position
+}
+
+export interface Request {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  system_id: string,
+  display_name: string
+  status: Status,
+  notes: string
 }

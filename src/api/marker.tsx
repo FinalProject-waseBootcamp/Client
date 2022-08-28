@@ -48,7 +48,7 @@ export const getMarker = async (markerId: string) => {
 
 export const putMarker = async (markerId: string, updatedMarker: Marker) => {
     try {
-        await axios.put(`http://localhost:3333/system//marker?id=${markerId}`, updatedMarker);
+        await axios.put(`http://localhost:3333/system/marker?id=${markerId}`, updatedMarker);
     } catch (err) {
         console.log(err);
     }
@@ -56,7 +56,7 @@ export const putMarker = async (markerId: string, updatedMarker: Marker) => {
 
 export const deleteMarker = async (markerId: string) => {
     try {
-        await axios.delete(`http://localhost:3333/system//marker?id=${markerId}`);
+        await axios.delete(`http://localhost:3333/system/marker?id=${markerId}`);
     } catch (err) {
         console.log(err);
     }
