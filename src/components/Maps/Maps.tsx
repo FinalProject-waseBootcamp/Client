@@ -92,7 +92,7 @@ const Maps: React.FC = (props: any) => {
   // };
   useEffect(() => {
     debugger;
-    mapStore.openInfo && onInfoWindowOpen();
+    mapStore.openInfo ? onInfoWindowOpen():onInfoWindowClose();
     // setOpenInfo(mapStore.openInfo);
   }, [mapStore.openInfo]);
   useEffect(() => {
@@ -221,7 +221,7 @@ const Maps: React.FC = (props: any) => {
           <Grid item xs={6} md={4}>
             <div>
               <h4>your current location:</h4>
-              <h5>{currentLocation?.lat + " , " + currentLocation?.lng}</h5>
+              <h6>({currentLocation?.lat + " , " + currentLocation?.lng})</h6>
               <h5>{address}</h5>
             </div>
             <Paper
@@ -307,12 +307,8 @@ const Maps: React.FC = (props: any) => {
                 <h3>{markerStore.currentMarker?.name}</h3>
                 <h4>{markerStore.currentMarker?.description}</h4>
                 <h4>{markerStore.currentMarker?.notes}</h4>
+                <h4>{markerStore.currentMarker?.address}</h4>
                 <h4>
-                  address
-                  {markerStore.currentMarker?.address}
-                </h4>
-                <h4>
-                  communication details
                   {markerStore.currentMarker?.email}
                   {markerStore.currentMarker?.phone}
                 </h4>

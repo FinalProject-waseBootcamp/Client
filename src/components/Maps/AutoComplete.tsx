@@ -52,7 +52,7 @@ export default function MyAutoComplete() {
           console.log("userStore.user: ", userStore.user);
           debugger;
           newMarker = {
-            systemId: systemStore.currentSystem?._id || "",
+            systemId: systemStore.currentSystem?._id || uid,
             managerId: userStore.user?.uid,
             lat: lat,
             lng: lng,
@@ -83,8 +83,10 @@ export default function MyAutoComplete() {
         }
 
         debugger;
+        mapStore.openInfo=false;
         mapStore.center= { lat:newMarker.lat,lng:newMarker.lng };
         markerStore.addMarker(newMarker);
+        mapStore.openInfo=true;
         debugger;
         navigate(`/system/welcome/${name}/${uid}`);
       }
