@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import {put}  from "../../api/system";
 import systemStore from "../../store/systemStore";
 import userStore from "../../store/userStore";
 import { getAuth } from "firebase/auth";
@@ -55,7 +55,7 @@ export default function AddSystem() {
 
       systemStore.addSystem(updatedSystem);
       try {
-        await axios.put(`http://localhost:3333/system/${uid}`, updatedSystem);
+        await put(uid,updatedSystem);
       } catch (err) {
         console.log(err);
       }

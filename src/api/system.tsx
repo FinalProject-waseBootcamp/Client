@@ -21,6 +21,14 @@ export const get = async () => {
         console.log('error in get systems', error);
     }
 }
+export const getById = async (systemId: string) => {
+    try {
+        const Request = await axios.get(`http://localhost:3333/request?id=${systemId}`);
+        return Request;
+    } catch (error) {
+        console.log('error in get systems', error);
+    }
+}
 export const post=async(newSystem:Isystem)=>{
     try{
         debugger;
@@ -32,3 +40,12 @@ export const post=async(newSystem:Isystem)=>{
     }
 
 }
+export const put=async(uid : string ,updatedSystem:Isystem)=>{
+    try {
+        const res =await axios.put(`http://localhost:3333/system/${uid}`, updatedSystem);
+        return res.status;
+      } catch (err) {
+        console.log(err);
+      }
+    
+    }

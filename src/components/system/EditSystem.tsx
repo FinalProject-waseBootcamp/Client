@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import axios from "axios";
+import {getById,put} from "../../api/system";
 import { System } from "../../utils/modals";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material";
@@ -18,7 +18,7 @@ export default function EditSystem() {
   const location = useLocation();
   const from = location.state as Ilocation;
   const uid = from.uid;
-  const [currentSystem, setCurrentSystem] = React.useState<System>();
+  const [currentSystem, setCurrentSystem] = React.useState<any>();
 
   const name_ref = useRef<HTMLInputElement>();
   const topic_ref = useRef<HTMLInputElement>();
@@ -28,8 +28,8 @@ export default function EditSystem() {
 
   const getCurrentSystem = async () => {
     try {
-      const response = await axios.get(`http://localhost:3333/system/${uid}`);
-      return response.data as System;
+      const response = await getById(uid);
+      return response;
     } catch (err) {
       console.log(err);
     }
@@ -56,9 +56,8 @@ export default function EditSystem() {
         dangerMode: true,
       }).then(async (willUpdate) => {
         if (willUpdate) {
-          const res = await axios.put(`http://localhost:3333/system/${uid}`, updatedSystem);
-          const status = await res.status;
-          if (status === 200) {
+          const res = await put(uid, updatedSystem);
+          if (res !== undefined) {
             swal("Your system details has been updated!", {
               icon: "success",
             });

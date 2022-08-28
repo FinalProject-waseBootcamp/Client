@@ -82,8 +82,7 @@ const addMarker = () => {
         // // "color":
         // "notes": inputNotes.current?.value,
         // "email": inputEmail.current?.value,
-        // "phone": inputPhone.current?.value,
-      
+        // "phone": inputPhone.current?.value,     
     }
     console.log(markerStore.markers)
     markerStore.addMarker(newMarker);  
