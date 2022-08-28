@@ -115,7 +115,7 @@ export default function MyAutoComplete() {
     <div className="App">
       <Combobox onSelect={handleSelect} aria-labelledby="demo">
         <ComboboxInput
-          style={{ width: 300, maxWidth: "90%" }}
+          style={{ width: 300, maxWidth: "90%" ,border: 0,padding:4}}
           value={value}
           onChange={handleInput}
           disabled={!ready}

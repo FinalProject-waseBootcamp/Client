@@ -135,7 +135,7 @@ const { name, uid } = useParams();
     <div className="App">
       <Combobox onSelect={handleSelect} aria-labelledby="demo">
         <ComboboxInput
-          style={{ width: 300, maxWidth: "90%",border:0 }}
+          style={{ width: 300, maxWidth: "90%",border:0,padding:4 }}
           defaultValue={mapStore.currentAddress.address}
           value={value}
           onChange={handleInput}
