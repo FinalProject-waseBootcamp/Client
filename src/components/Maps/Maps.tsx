@@ -51,14 +51,14 @@ const Maps: React.FC = (props: any) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<readonly Film[]>([]);
   const loading = open && options.length === 0;
-  const [zoom, setZoom] = useState(18);
   const [openModal, setOpenModal] = useState(false);
   const [address, setAddress] = useState("");
-  const [currentLocation, setCurrentLocation] = useState({
-    lat: 32,
-    lng: 30,
+  const [currentLocation, setCurrentLocation] = useState<Position>({
+    lat: mapStore.currentAddress.lat,
+    lng: mapStore.currentAddress.lng,
   });
   const [center, setCenter] = useState<Position>(currentLocation);
+  const [zoom, setZoom] = useState<number>(15);
   const [markers, setMarkers] = useState<Mark[]>([...markerStore.markers]);
   const marker_ref = useRef<HTMLInputElement>();
   // const [activeMarker, setactiveMarker] = useState<any>();
@@ -81,11 +81,18 @@ const Maps: React.FC = (props: any) => {
   //     setshowingInfoWindow(false);
   //   }
   // };
-
   useEffect(() => {
     debugger;
     setMarkers(markerStore.markers);
   }, [markerStore.markers]);
+  useEffect(() => {
+    debugger;
+    setCenter(mapStore.center);
+    setZoom(mapStore.zoom);
+    setTimeout(() => {
+      setZoom(15);
+    }, 5000)
+  }, [mapStore.center,mapStore.zoom]);
 
   const getMapOptions = (maps: any) => {
     return {
@@ -108,7 +115,12 @@ const Maps: React.FC = (props: any) => {
         console.log("lat: " + lat + ", lng: " + lng);
         const position = { lat, lng };
         setCurrentLocation(position);
-        mapStore.currentAddress={...mapStore.currentAddress,lat:lat, lng:lng};
+        mapStore.currentAddress = {
+          ...mapStore.currentAddress,
+          lat: lat,
+          lng: lng,
+        };
+        mapStore.center = { lat: lat, lng: lng };
         await fetch(
           "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
             lat +
@@ -124,8 +136,11 @@ const Maps: React.FC = (props: any) => {
             return res.results[0];
           })
           .then((results) => {
-            debugger
-            mapStore.currentAddress={...mapStore.currentAddress,address:results.formatted_address};
+            debugger;
+            mapStore.currentAddress = {
+              ...mapStore.currentAddress,
+              address: results.formatted_address,
+            };
             setAddress(results.formatted_address);
           });
       }
@@ -168,11 +183,11 @@ const Maps: React.FC = (props: any) => {
             <GoogleMapReact
               bootstrapURLKeys={{
                 key: "AIzaSyAMPFO6Sc4Ihhl2ciCChm6Am1QVlMtDMb0",
-                libraries:['places']
+                libraries: ["places"],
               }}
-              center={currentLocation}
-              defaultZoom={zoom}
-              onGoogleApiLoaded={({ map, maps }) => apiIsLoaded()}
+              center={center}
+              zoom={zoom}
+              onGoogleApiLoaded={() => apiIsLoaded()}
               // onClick={onMapClicked}
               // options={getMapOptions}
             >
@@ -192,7 +207,7 @@ const Maps: React.FC = (props: any) => {
           <Grid item xs={6} md={4}>
             <div>
               <h4>your current location:</h4>
-              <h5>{currentLocation.lat + " , " + currentLocation.lng}</h5>
+              <h5>{currentLocation?.lat + " , " + currentLocation?.lng}</h5>
               <h5>{address}</h5>
             </div>
             <Paper

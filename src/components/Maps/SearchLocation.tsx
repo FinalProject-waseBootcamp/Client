@@ -15,7 +15,7 @@ import usePlacesAutocomplete, {
 //   LatLng,
 } from "use-places-autocomplete";
 // import { LatLng } from "google-maps";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import mapStore from "../../store/mapStore";
 import { Position } from "../../utils/modals";
 import markerStore from "../../store/markerStore";
@@ -32,6 +32,11 @@ export default function MyAutoComplete() {
   const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   };
+//   const[center,setCenter]=useState<Position>(mapStore.center);
+//   useEffect(()=>{
+//     setCenter(mapStore.center);
+//   },[mapStore.center])
+const { name, uid } = useParams();
 
   const renderSuggestions = (): JSX.Element => {
     const suggestions = data.map(({ place_id, description }: any) => (
@@ -93,6 +98,9 @@ export default function MyAutoComplete() {
         }
         debugger
     }
+    mapStore.center={lat:markerStore.markers[closest].lat,lng:markerStore.markers[closest].lng};
+    mapStore.zoom=18;
+    navigate(`/system/welcome/${name}/${uid}`);
     alert('Closest location is ' + markerStore.markers[closest].address);
 }
 
