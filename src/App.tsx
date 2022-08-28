@@ -32,10 +32,6 @@ theme = createTheme(theme, {
   },
 });
 
-// useEffect(() =>{
-// let auth = getAuth();
-// let user = auth.currentUser;
-// userStore.addUser(user);
 let auth = getAuth();
 let user = auth.currentUser;
 onAuthStateChanged(auth, (user) => {

@@ -14,6 +14,7 @@ import usePlacesAutocomplete, {
   LatLng,
 //   LatLng,
 } from "use-places-autocomplete";
+import swal from 'sweetalert';
 // import { LatLng } from "google-maps";
 import { useNavigate, useParams } from "react-router";
 import mapStore from "../../store/mapStore";
@@ -100,8 +101,10 @@ const { name, uid } = useParams();
     }
     mapStore.center={lat:markerStore.markers[closest].lat,lng:markerStore.markers[closest].lng};
     mapStore.zoom=18;
+    mapStore.openInfo=true;
+    markerStore.currentMarker=markerStore.markers[closest];
     navigate(`/system/welcome/${name}/${uid}`);
-    alert('Closest location is ' + markerStore.markers[closest].address);
+    swal('Closest location is ' + markerStore.markers[closest].address);
 }
 
   const handleSelect = async (description: string): Promise<void> => {

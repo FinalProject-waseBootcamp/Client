@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import {Combobox,ComboboxInput,ComboboxPopover,ComboboxList,ComboboxOption,} from "@reach/combobox";
+import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption, } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
@@ -10,7 +10,7 @@ import Search from "@mui/icons-material/Search";
 import swal from "sweetalert";
 import AddMarkerForm from "./AddMarkerForm";
 import "../../css/Marker.css";
-import usePlacesAutocomplete, { getGeocode,getLatLng,} from "use-places-autocomplete";
+import usePlacesAutocomplete, { getGeocode, getLatLng, } from "use-places-autocomplete";
 import { useNavigate, useParams } from "react-router";
 import markerStore from "../../store/markerStore";
 import { Marker } from "../../utils/modals";
@@ -18,6 +18,7 @@ import axios from "axios";
 import systemStore from "../../store/systemStore";
 import userStore from "../../store/userStore";
 import { getAuth } from "firebase/auth";
+import mapStore from "../../store/mapStore";
 
 export default function MyAutoComplete() {
   const {
@@ -48,7 +49,7 @@ export default function MyAutoComplete() {
           console.log("userStore.user: ", userStore.user);
           debugger;
           newMarker = {
-            systemId: systemStore.currentSystem?._id || "",
+            systemId: systemStore.currentSystem?._id || uid,
             managerId: userStore.user?.uid,
             lat: lat,
             lng: lng,
@@ -79,7 +80,10 @@ export default function MyAutoComplete() {
         }
 
         debugger;
+        mapStore.openInfo = false;
+        mapStore.center = { lat: newMarker.lat, lng: newMarker.lng };
         markerStore.addMarker(newMarker);
+        mapStore.openInfo = true;
         debugger;
         navigate(`/system/welcome/${name}/${uid}`);
       }
@@ -106,45 +110,47 @@ export default function MyAutoComplete() {
 
   return (
 
-      // <div className="App">
-      //   <Combobox onSelect={handleSelect} aria-labelledby="demo">
-      //     <ComboboxInput
-      //       style={{ width: 300, maxWidth: "90%" }}
-      //       value={value}
-      //       onChange={handleInput}
-      //       disabled={!ready}
-      //     />
-      //     <ComboboxPopover>  
-      //       <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
-      //     </ComboboxPopover>
-      //   </Combobox>
-      
-      // </div>
-      <>
-      <Paper
-          component="form"
-          sx={{
-              p: "2px 4px",
-              display: "flex",
-              alignItems: "center",
-              width: 500,
-          }}
-      >
-          <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="Search Google Maps"
-              inputProps={{ 'aria-label': 'search google maps' }}
-              value={value}
-              onChange={handleInput}
-              disabled={!ready}
+    <div className="App">
+      <Combobox onSelect={handleSelect} aria-labelledby="demo">
+        <ComboboxInput
+          style={{ width: 300, maxWidth: "90%" }}
+          value={value}
+          onChange={handleInput}
+          disabled={!ready}
+        />
+        <ComboboxPopover>  
+          <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
+        </ComboboxPopover>
+      </Combobox>
 
-          />
-          <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-              <Search />
-          </IconButton>
-      </Paper>
-      {status === "OK" && <div>{renderSuggestions()}</div>}
-  </>
-      
+    </div>
+    // <>
+    //   <Combobox onSelect={handleSelect} aria-labelledby="demo">
+    //     <Paper
+    //       component="form"
+    //       sx={{
+    //         p: "2px 4px",
+    //         display: "flex",
+    //         alignItems: "center",
+    //         width: 500,
+    //       }}
+    //     >
+    //       <InputBase
+    //         sx={{ ml: 1, flex: 1 }}
+    //         placeholder="Search Google Maps"
+    //         inputProps={{ 'aria-label': 'search google maps' }}
+    //         value={value}
+    //         onChange={handleInput}
+    //         disabled={!ready}
+
+    //       />
+    //       <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+    //         <Search />
+    //       </IconButton>
+    //     </Paper>
+    //   </Combobox>
+    //   {status === "OK" && <div>{renderSuggestions()}</div>}
+    // </>
+
   );
 }
