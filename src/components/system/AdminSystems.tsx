@@ -17,6 +17,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Header from "../Header";
 
 export default function AdminSystems() {
+  debugger
   let auth = getAuth();
   let user = auth.currentUser;
   const [mySystems, setMySystems] = useState<System[]>([]);
@@ -25,6 +26,7 @@ export default function AdminSystems() {
   const navigate = useNavigate();
 
   onAuthStateChanged(auth, (user) => {
+    debugger
     auth = getAuth();
     user = auth.currentUser;
     userStore.addUser(user);
@@ -61,13 +63,16 @@ export default function AdminSystems() {
 
   const getSystems = async () => {
     try {
+      debugger
       const res = await axios.get(
         `http://localhost:3333/system?adminId=${adminId}`
       );
       const _mySystems: System[] = await res.data;
+      debugger
       setMySystems(_mySystems);
       console.log(_mySystems[0]);
     } catch (error) {
+      debugger
       console.log(error);
     }
   };

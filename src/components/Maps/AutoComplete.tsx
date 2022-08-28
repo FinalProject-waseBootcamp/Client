@@ -9,7 +9,7 @@ import {
 import "@reach/combobox/styles.css";
 import swal from "sweetalert";
 import AddMarkerForm from "./AddMarkerForm";
-import '../../css/Marker.css'
+import "../../css/Marker.css";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -34,28 +34,32 @@ export default function MyAutoComplete() {
   const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   };
-  // useEffect(() =>{
 
-  // })
   const { name, uid } = useParams();
 
   let newMarker: Marker;
   const handleSelect = async (description: string): Promise<void> => {
-    // =>() => {
-    // When user selects a place, we can replace the keyword without request data from API
-    // by setting the second parameter to "false"
     const doing = () => {
       setValue(description, false);
       clearSuggestions();
       debugger;
       // Get latitude and longitude via utility functions
-      getGeocode({ address: description})
+      getGeocode({ address: description })
         .then((results) => getLatLng(results[0]))
         .then(({ lat, lng }) => {
           console.log("📍 Coordinates: ", { lat, lng });
           console.log("userStore.user: ", userStore.user);
           debugger;
-         newMarker = { systemId: systemStore.currentSystem?._id||'',managerId:userStore.user?.uid, lat: lat, lng: lng, address: description, name: "name",description:"description", phone:"0504168639"};
+          newMarker = {
+            systemId: systemStore.currentSystem?._id || "",
+            managerId: userStore.user?.uid,
+            lat: lat,
+            lng: lng,
+            address: description,
+            name: "name",
+            description: "description",
+            phone: "phone",
+          };
           debugger;
         })
         .catch((error) => {
@@ -70,11 +74,13 @@ export default function MyAutoComplete() {
     }).then(async (willDefine) => {
       debugger;
       if (willDefine) {
-        debugger
-        try{
-          await axios.post('http://localhost:3333/marker',newMarker)
-        }catch(err){
-          alert("Error: " + err);}
+        debugger;
+        try {
+          await axios.post("http://localhost:3333/marker", newMarker);
+        } catch (err) {
+          alert("Error: " + err);
+        }
+
         debugger;
         markerStore.addMarker(newMarker);
         debugger;

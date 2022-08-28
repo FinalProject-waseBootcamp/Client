@@ -6,7 +6,6 @@ import { Button, Modal } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import MyAutoComplete from "./AutoComplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
@@ -21,6 +20,8 @@ import { Marker as Mark, Position } from "../../utils/modals";
 import Marker from "./Marker";
 import markerStore from "../../store/markerStore";
 import { SocketAddress } from "net";
+import MyAutoComplete from "./SearchLocation";
+import mapStore from "../../store/mapStore";
 
 interface Film {
   title: string;
@@ -50,14 +51,14 @@ const Maps: React.FC = (props: any) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<readonly Film[]>([]);
   const loading = open && options.length === 0;
-  const [zoom, setZoom] = useState(18);
   const [openModal, setOpenModal] = useState(false);
   const [address, setAddress] = useState("");
-  const [currentLocation, setCurrentLocation] = useState({
-    lat: 32,
-    lng: 30,
+  const [currentLocation, setCurrentLocation] = useState<Position>({
+    lat: mapStore.currentAddress.lat,
+    lng: mapStore.currentAddress.lng,
   });
   const [center, setCenter] = useState<Position>(currentLocation);
+  const [zoom, setZoom] = useState<number>(15);
   const [markers, setMarkers] = useState<Mark[]>([...markerStore.markers]);
   const marker_ref = useRef<HTMLInputElement>();
   // const [activeMarker, setactiveMarker] = useState<any>();
@@ -80,11 +81,18 @@ const Maps: React.FC = (props: any) => {
   //     setshowingInfoWindow(false);
   //   }
   // };
-
   useEffect(() => {
     debugger;
     setMarkers(markerStore.markers);
   }, [markerStore.markers]);
+  useEffect(() => {
+    debugger;
+    setCenter(mapStore.center);
+    setZoom(mapStore.zoom);
+    setTimeout(() => {
+      setZoom(15);
+    }, 5000)
+  }, [mapStore.center,mapStore.zoom]);
 
   const getMapOptions = (maps: any) => {
     return {
@@ -101,14 +109,24 @@ const Maps: React.FC = (props: any) => {
     };
   };
 
-  const apiIsLoaded = (map: any, maps: any) => {
+  const apiIsLoaded = () => {
     navigator?.geolocation.getCurrentPosition(
       async ({ coords: { latitude: lat, longitude: lng } }) => {
         console.log("lat: " + lat + ", lng: " + lng);
         const position = { lat, lng };
         setCurrentLocation(position);
+        mapStore.currentAddress = {
+          ...mapStore.currentAddress,
+          lat: lat,
+          lng: lng,
+        };
+        mapStore.center = { lat: lat, lng: lng };
         await fetch(
-          "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key=AIzaSyDuj7uje4eVa30MdHZOmm1sfyfKF22AKnE"
+          "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+            lat +
+            "," +
+            lng +
+            "&key=AIzaSyDuj7uje4eVa30MdHZOmm1sfyfKF22AKnE"
         )
           .then((res) => {
             return res.json();
@@ -118,6 +136,11 @@ const Maps: React.FC = (props: any) => {
             return res.results[0];
           })
           .then((results) => {
+            debugger;
+            mapStore.currentAddress = {
+              ...mapStore.currentAddress,
+              address: results.formatted_address,
+            };
             setAddress(results.formatted_address);
           });
       }
@@ -131,22 +154,22 @@ const Maps: React.FC = (props: any) => {
     setOpenModal(false);
   };
 
-  const searchMarker = async () => {
-    debugger;
-    console.log(marker_ref.current);
-    const markName = marker_ref.current?.innerText || "";
-    await markerStore.SearchMarker(markName);
-    debugger;
-    if (markerStore.currentMarker != null) {
-      debugger;
-      const pos: Position = {
-        lat: markerStore.currentMarker?.lat,
-        lng: markerStore.currentMarker?.lng,
-      };
-      setCenter(pos);
-      setZoom(15);
-    }
-  };
+  // const searchMarker = async () => {
+  //   debugger;
+  //   console.log(marker_ref.current);
+  //   const markName = marker_ref.current?.innerText || "";
+  //   await markerStore.SearchMarker(markName);
+  //   debugger;
+  //   if (markerStore.currentMarker != null) {
+  //     debugger;
+  //     const pos: Position = {
+  //       lat: markerStore.currentMarker?.lat,
+  //       lng: markerStore.currentMarker?.lng,
+  //     };
+  //     setCenter(pos);
+  //     setZoom(15);
+  //   }
+  // };
 
   return (
     <>
@@ -160,10 +183,11 @@ const Maps: React.FC = (props: any) => {
             <GoogleMapReact
               bootstrapURLKeys={{
                 key: "AIzaSyAMPFO6Sc4Ihhl2ciCChm6Am1QVlMtDMb0",
+                libraries: ["places"],
               }}
-              center={currentLocation}
-              defaultZoom={zoom}
-              onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps)}
+              center={center}
+              zoom={zoom}
+              onGoogleApiLoaded={() => apiIsLoaded()}
               // onClick={onMapClicked}
               // options={getMapOptions}
             >
@@ -183,7 +207,7 @@ const Maps: React.FC = (props: any) => {
           <Grid item xs={6} md={4}>
             <div>
               <h4>your current location:</h4>
-              <h5>{currentLocation.lat + " , " + currentLocation.lng}</h5>
+              <h5>{currentLocation?.lat + " , " + currentLocation?.lng}</h5>
               <h5>{address}</h5>
             </div>
             <Paper
@@ -198,7 +222,7 @@ const Maps: React.FC = (props: any) => {
               <IconButton sx={{ p: "10px" }} aria-label="menu">
                 <Menu />
               </IconButton>
-              <Autocomplete
+              {/* <Autocomplete
                 id="asynchronous-demo"
                 sx={{ width: 300 }}
                 open={open}
@@ -214,30 +238,33 @@ const Maps: React.FC = (props: any) => {
                 getOptionLabel={(option) => option.title}
                 options={options}
                 loading={loading}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Location to search nearby"
-                    // placeholder={address}
-                    defaultValue={address}
-                    inputRef={marker_ref}
-                    InputProps={{
-                      ...params.InputProps,
-                      endAdornment: (
-                        <React.Fragment>
-                          {loading ? (
-                            <CircularProgress color="inherit" size={15} />
-                          ) : null}
-                          {params.InputProps.endAdornment}
-                        </React.Fragment>
-                      ),
-                    }}
-                  />
-                )}
-              />
+                renderInput={(params) => ( */}
+              {/* // <TextField */}
+              {/* //   {...params}
+                  //   label="Location to search nearby"
+                  //   // placeholder={address}
+                  //   defaultValue={address}
+                  //   inputRef={marker_ref}
+                  //   InputProps={{ */}
+              {/* //     ...params.InputProps,
+                  //     endAdornment: (
+                  //       <React.Fragment>
+                  //         {loading ? ( */}
+              {/* //           <CircularProgress color="inherit" size={15} />
+                  //         ) : null}
+                  //         {params.InputProps.endAdornment}
+                  //       </React.Fragment>
+                  //     ),
+                  //   }}
+                  // />
+                  // )}
+                  // /> */}
+              <Paper component="form" sx={{ p: "1vw 2vw" }}>
+                <MyAutoComplete />
+              </Paper>
               <IconButton
                 type="button"
-                onClick={searchMarker}
+                // onClick={searchMarker}
                 sx={{ p: "10px" }}
                 aria-label="search"
               >
