@@ -62,7 +62,7 @@ export default function AddSystem() {
       swal("your new url for system is: " + newUrl).then(() =>
         window.open(newUrl, "_blank")
       );
-
+      navigate('/adminSystems')
       return newUrl;
     } catch (err) {
       console.log(err);

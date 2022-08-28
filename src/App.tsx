@@ -35,15 +35,14 @@ theme = createTheme(theme, {
 // let auth = getAuth();
 // let user = auth.currentUser;
 // userStore.addUser(user);
+let auth = getAuth();
+let user = auth.currentUser;
+onAuthStateChanged(auth, (user) => {
+  auth = getAuth();
+  user = auth.currentUser;
+  userStore.addUser(user);
+});
 
-//   onAuthStateChanged(auth, (user) => {
-//   if (user) {
-//     // User is signed in.
-//   } else {
-//     // No user is signed in.
-//   }
-// });
-// })
 
 function App() {
   return (

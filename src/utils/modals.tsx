@@ -26,11 +26,17 @@ export interface System {
   siteUrl: string;
 }
 export interface Marker{
+  managerId: string,
+  systemId: string,
   lat:number,
   lng:number,
   name:string ,
+  description:string,
   address:string,
-  color?:string
+  color?:string,
+  notes?: string,
+  email?: string,
+  phone?: string,
 }
 export interface Position{
   lat:number,
