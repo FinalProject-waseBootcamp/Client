@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 // import { withRouter } from "react-router-dom";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
-import { sendPasswordResetEmail } from "firebase/auth";
-import { JsxElement } from "typescript";
 import { Button, TextField } from "@mui/material";
 import { registerWithEmailAndPassword } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";

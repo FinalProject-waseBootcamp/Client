@@ -50,7 +50,7 @@ const Maps: React.FC = (props: any) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<readonly Film[]>([]);
   const loading = open && options.length === 0;
-  const [zoom, setZoom] = useState(13);
+  const [zoom, setZoom] = useState(18);
   const [openModal, setOpenModal] = useState(false);
   const [address, setAddress] = useState("");
   const [currentLocation, setCurrentLocation] = useState({

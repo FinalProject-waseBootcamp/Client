@@ -17,6 +17,7 @@ import  MyAutocomplete from './components/Maps/AutoComplete';
 import AddLocation from "./components/Maps/AddLocation";
 import { onAuthStateChanged,getAuth } from "firebase/auth";
 import userStore from "./store/userStore";
+import AddMarker from "./components/Maps/AddMarker";
 
 
 let theme = createTheme();
@@ -65,6 +66,8 @@ function App() {
             <Route path="/maps" element={<Maps />} />
             <Route path="/auto" element={<MyAutocomplete />} />
             <Route path="system/addLocation" element={<AddLocation />} />
+            <Route path="/add" element={<AddMarker />} />
+
           </Routes>
         </Router>
         <img src={require("./utils/logo.jpg")} id="logo" alt="logo"></img>
