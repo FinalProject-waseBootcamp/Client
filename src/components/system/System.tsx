@@ -3,14 +3,14 @@ import { useSearchParams } from "react-router-dom";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router";
 import { Container } from "@mui/system";
-import { Position, System } from "../../utils/modals";
+import { Marker, Position, System } from "../../utils/modals";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { getAuth } from "firebase/auth";
 import Maps from "../Maps/Maps";
 import markerStore from "../../store/markerStore";
 import mapStore from "../../store/mapStore";
-import { Button } from "@mui/material";
+import { Button, ListItemButton } from "@mui/material";
 import systemStore from "../../store/systemStore";
 import { getById } from "../../api/system";
 import List from "@mui/material/List";
@@ -64,9 +64,14 @@ export default function MySystem() {
   // const onClick = (e: google.maps.MapMouseEvent) => {
   //   setClicks([...clicks, e.latLng!]);
   // };
-  const handleSelect = () => {
+  const handleClick = (item:Marker) => {
     debugger
-    alert("Please selectedPlace  ");
+    // alert(item.address);
+    mapStore.center={lat:item.lat,lng:item.lng};
+    markerStore.currentMarker = item;
+    mapStore.openInfo = true;
+    navigate(`/system/welcome/${name}/${uid}`);
+
   };
 
   return (
@@ -93,19 +98,18 @@ export default function MySystem() {
               "& ul": { padding: 0 },
             }}
             subheader={<li />}
-            onSelect={handleSelect}
           >
             {cities?.length && cities?.map((city:string, i:number) => (
               <li key={`section-${i}`}>
                 <ul>
                   <ListSubheader>{city}</ListSubheader>
                   {markerStore.markers.map(
-                    (item, i) =>
+                    (item:Marker, i:number) =>
                       item.city === city && (
                         <>
-                          <ListItem key={`item-${i}-${item}`}>
+                          <ListItemButton key={`item-${i}-${item}`} onClick={()=>handleClick(item)}>
                             <ListItemText primary={item.address} />
-                          </ListItem>
+                          </ListItemButton>
                         </>
                       )
                   )}
