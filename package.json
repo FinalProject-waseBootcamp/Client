@@ -30,6 +30,7 @@
     "mobx-react": "^7.5.2",
     "mobx-react-lite": "^3.4.0",
     "react": "^18.2.0",
+    "react-color-palette": "^6.2.0",
     "react-cool-onclickoutside": "^1.7.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.0.3",

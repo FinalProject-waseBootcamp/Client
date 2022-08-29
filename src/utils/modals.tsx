@@ -37,6 +37,7 @@ export interface Marker{
   lng:number,
   name:string ,
   address:string,
+  city:string,
   description?:string,
   color?:string,
   notes?: string,

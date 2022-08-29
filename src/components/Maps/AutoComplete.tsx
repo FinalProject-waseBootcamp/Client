@@ -50,6 +50,8 @@ export default function MyAutoComplete(props: any) {
             lat: lat,
             lng: lng,
             address: description.description,
+            city:"city",
+
           };
           markerStore.addAdresses(newAdders);
           console.log("addresses: ", markerStore.addresses);
@@ -125,7 +127,7 @@ export default function MyAutoComplete(props: any) {
         {/* <div ref={ref}> */}
         <InputBase
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Search Google Maps"
+          placeholder="New Location"
           inputProps={{ 'aria-label': 'search google maps' }}
           value={value}
           onChange={handleInput}

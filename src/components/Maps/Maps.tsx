@@ -33,20 +33,9 @@ function sleep(delay = 0) {
     setTimeout(resolve, delay);
   });
 }
-const style = {
-  position: "absolute",
-  top: "70%",
-  left: "70%",
-  transform: "translate(-50%, -50%)",
-  width: 100,
-  height: 200,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 const Maps: React.FC = (props: any) => {
+  const { name, uid } = useParams();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<readonly Film[]>([]);
@@ -91,8 +80,12 @@ const Maps: React.FC = (props: any) => {
   //   }
   // };
   useEffect(() => {
+    setAddress(mapStore.currentAddress.address);
+    setCurrentLocation({lat: mapStore.currentAddress.lat, lng: mapStore.currentAddress.lng});
+  },[mapStore.currentAddress]);
+  useEffect(() => {
     debugger;
-    mapStore.openInfo ? onInfoWindowOpen():onInfoWindowClose();
+    mapStore.openInfo ? onInfoWindowOpen() : onInfoWindowClose();
     // setOpenInfo(mapStore.openInfo);
   }, [mapStore.openInfo]);
   useEffect(() => {
@@ -123,24 +116,22 @@ const Maps: React.FC = (props: any) => {
     };
   };
 
-  const apiIsLoaded = () => {
+  const apiIsLoaded = (map: any,maps: any) => {
     navigator?.geolocation.getCurrentPosition(
       async ({ coords: { latitude: lat, longitude: lng } }) => {
         console.log("lat: " + lat + ", lng: " + lng);
         const position = { lat, lng };
         setCurrentLocation(position);
-        mapStore.currentAddress = {
-          ...mapStore.currentAddress,
-          lat: lat,
-          lng: lng,
-        };
+        // mapStore.currentAddress = {
+        //   ...mapStore.currentAddress,
+        //   lat: lat,
+        //   lng: lng,
+        // };
+        mapStore.currentAddress.lat = lat;
+        mapStore.currentAddress.lng = lng;
         mapStore.center = { lat: lat, lng: lng };
         await fetch(
-          "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
-            lat +
-            "," +
-            lng +
-            "&key=AIzaSyDuj7uje4eVa30MdHZOmm1sfyfKF22AKnE"
+          "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key=AIzaSyDuj7uje4eVa30MdHZOmm1sfyfKF22AKnE"
         )
           .then((res) => {
             return res.json();
@@ -151,11 +142,13 @@ const Maps: React.FC = (props: any) => {
           })
           .then((results) => {
             debugger;
-            mapStore.currentAddress = {
-              ...mapStore.currentAddress,
-              address: results.formatted_address,
-            };
+            // mapStore.currentAddress = {
+            //   ...mapStore.currentAddress,
+            //   address: results.formatted_address,
+            // };
+            mapStore.currentAddress.address = results.formatted_address;
             setAddress(results.formatted_address);
+            navigate(`/system/welcome/${name}/${uid}`);
           });
       }
     );
@@ -188,13 +181,13 @@ const Maps: React.FC = (props: any) => {
 
   return (
     <>
-      <Box sx={{ height: "100%", width: "100%" }}>
+      <Box sx={{ height: "100%", width: "100%",margin:0 }}>
         <Grid
           container
           spacing={2}
           sx={{ height: "100%", width: "100%", justifyItems: "right" }}
         >
-          <Grid item md={6} sx={{ height: "70vh", width: "100vw" }}>
+          <Grid item md={6} sx={{ height: "70vh", width: "100vh" }}>
             <GoogleMapReact
               bootstrapURLKeys={{
                 key: "AIzaSyAMPFO6Sc4Ihhl2ciCChm6Am1QVlMtDMb0",
@@ -202,7 +195,7 @@ const Maps: React.FC = (props: any) => {
               }}
               center={center}
               zoom={zoom}
-              onGoogleApiLoaded={() => apiIsLoaded()}
+              onGoogleApiLoaded={({map,maps}) => apiIsLoaded(map,maps)}
               // onClick={onMapClicked}
               // options={getMapOptions}
             >
@@ -219,10 +212,12 @@ const Maps: React.FC = (props: any) => {
               ))}
             </GoogleMapReact>
           </Grid>
-          <Grid item xs={6} md={4}>
+          <Grid
+           item xs={6} md={4}
+          >
             <div>
               <h4>your current location:</h4>
-              <h6>({currentLocation?.lat + " , " + currentLocation?.lng})</h6>
+              <h6>({currentLocation.lat + " , " + currentLocation?.lng})</h6>
               <h5>{address}</h5>
             </div>
             <Paper
@@ -275,6 +270,7 @@ const Maps: React.FC = (props: any) => {
                   // )}
                   // /> */}
               <Paper component="form" sx={{ p: "1vw 2vw" }}>
+              Location to search nearBy
                 <MyAutoComplete />
               </Paper>
               <IconButton
@@ -295,14 +291,14 @@ const Maps: React.FC = (props: any) => {
               </IconButton>
               <Button
                 variant="contained"
-                sx={{padding:2,width:"5vw"}}
+                sx={{ padding: 2, width: "5vw" }}
                 // id="leftTopButton"
                 onClick={handleOpen}
               >
                 Add Location🎯
               </Button>
             </Paper>
-            {openModal && <AddMarker/>}
+            {openModal && <AddMarker />}
             {openInfo && (
               <div id="markerInfo">
                 <h2>marker info</h2>

@@ -23,7 +23,7 @@ export const get = async () => {
 }
 export const getById = async (systemId: string) => {
     try {
-        const Request = await axios.get(`http://localhost:3333/request?id=${systemId}`);
+        const Request = await axios.get(`http://localhost:3333/system/${systemId}`);
         return Request;
     } catch (error) {
         console.log('error in get systems', error);
