@@ -125,7 +125,7 @@ export default function MyAutoComplete() {
     swal("Closest location is " + markerStore.markers[closest].address);
   }
 
-  const handleSelect = async (description: string): Promise<void> => {
+   const handleSelect = async (description: string): Promise<void> => {
     debugger
     const doing = () => {
       setValue(description, false);
