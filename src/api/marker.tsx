@@ -5,6 +5,7 @@ import { Marker } from '../utils/modals'
 
 
 export const post = async (newMarker: Marker) => {
+    debugger;
     try {
         const response = await axios.post('http://localhost:3333/marker', newMarker);
         return response.data;
