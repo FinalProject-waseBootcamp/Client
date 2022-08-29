@@ -65,12 +65,9 @@ const AddMarker = () => {
     const inputEmail = useRef<HTMLInputElement>();
     const inputNotes = useRef<HTMLInputElement>();
     const inputcolor = useRef<HTMLInputElement>();
-
     const inputNameMarker = useRef<HTMLInputElement>();
 
-    const handleSelect = async () => {
-        debugger;
-    };
+
 
     const handleClickOpen = () => {
         setOpenDialog(true);
@@ -81,15 +78,8 @@ const AddMarker = () => {
         setOpenDialog(false);
     };
 
-
-    const handleClickOpenAuto = () => {
-        setOpenAuto(true);
-    };
-
-    const handleCloseAuto = () => {
-        setOpenAuto(false);
-    };
-
+    const navigate = useNavigate();
+    const { name, uid } = useParams();
     const addMarker = () => {
         debugger;
         const newMarker: any = {
@@ -98,7 +88,6 @@ const AddMarker = () => {
             name: inputName.current?.value,
             description: inputDescription.current?.value,
             color: color.hex,
-            notes: inputNotes.current?.value,
             notes: inputNotes.current?.value,
             email: inputEmail.current?.value,
             phone: inputPhone.current?.value,
