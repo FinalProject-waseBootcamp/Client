@@ -1,11 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
+import {Combobox,ComboboxInput,ComboboxPopover,ComboboxList,ComboboxOption,} from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import "../../css/Marker.css";
 import usePlacesAutocomplete, {
@@ -88,7 +82,6 @@ export default function MyAutoComplete() {
 
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     let distance = R * c;
-
     return distance;
   }
 

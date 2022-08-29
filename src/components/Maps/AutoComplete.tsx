@@ -33,7 +33,6 @@ export default function MyAutoComplete(props: any) {
 
   let newMarker: Marker;
   const handleSelect = (description: any) => () => {
-    // const doing = () => {
       if (!description.structured_formatting.secondary_text) {
         description.structured_formatting.secondary_text = ""
       }
@@ -61,30 +60,6 @@ export default function MyAutoComplete(props: any) {
           debugger;
           console.log("😱 Error: ", error);
         });
-    // };
-    debugger;
-    //  doing();
-    // swal({
-    //   title: `Want to define ${description} as your location?`,
-    //   buttons: ["Cancel", "Ok"],
-    // }).then(async (willDefine) => {
-    //   debugger;
-    //   if (willDefine) {
-    //     debugger;
-    //     try {
-    //       await axios.post("http://localhost:3333/marker", newMarker);
-    //     } catch (err) {
-    //       alert("Error: " + err);
-    //     }
-    //     debugger;
-    //     mapStore.openInfo = false;
-    //     mapStore.center = { lat: newMarker.lat, lng: newMarker.lng };
-    //     markerStore.addMarker(newMarker);
-    //     mapStore.openInfo = true;
-    //     debugger;
-    //     navigate(`/system/welcome/${name}/${uid}`);
-    //   }
-    // });
   };
 
   const renderSuggestions = () =>
@@ -101,19 +76,6 @@ export default function MyAutoComplete(props: any) {
       );
     });
   return (
-    // <div className="App">
-    //   <Combobox onSelect={handleSelect} aria-labelledby="demo">
-    //     <ComboboxInput
-    //       style={{ width: 300, maxWidth: "90%" }}
-    //       value={value}
-    //       onChange={handleInput}
-    //       disabled={!ready}
-    //     />
-    //     {/* <ComboboxPopover> */}
-    //       {status === "OK" && <div> {renderSuggestions()}</div>}
-    //     {/* </ComboboxPopover> */}
-    //   </Combobox>
-    // </div>
     <>
       <Paper
         component="form"
