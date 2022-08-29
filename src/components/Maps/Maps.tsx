@@ -14,7 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/icons-material/Menu";
 import Search from "@mui/icons-material/Search";
 import Directions from "@mui/icons-material/Directions";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 // import AddLocation from "./AddLocation";
 import Marker from "./Marker";
 import { Marker as MarkerModal, Position } from "../../utils/modals";
@@ -34,20 +34,9 @@ function sleep(delay = 0) {
     setTimeout(resolve, delay);
   });
 }
-const style = {
-  position: "absolute",
-  top: "70%",
-  left: "70%",
-  transform: "translate(-50%, -50%)",
-  width: 100,
-  height: 200,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 const Maps: React.FC = (props: any) => {
+  const { name, uid } = useParams();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<readonly Film[]>([]);
@@ -92,6 +81,10 @@ const Maps: React.FC = (props: any) => {
   //   }
   // };
   useEffect(() => {
+    setAddress(mapStore.currentAddress.address);
+    setCurrentLocation({lat: mapStore.currentAddress.lat, lng: mapStore.currentAddress.lng});
+  },[mapStore.currentAddress]);
+  useEffect(() => {
     debugger;
     mapStore.openInfo ? onInfoWindowOpen() : onInfoWindowClose();
     // setOpenInfo(mapStore.openInfo);
@@ -124,24 +117,22 @@ const Maps: React.FC = (props: any) => {
     };
   };
 
-  const apiIsLoaded = () => {
+  const apiIsLoaded = (map: any,maps: any) => {
     navigator?.geolocation.getCurrentPosition(
       async ({ coords: { latitude: lat, longitude: lng } }) => {
         console.log("lat: " + lat + ", lng: " + lng);
         const position = { lat, lng };
         setCurrentLocation(position);
-        mapStore.currentAddress = {
-          ...mapStore.currentAddress,
-          lat: lat,
-          lng: lng,
-        };
+        // mapStore.currentAddress = {
+        //   ...mapStore.currentAddress,
+        //   lat: lat,
+        //   lng: lng,
+        // };
+        mapStore.currentAddress.lat = lat;
+        mapStore.currentAddress.lng = lng;
         mapStore.center = { lat: lat, lng: lng };
         await fetch(
-          "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
-            lat +
-            "," +
-            lng +
-            "&key=AIzaSyDuj7uje4eVa30MdHZOmm1sfyfKF22AKnE"
+          "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key=AIzaSyDuj7uje4eVa30MdHZOmm1sfyfKF22AKnE"
         )
           .then((res) => {
             return res.json();
@@ -152,11 +143,13 @@ const Maps: React.FC = (props: any) => {
           })
           .then((results) => {
             debugger;
-            mapStore.currentAddress = {
-              ...mapStore.currentAddress,
-              address: results.formatted_address,
-            };
+            // mapStore.currentAddress = {
+            //   ...mapStore.currentAddress,
+            //   address: results.formatted_address,
+            // };
+            mapStore.currentAddress.address = results.formatted_address;
             setAddress(results.formatted_address);
+            navigate(`/system/welcome/${name}/${uid}`);
           });
       }
     );
@@ -202,7 +195,7 @@ const Maps: React.FC = (props: any) => {
               }}
               center={center}
               zoom={zoom}
-              onGoogleApiLoaded={() => apiIsLoaded()}
+              onGoogleApiLoaded={({map,maps}) => apiIsLoaded(map,maps)}
               // onClick={onMapClicked}
               // options={getMapOptions}
             >
@@ -224,7 +217,7 @@ const Maps: React.FC = (props: any) => {
           >
             <div>
               <h4>your current location:</h4>
-              <h6>({currentLocation?.lat + " , " + currentLocation?.lng})</h6>
+              <h6>({currentLocation.lat + " , " + currentLocation?.lng})</h6>
               <h5>{address}</h5>
             </div>
             <Paper
