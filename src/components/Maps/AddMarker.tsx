@@ -27,6 +27,10 @@ import { textAlign } from '@mui/system';
 import MyAutoComplete from './AutoComplete';
 import userStore from '../../store/userStore';
 import systemStore from '../../store/systemStore';
+import {post} from '../../api/marker';
+import mapStore from '../../store/mapStore';
+import { useNavigate, useParams } from "react-router";
+
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -47,7 +51,6 @@ const AddMarker = () => {
     const loading = open && options.length === 0;
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const [openDialog, setOpenDialog] = useState(true);
-    const [openAuto, setOpenAuto] = useState(false);
     const [lat, setLat] = useState<number>(0);
     const [lng, setLng] = useState<number>(0);
     const [status, setStatus] = useState<string>("");
@@ -57,12 +60,7 @@ const AddMarker = () => {
     const inputEmail = useRef<HTMLInputElement>();
     const inputNotes = useRef<HTMLInputElement>();
     const inputcolor = useRef<HTMLInputElement>();
-
     const inputNameMarker = useRef<HTMLInputElement>();
-
-    const handleSelect = async () => {
-        debugger;
-    }
 
     const handleClickOpen = () => {
         setOpenDialog(true);
@@ -72,14 +70,8 @@ const AddMarker = () => {
         setOpenDialog(false);
     };
 
-
-    const handleClickOpenAuto = () => {
-        setOpenAuto(true);
-    };
-
-    const handleCloseAuto = () => {
-        setOpenAuto(false);
-    };
+    const navigate = useNavigate();
+    const { name, uid } = useParams();
 
     const addMarker = () => {
         debugger;
@@ -88,18 +80,38 @@ const AddMarker = () => {
             managerId: userStore.user?.uid,
             name: inputName.current?.value,
             description: inputDescription.current?.value,
-            // // "color":
+            // "color":
+            //notes
             notes: inputNotes.current?.value,
             email: inputEmail.current?.value,
             phone: inputPhone.current?.value,
+            address: markerStore.addresses.address,
+            lng: markerStore.addresses.lng,
+            lat: markerStore.addresses.lat,
         }
-        // console.log(markerStore.markers)
-        // markerStore.addMarker(newMarker);
-        // console.log(markerStore.markers)
-        swal("saved!", "now you can add your location!", "success");
-        handleClickOpenAuto();
+        swal({
+            title: `Want to define ${markerStore.addresses.address} as your location?`,
+            buttons: ["Cancel", "Ok"],
+        }).then(async (willDefine) => {
+            debugger;
+            if (willDefine) {
+                debugger;
+                try {
+                    await post(newMarker);
+                } catch (err) {
+                    alert("Error: " + err);
+                }
+                debugger;
+                mapStore.openInfo = false;
+                mapStore.center = { lat: newMarker.lat, lng: newMarker.lng };
+                markerStore.addMarker(newMarker);
+                mapStore.openInfo = true;
+                debugger;
+                navigate(`/system/welcome/${name}/${uid}`);
+            }
+        });
         handleClose()
-       return newMarker
+
     }
     return (
         <Paper
@@ -111,7 +123,6 @@ const AddMarker = () => {
                 width: 420,
             }}
         >
-            { openAuto &&< MyAutoComplete /> }
             <Dialog
                 fullScreen={fullScreen}
                 open={openDialog}
@@ -123,7 +134,7 @@ const AddMarker = () => {
                 </DialogTitle>
                 <DialogContent sx={{ textAlign: "center" }}>
                     <DialogContentText sx={{ textAlign: "center" }}>
-                    < MyAutoComplete />
+                        < MyAutoComplete />
                         <React.Fragment>
                             <Grid item xs={4}>
                                 <TextField inputRef={inputName} id="filled-basic" label="name" variant="filled" />

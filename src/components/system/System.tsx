@@ -20,6 +20,8 @@ import ListItemText from '@mui/material/ListItemText';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 
 function renderRow(props: ListChildComponentProps) {
+  // function renderRow(props: any) {
+
   const { index, style } = props;
 
   return (
@@ -82,7 +84,7 @@ export default function MySystem() {
         itemSize={46}
         itemCount={200}
         overscanCount={5}
-      >
+      > 
         {renderRow}
       </FixedSizeList>
     </Box>

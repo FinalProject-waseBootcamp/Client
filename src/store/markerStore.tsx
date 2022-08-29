@@ -18,7 +18,7 @@ async function getSystemMarkers(){
   }
 }
 class Store {
-
+  addresses: any={};
   markers: Marker[] =[];
   currentMarker: Marker | null = null;
 
@@ -70,6 +70,14 @@ class Store {
   debugger
     this.markers.push(marker);
   }
+  addAdresses(adress: any) {
+    debugger
+      this.addresses=adress;
+    }
+    // getAdresses() {
+    //   debugger
+    //     return this.adresses;
+    //   }
   // async SearchMarker(name: string) {
   //     this.currentMarker = this.markers.find((marker) => marker.name === name) || null;
   // }

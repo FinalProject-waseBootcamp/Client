@@ -14,7 +14,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Maps from "./components/Maps/Maps";
 import  MyAutocomplete from './components/Maps/AutoComplete';
-import AddLocation from "./components/Maps/AddLocation";
 import { onAuthStateChanged,getAuth } from "firebase/auth";
 import userStore from "./store/userStore";
 import AddMarker from "./components/Maps/AddMarker";
@@ -61,7 +60,6 @@ function App() {
             <Route path="/editSystem" element={<EditSystem />} />
             <Route path="/maps" element={<Maps />} />
             <Route path="/auto" element={<MyAutocomplete />} />
-            <Route path="system/addLocation" element={<AddLocation />} />
             <Route path="/add" element={<AddMarker />} />
 
           </Routes>

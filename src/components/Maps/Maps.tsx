@@ -15,7 +15,6 @@ import Menu from "@mui/icons-material/Menu";
 import Search from "@mui/icons-material/Search";
 import Directions from "@mui/icons-material/Directions";
 import { useNavigate } from "react-router";
-import AddLocation from "./AddLocation";
 import Marker from "./Marker";
 import { Marker as MarkerModal, Position } from "../../utils/modals";
 import markerStore from "../../store/markerStore";
@@ -163,6 +162,7 @@ const Maps: React.FC = (props: any) => {
   };
 
   const handleOpen = () => {
+    debugger
     setOpenModal(true);
   };
   const handleClose = () => {
