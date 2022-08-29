@@ -29,6 +29,7 @@ export default function MySystem() {
   const [cities, setCities] = React.useState<string[]>();
   const [open, setOpen] = React.useState(false);
 
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -52,8 +53,8 @@ export default function MySystem() {
     try {
       const response = await getById(uid);
       const currentSystem: System = response?.data;
-      setCurrentSystem(currentSystem);
       systemStore.currentSystem = currentSystem;
+      setCurrentSystem(currentSystem);
     } catch (err) {
       console.log(err);
     }

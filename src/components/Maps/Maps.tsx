@@ -275,7 +275,7 @@ const Maps: React.FC = (props: any) => {
               </Paper>
               <IconButton
                 type="button"
-                // onClick={searchMarker}
+                // onClick={handleSelect}
                 sx={{ p: "10px" }}
                 aria-label="search"
               >
