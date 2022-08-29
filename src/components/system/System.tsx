@@ -24,14 +24,14 @@ export default function MySystem() {
   const { name, uid }: any = useParams();
 
   const navigate = useNavigate();
-  const [currentSystem, setCurrentSystem] = React.useState<any>();
+  const [currentSystem, setCurrentSystem] = React.useState<System>();
   const[cities,setCities]= React.useState<string[]>();
   // let cities: string[] = [];
 
   const getCurrentSystem = async () => {
     try {
       const response = await getById(uid);
-      const currentSystem = response;
+      const currentSystem:System = response?.data;
       setCurrentSystem(currentSystem);
       systemStore.currentSystem = currentSystem;
     } catch (err) {
@@ -70,13 +70,12 @@ export default function MySystem() {
     mapStore.center={lat:item.lat,lng:item.lng};
     markerStore.currentMarker = item;
     mapStore.openInfo = true;
-    navigate(`/system/welcome/${name}/${uid}`);
-
+    navigate(`/system/welcome/${currentSystem?.name}/${uid}`);
   };
 
   return (
     <>
-      <h1>WELCOME TO {currentSystem?.name || name} SYSTEM</h1>
+      <h1>WELCOME TO {currentSystem?.name} SYSTEM</h1>
       {/* here customers can search for their closest location of the object 👇*/}
       {/* <Container id="container"> */}
       {/* <h3>locations</h3> */}
