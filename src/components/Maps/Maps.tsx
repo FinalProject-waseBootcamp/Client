@@ -41,11 +41,9 @@ const Maps: React.FC = (props: any) => {
   const { name, uid } = useParams();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  // const loading = open && options.length === 0;
   const [openInfo, setOpenInfo] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
-
   const [address, setAddress] = useState("");
   const [currentLocation, setCurrentLocation] = useState<Position>({
     lat: mapStore.currentAddress.lat,
@@ -53,19 +51,10 @@ const Maps: React.FC = (props: any) => {
   });
   const [center, setCenter] = useState<Position>(currentLocation);
   const [zoom, setZoom] = useState<number>(15);
-  const [markers, setMarkers] = useState<MarkerModal[]>([
-    ...markerStore.markers,
-  ]);
+  const [markers, setMarkers] = useState<MarkerModal[]>([...markerStore.markers,]);
   const marker_ref = useRef<HTMLInputElement>();
   const [activeMarker, setActiveMarker] = useState<MarkerModal | null>(null);
-  // const [selectedPlace, setselectedPlace] = useState<any>();
-  // const [showingInfoWindow, setshowingInfoWindow] = useState<boolean>();
-  // const onMarkerClick = (props: any, marker: any) => {
-  //   setactiveMarker(marker);
-  //   setselectedPlace(props);
-  //   setshowingInfoWindow(true);
-  // };
-
+ 
   const onInfoWindowClose = () => {
     mapStore.openInfo = false;
     markerStore.currentMarker = { lat: 0, lng: 0, name: 'string', address: "string", city: "string", _id: "string" };
@@ -77,12 +66,7 @@ const Maps: React.FC = (props: any) => {
     setOpenInfo(true);
   };
 
-  // const onMapClicked = () => {
-  //   if (showingInfoWindow) {
-  //     setactiveMarker(null);
-  //     setshowingInfoWindow(false);
-  //   }
-  // };
+
   useEffect(() => {
     setAddress(mapStore.currentAddress.address);
     setCurrentLocation({ lat: mapStore.currentAddress.lat, lng: mapStore.currentAddress.lng });
@@ -90,7 +74,6 @@ const Maps: React.FC = (props: any) => {
   useEffect(() => {
     debugger;
     mapStore.openInfo ? onInfoWindowOpen() : onInfoWindowClose();
-    // setOpenInfo(mapStore.openInfo);
   }, [mapStore.openInfo]);
   useEffect(() => {
     debugger;
@@ -126,11 +109,6 @@ const Maps: React.FC = (props: any) => {
         console.log("lat: " + lat + ", lng: " + lng);
         const position = { lat, lng };
         setCurrentLocation(position);
-        // mapStore.currentAddress = {
-        //   ...mapStore.currentAddress,
-        //   lat: lat,
-        //   lng: lng,
-        // };
         mapStore.currentAddress.lat = lat;
         mapStore.currentAddress.lng = lng;
         mapStore.center = { lat: lat, lng: lng };
@@ -146,10 +124,6 @@ const Maps: React.FC = (props: any) => {
           })
           .then((results) => {
             debugger;
-            // mapStore.currentAddress = {
-            //   ...mapStore.currentAddress,
-            //   address: results.formatted_address,
-            // };
             mapStore.currentAddress.address = results.formatted_address;
             setAddress(results.formatted_address);
             navigate(`/system/welcome/${name}/${uid}`);
@@ -173,22 +147,7 @@ const Maps: React.FC = (props: any) => {
     setOpenModal2(false);
   };
 
-  // const searchMarker = async () => {
-  //   debugger;
-  //   console.log(marker_ref.current);
-  //   const markName = marker_ref.current?.innerText || "";
-  //   await markerStore.SearchMarker(markName);
-  //   debugger;
-  //   if (markerStore.currentMarker != null) {
-  //     debugger;
-  //     const pos: Position = {
-  //       lat: markerStore.currentMarker?.lat,
-  //       lng: markerStore.currentMarker?.lng,
-  //     };
-  //     setCenter(pos);
-  //     setZoom(15);
-  //   }
-  // };
+  
   const editMarker = async (item: MarkerModal) => {
   }
   const deleteMarker = async (item: MarkerModal) => {
@@ -226,13 +185,10 @@ const Maps: React.FC = (props: any) => {
             <GoogleMapReact
               bootstrapURLKeys={{
                 key: "AIzaSyAMPFO6Sc4Ihhl2ciCChm6Am1QVlMtDMb0",
-                // libraries: ["places"],
               }}
               center={center}
               zoom={zoom}
               onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps)}
-            // onClick={onMapClicked}
-            // options={getMapOptions}
             >
               {markerStore.markers?.map((marker, i) => (
                 <Marker
@@ -242,7 +198,6 @@ const Maps: React.FC = (props: any) => {
                   name={marker.name}
                   color={marker.color}
                   address={marker.address}
-                // onClick={onMarkerClick}
                 />
               ))}
             </GoogleMapReact>
@@ -267,52 +222,12 @@ const Maps: React.FC = (props: any) => {
               <IconButton sx={{ p: "10px" }} aria-label="menu">
                 <Menu />
               </IconButton>
-
-
-              {/* <Autocomplete
-                id="asynchronous-demo"
-                sx={{ width: 300 }}
-                open={open}
-                onOpen={() => {
-                  setOpen(true);
-                }}
-                onClose={() => {
-                  setOpen(false);
-                }}
-                isOptionEqualToValue={(option, value) =>
-                  option.title === value.title
-                }
-                getOptionLabel={(option) => option.title}
-                options={options}
-                loading={loading}
-                renderInput={(params) => ( */}
-              {/* // <TextField */}
-              {/* //   {...params}
-                  //   label="Location to search nearby"
-                  //   // placeholder={address}
-                  //   defaultValue={address}
-                  //   inputRef={marker_ref}
-                  //   InputProps={{ */}
-              {/* //     ...params.InputProps,
-                  //     endAdornment: (
-                  //       <React.Fragment>
-                  //         {loading ? ( */}
-              {/* //           <CircularProgress color="inherit" size={15} />
-                  //         ) : null}
-                  //         {params.InputProps.endAdornment}
-                  //       </React.Fragment>
-                  //     ),
-                  //   }}
-                  // />
-                  // )}
-                  // /> */}
               <Paper component="form" sx={{ p: "1vw 2vw" }}>
                 Location to search nearBy
                 <MyAutoComplete />
               </Paper>
               <IconButton
                 type="button"
-                // onClick={handleSelect}
                 sx={{ p: "10px" }}
                 aria-label="search"
               >
@@ -329,7 +244,6 @@ const Maps: React.FC = (props: any) => {
               <Button
                 variant="contained"
                 sx={{ padding: 2, width: "5vw" }}
-                // id="leftTopButton"
                 onClick={handleOpen}
               >
                 Add Location🎯
@@ -354,24 +268,6 @@ const Maps: React.FC = (props: any) => {
                 <Button onClick={onInfoWindowClose}>close</Button>
               </div>
             )}
-            {/* <Modal
-                keepMounted
-                open={openModal}
-                onClose={handleClose}
-                aria-labelledby="keep-mounted-modal-title"
-                aria-describedby="keep-mounted-modal-description"
-            >
-                <Box sx={style}>
-                    <AddLocation/>
-                </Box>
-            </Modal> */}
-            {/* <h3>
-              {clicks.length === 0 ? "Click on map to add markers" : "Clicks"}
-            </h3>
-            {clicks.map((latLng, i) => (
-              <pre key={i}>{JSON.stringify(latLng.toJSON(), null, 2)}</pre>
-            ))}
-            <button onClick={() => setClicks([])}>Clear</button> */}
           </Grid>
         </Grid>
       </Box>

@@ -44,7 +44,7 @@ export default function MyAutoComplete(props: any) {
             lat: lat,
             lng: lng,
             address: description.description,
-            city:"city",
+            city:description.structured_formatting.secondary_text,
 
           };
           markerStore.addAdresses(newAdders);
