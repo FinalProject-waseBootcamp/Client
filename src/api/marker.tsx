@@ -55,9 +55,11 @@ export const putMarker = async (markerId: string, updatedMarker: Marker) => {
     }
 }
 
-export const deleteMarker = async (markerId: string) => {
+export const deleteM = async (markerId: string) => {
     try {
-        await axios.delete(`http://localhost:3333/system/marker?id=${markerId}`);
+        debugger
+       const res= await axios.delete(`http://localhost:3333/marker/${markerId}`);
+        return res.status;
     } catch (err) {
         console.log(err);
     }

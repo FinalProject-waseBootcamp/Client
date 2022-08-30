@@ -14,7 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/icons-material/Menu";
 import Search from "@mui/icons-material/Search";
 import Directions from "@mui/icons-material/Directions";
-import { useNavigate,useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Marker from "./Marker";
 import { Marker as MarkerModal, Position } from "../../utils/modals";
 import markerStore from "../../store/markerStore";
@@ -22,6 +22,9 @@ import { SocketAddress } from "net";
 import MyAutoComplete from "./SearchLocation";
 import mapStore from "../../store/mapStore";
 import AddMarker from "./AddMarker";
+import { deleteM } from "../../api/marker";
+import swal from 'sweetalert';
+import { observer } from 'mobx-react';
 
 interface Film {
   title: string;
@@ -38,8 +41,7 @@ const Maps: React.FC = (props: any) => {
   const { name, uid } = useParams();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState<readonly Film[]>([]);
-  const loading = open && options.length === 0;
+  // const loading = open && options.length === 0;
   const [openInfo, setOpenInfo] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [address, setAddress] = useState("");
@@ -64,7 +66,7 @@ const Maps: React.FC = (props: any) => {
 
   const onInfoWindowClose = () => {
     mapStore.openInfo = false;
-    markerStore.currentMarker = null;
+    markerStore.currentMarker = { lat: 0, lng: 0, name: 'string', address: "string", city: "string", _id: "string" };
     setOpenInfo(false);
     setActiveMarker(null);
   };
@@ -81,8 +83,8 @@ const Maps: React.FC = (props: any) => {
   // };
   useEffect(() => {
     setAddress(mapStore.currentAddress.address);
-    setCurrentLocation({lat: mapStore.currentAddress.lat, lng: mapStore.currentAddress.lng});
-  },[mapStore.currentAddress]);
+    setCurrentLocation({ lat: mapStore.currentAddress.lat, lng: mapStore.currentAddress.lng });
+  }, [mapStore.currentAddress]);
   useEffect(() => {
     debugger;
     mapStore.openInfo ? onInfoWindowOpen() : onInfoWindowClose();
@@ -116,7 +118,7 @@ const Maps: React.FC = (props: any) => {
     };
   };
 
-  const apiIsLoaded = (map: any,maps: any) => {
+  const apiIsLoaded = (map: any, maps: any) => {
     navigator?.geolocation.getCurrentPosition(
       async ({ coords: { latitude: lat, longitude: lng } }) => {
         console.log("lat: " + lat + ", lng: " + lng);
@@ -131,7 +133,7 @@ const Maps: React.FC = (props: any) => {
         mapStore.currentAddress.lng = lng;
         mapStore.center = { lat: lat, lng: lng };
         await fetch(
-          "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key=AIzaSyDuj7uje4eVa30MdHZOmm1sfyfKF22AKnE"
+          "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDuj7uje4eVa30MdHZOmm1sfyfKF22AKnE"
         )
           .then((res) => {
             return res.json();
@@ -178,10 +180,34 @@ const Maps: React.FC = (props: any) => {
   //     setZoom(15);
   //   }
   // };
+  const editMarker = async (item: MarkerModal) => {
+  }
+  const deleteMarker = async (item: MarkerModal) => {
+    swal({
+      title: "Are you sure?",
+      text: " you want to delete this marker?",
+      icon: "warning",
+      dangerMode: true,
+    })
+      .then(async(willDelete) => {
+        if (willDelete) {
+          const res =await deleteM(item._id);
+          if (res == 200) {
+            swal("Poof! Your marker deleted!", {
+              icon: "success",
+            });
+          }
+        } else {
+          swal("Your marker is safe!");
+
+        }
+      });
+  }
+
 
   return (
     <>
-      <Box sx={{ height: "100%", width: "100%",margin:0 }}>
+      <Box sx={{ height: "100%", width: "100%", margin: 0 }}>
         <Grid
           container
           spacing={2}
@@ -195,9 +221,9 @@ const Maps: React.FC = (props: any) => {
               }}
               center={center}
               zoom={zoom}
-              onGoogleApiLoaded={({map,maps}) => apiIsLoaded(map,maps)}
-              // onClick={onMapClicked}
-              // options={getMapOptions}
+              onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps)}
+            // onClick={onMapClicked}
+            // options={getMapOptions}
             >
               {markerStore.markers?.map((marker, i) => (
                 <Marker
@@ -207,13 +233,13 @@ const Maps: React.FC = (props: any) => {
                   name={marker.name}
                   color={marker.color}
                   address={marker.address}
-                  // onClick={onMarkerClick}
+                // onClick={onMarkerClick}
                 />
               ))}
             </GoogleMapReact>
           </Grid>
           <Grid
-           item xs={6} md={4}
+            item xs={6} md={4}
           >
             <div>
               <h4>your current location:</h4>
@@ -232,6 +258,8 @@ const Maps: React.FC = (props: any) => {
               <IconButton sx={{ p: "10px" }} aria-label="menu">
                 <Menu />
               </IconButton>
+
+
               {/* <Autocomplete
                 id="asynchronous-demo"
                 sx={{ width: 300 }}
@@ -270,7 +298,7 @@ const Maps: React.FC = (props: any) => {
                   // )}
                   // /> */}
               <Paper component="form" sx={{ p: "1vw 2vw" }}>
-              Location to search nearBy
+                Location to search nearBy
                 <MyAutoComplete />
               </Paper>
               <IconButton
@@ -310,6 +338,8 @@ const Maps: React.FC = (props: any) => {
                   {markerStore.currentMarker?.email}
                   {markerStore.currentMarker?.phone}
                 </h4>
+                <Button onClick={() => { deleteMarker(markerStore.currentMarker) }}>Delete</Button>
+                <Button onClick={() => { editMarker(markerStore.currentMarker) }}>Edit</Button>
                 <Button onClick={onInfoWindowClose}>close</Button>
               </div>
             )}
@@ -338,4 +368,4 @@ const Maps: React.FC = (props: any) => {
   );
 };
 
-export default Maps;
+export default observer(Maps);

@@ -87,7 +87,6 @@ export default function MySystem() {
   // };
   const handleClick = (item: Marker) => {
     debugger;
-    // alert(item.address);
     mapStore.center = { lat: item.lat, lng: item.lng };
     markerStore.currentMarker = item;
     mapStore.openInfo = true;

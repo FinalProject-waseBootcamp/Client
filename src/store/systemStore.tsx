@@ -42,5 +42,4 @@ class Store {
   }
 }
 const systemStore = new Store();
-
 export default systemStore;

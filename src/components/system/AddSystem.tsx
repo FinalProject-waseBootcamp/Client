@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import "../../css/design.css";
+import "../../style/design.css";
 import { post } from "../../api/system";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";

@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import {Combobox,ComboboxInput,ComboboxPopover,ComboboxList,ComboboxOption,} from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import "../../css/Marker.css";
+import '../../style/Marker.css';
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,

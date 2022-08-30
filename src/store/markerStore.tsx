@@ -20,7 +20,14 @@ async function getSystemMarkers(){
 class Store {
   addresses: any={};
   markers: Marker[] =[];
-  currentMarker: Marker | null = null;
+  currentMarker: Marker ={
+  lat:0,
+  lng:0,
+  name:'string' ,
+  address:"string",
+  city:"string",
+  _id:"string" 
+  };
 
  constructor() {
     makeAutoObservable(this);
@@ -29,37 +36,6 @@ class Store {
     //   const markers:Marker[]=await 
     //   this.markers=markers;
     // }
-    // get();
-    // this.markers.push(
-    //   {
-    //     lat: 32.0461,
-    //     lng: 35.5166,
-    //     name: "S.T.",
-    //     address: "adress",
-    //     color: "blue",
-    //   },
-    //   {
-    //     lat: 34,
-    //     lng: 32,
-    //     name: "Noga",
-    //     address: "adress",
-    //     color: "red",
-    //   },
-    //   {
-    //     lat: 33,
-    //     lng: 32,
-    //     name: "Moshe",
-    //     color: "orange",
-    //     address: "adress",
-    //   },
-    //   {
-    //     lat: 32,
-    //     lng: 32,
-    //     name: "ora",
-    //     color: "green",
-    //     address: "adress",
-    //   }
-    // );
   }
 
   async initMarkers(){

@@ -17,6 +17,7 @@ import  MyAutocomplete from './components/Maps/AutoComplete';
 import { onAuthStateChanged,getAuth } from "firebase/auth";
 import userStore from "./store/userStore";
 import AddMarker from "./components/Maps/AddMarker";
+import Map from "./components/Maps/Map";
 
 
 let theme = createTheme();

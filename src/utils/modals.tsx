@@ -43,6 +43,7 @@ export interface Marker{
   notes?: string,
   email?: string,
   phone?: string,
+  _id: string
 }
 export interface Managers  {
   user_id:  string,
