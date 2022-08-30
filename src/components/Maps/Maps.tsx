@@ -25,7 +25,7 @@ import AddMarker from "./AddMarker";
 import { deleteM } from "../../api/marker";
 import swal from 'sweetalert';
 import { observer } from 'mobx-react';
-
+import EditMarker from "./EditMarker";
 interface Film {
   title: string;
   year: number;
@@ -44,6 +44,8 @@ const Maps: React.FC = (props: any) => {
   // const loading = open && options.length === 0;
   const [openInfo, setOpenInfo] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [openModal2, setOpenModal2] = useState(false);
+
   const [address, setAddress] = useState("");
   const [currentLocation, setCurrentLocation] = useState<Position>({
     lat: mapStore.currentAddress.lat,
@@ -162,6 +164,13 @@ const Maps: React.FC = (props: any) => {
   };
   const handleClose = () => {
     setOpenModal(false);
+  };
+  const handleOpen2 = () => {
+    debugger
+    setOpenModal2(true);
+  };
+  const handleClose2 = () => {
+    setOpenModal2(false);
   };
 
   // const searchMarker = async () => {
@@ -339,7 +348,9 @@ const Maps: React.FC = (props: any) => {
                   {markerStore.currentMarker?.phone}
                 </h4>
                 <Button onClick={() => { deleteMarker(markerStore.currentMarker) }}>Delete</Button>
-                <Button onClick={() => { editMarker(markerStore.currentMarker) }}>Edit</Button>
+                <Button  onClick={handleOpen2} >Edit
+                {openModal2 && <EditMarker/>}
+                </Button>
                 <Button onClick={onInfoWindowClose}>close</Button>
               </div>
             )}

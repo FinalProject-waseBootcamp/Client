@@ -9,12 +9,7 @@ import usePlacesAutocomplete, {
 import { useNavigate, useParams } from "react-router";
 import markerStore from "../../store/markerStore";
 import { Marker } from "../../utils/modals";
-import axios from "axios";
-import systemStore from "../../store/systemStore";
-import userStore from "../../store/userStore";
-import { getAuth } from "firebase/auth";
-import mapStore from "../../store/mapStore";
-import { IconButton, InputBase, Paper } from "@mui/material";
+import { InputBase, Paper } from "@mui/material";
 
 export default function MyAutoComplete(props: any) {
   const {
