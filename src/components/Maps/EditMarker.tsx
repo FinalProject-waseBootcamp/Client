@@ -73,12 +73,12 @@ const EditMarker = () => {
             notes: inputNotes.current?.value,
             email: inputEmail.current?.value,
             phone: inputPhone.current?.value,
-            address: markerStore.addresses.address,
-            lng: markerStore.addresses.lng,
-            lat: markerStore.addresses.lat,
+            address: markerStore.address.address,
+            lng: markerStore.address.lng,
+            lat: markerStore.address.lat,
         }
         swal({
-            title: `Want to define ${markerStore.addresses.address} as your location?`,
+            title: `Want to define ${markerStore.address.address} as your location?`,
             buttons: ["Cancel", "Ok"],
         }).then(async (willDefine) => {
             debugger;

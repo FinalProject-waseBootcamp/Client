@@ -18,18 +18,27 @@ export const get = async () => {
         })
         return systemssList;
     }catch (error) {
-        console.log('error in get systems', error);
+        console.log('error in get all systems', error);
     }
 }
 export const getById = async (systemId: string) => {
     try {
-        const Request = await axios.get(`http://localhost:3333/system/${systemId}`);
-        return Request;
+        const response = await axios.get(`http://localhost:3333/system/${systemId}`);
+        return response.data;
     } catch (error) {
-        console.log('error in get systems', error);
+        console.log('error in get system', error);
     }
 }
-export const post=async(newSystem:Isystem)=>{
+
+export const getByAdminId = async (adminId: string) => {
+    try {
+        const response = await axios.get(`http://localhost:3333/system?adminId=${adminId}`);
+        return response.data;
+    } catch (error) {
+        console.log('error in get manager systems', error);
+    }
+}
+export const postSystem=async(newSystem:Isystem)=>{
     try{
         debugger;
         console.log(newSystem);

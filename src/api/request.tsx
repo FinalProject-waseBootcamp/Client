@@ -9,24 +9,24 @@ export const post = async (newRequest: Request) => {
     } catch (error) {
         console.log('error in create newRequest', error);
     }
-
 }
 
 export const getAllRequests = async () => {
     try {
         const response = await axios.get('http://localhost:3333/request');
-        const RequestsList: Request[] = await response.data.map((requests: Request) => {
-            return {
-                firstName: requests.firstName,
-                lastName: requests.lastName,
-                email: requests.email,
-                phone: requests.phone,
-                system_id: requests.system_id,
-                display_name: requests.display_name,
-                status: requests.status,
-                notes: requests.notes
-            }
-        })
+        const RequestsList: Request[] = await response.data;
+        // .map((requests: Request) => {
+        //     return {
+        //         firstName: requests.firstName,
+        //         lastName: requests.lastName,
+        //         email: requests.email,
+        //         phone: requests.phone,
+        //         system_id: requests.system_id,
+        //         display_name: requests.display_name,
+        //         status: requests.status,
+        //         notes: requests.notes
+        //     }
+        // })
         return RequestsList;
     } catch (error) {
         console.log('error in get requests', error);

@@ -1,11 +1,11 @@
 import { System } from "../utils/modals";
 import { makeAutoObservable } from "mobx";
-import {getById, post} from "../api/system";
+import { getByAdminId, postSystem} from "../api/system";
 import userStore from "./userStore";
 
 const addSystem = async (system: System) => {
   try {
-    const res = await post(system);
+    const res = await postSystem(system);
     const data = await res.data;
     console.log(data);
     return data;
@@ -16,20 +16,21 @@ const addSystem = async (system: System) => {
 
 const getSystems = async (managerId: string) => {
   try {
-    const systemsList = await getById(managerId);
-    return systemsList;
+    const systemList = await getByAdminId(managerId);
+    debugger
+    return systemList;
   } catch (error) {
     console.log(error);
   }
 };
 
 class Store {
-  systems: System|any |null[] = [];
-  currentSystem:System|any |null= null;
+  systems: System[] = [];
+  currentSystem:System |null= null;
 
   async loadSystems() {
-    debugger;
-    this.systems = await getSystems(userStore.user.uid);
+    debugger
+    this.systems = await getSystems(userStore.user.uid) as System[];
   }
 
   async addSystem(system: System) {
@@ -39,6 +40,7 @@ class Store {
   }
   constructor() {
     makeAutoObservable(this);
+    this.loadSystems();
   }
 }
 const systemStore = new Store();

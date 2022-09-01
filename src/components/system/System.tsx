@@ -41,8 +41,8 @@ export default function MySystem() {
     top: "43%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 300,
-    height: 520,
+    width: 800,
+    height: 550,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -52,7 +52,7 @@ export default function MySystem() {
   const getCurrentSystem = async () => {
     try {
       const response = await getById(uid);
-      const currentSystem: System = response?.data;
+      const currentSystem: System = response;
       systemStore.currentSystem = currentSystem;
       setCurrentSystem(currentSystem);
     } catch (err) {
@@ -171,7 +171,7 @@ export default function MySystem() {
       </Modal>
       <div id="contributeDiv">
         <h5>HAVE THAT OBJECT TOO ? SIGN IN AND PEOPLE WILL BE HELPED BY YOU</h5>
-        <Button onClick={handleOpen}>SIGN IN TO ADD LOCATION</Button>
+        <Button onClick={handleOpen}>SIGN UP TO ADD LOCATION</Button>
       </div>
       {/* for admin only 👇*/}
       {/* {user?.uid&&

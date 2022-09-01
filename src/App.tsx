@@ -34,10 +34,11 @@ theme = createTheme(theme, {
 
 let auth = getAuth();
 let user = auth.currentUser;
+console.log(user);
 onAuthStateChanged(auth, (user) => {
   auth = getAuth();
   user = auth.currentUser;
-  userStore.addUser(user);
+  userStore.setUser(user);
 });
 
 

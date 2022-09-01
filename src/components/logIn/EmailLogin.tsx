@@ -25,7 +25,7 @@ export default function EmailLogin() {
       user.getIdToken().then((value=>{
         debugger
         console.log(value);
-        userStore.addUser(user);
+        userStore.setUser(user);
       }))
       console.log("userStore.user :",userStore.user);
       navigate("/addSystem");
