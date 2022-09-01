@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
-import {put}  from "../../api/system";
+import { put } from "../../api/system";
 import systemStore from "../../store/systemStore";
 import userStore from "../../store/userStore";
 import { getAuth } from "firebase/auth";
@@ -54,27 +54,24 @@ export default function AddSystem() {
         ...newSystem,
         siteUrl: newUrl,
       };
-
-      systemStore.addSystem(updatedSystem);
-        const manager: any = {
-            "user_id": userStore.user._id,
-            "system_id":uid,
-            "active": true,
-            "display_name": newSystem.name,
-            "role":Roles.ADMIN ,
-            "invitation_sent": "?"
-        }
-        // const newManager: Manager = await postManager(manager);
-        await ManagerStore.addManager(manager);
       try {
-        await put(uid,updatedSystem);
+        await put(uid, updatedSystem);
       } catch (err) {
         console.log(err);
       }
+      const manager: Manager = {
+        user_id: userStore.user.uid,
+        systemId: uid,
+        active: true,
+        display_name: newSystem.name,
+        role: Roles.ADMIN,
+        invitation_sent: "?",
+      };
+      await ManagerStore.addManager(manager);
       swal("your new url for system is: " + newUrl).then(() =>
         window.open(newUrl, "_blank")
       );
-      navigate('/adminSystems')
+      navigate("/adminSystems");
       return newUrl;
     } catch (err) {
       console.log(err);

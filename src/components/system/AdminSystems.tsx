@@ -25,6 +25,14 @@ export default function AdminSystems() {
 
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   userStore.setUser(user);
+  //   setAdminId(user?.uid);
+  //   getSystems();
+  // },[]);
+  useEffect(() => {
+    setMySystems(systemStore.systems);
+  },[systemStore.systems])
   onAuthStateChanged(auth, (user) => {
     auth = getAuth();
     user = auth.currentUser;
