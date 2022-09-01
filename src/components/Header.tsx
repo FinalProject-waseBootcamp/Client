@@ -26,7 +26,7 @@ export default function Header() {
   onAuthStateChanged(auth, (user) => {
     auth = getAuth();
     user = auth.currentUser;
-    userStore.addUser(user);
+    userStore.setUser(user);
     setCurrentUser(user);
   });
 

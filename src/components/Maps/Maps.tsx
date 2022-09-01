@@ -16,16 +16,17 @@ import Search from "@mui/icons-material/Search";
 import Directions from "@mui/icons-material/Directions";
 import { useNavigate, useParams } from "react-router";
 import Marker from "./Marker";
-import { Marker as MarkerModal, Position } from "../../utils/modals";
+import { Marker as MarkerModal, Position, Roles } from "../../utils/modals";
 import markerStore from "../../store/markerStore";
 import { SocketAddress } from "net";
 import MyAutoComplete from "./SearchLocation";
 import mapStore from "../../store/mapStore";
 import AddMarker from "./AddMarker";
 import { deleteM } from "../../api/marker";
-import swal from 'sweetalert';
-import { observer } from 'mobx-react';
+import swal from "sweetalert";
+import { observer } from "mobx-react";
 import EditMarker from "./EditMarker";
+import ManagerStore from "../../store/mangersStore";
 interface Film {
   title: string;
   year: number;
@@ -51,13 +52,22 @@ const Maps: React.FC = (props: any) => {
   });
   const [center, setCenter] = useState<Position>(currentLocation);
   const [zoom, setZoom] = useState<number>(15);
-  const [markers, setMarkers] = useState<MarkerModal[]>([...markerStore.markers,]);
+  const [markers, setMarkers] = useState<MarkerModal[]>([
+    ...markerStore.markers,
+  ]);
   const marker_ref = useRef<HTMLInputElement>();
   const [activeMarker, setActiveMarker] = useState<MarkerModal | null>(null);
- 
+
   const onInfoWindowClose = () => {
     mapStore.openInfo = false;
-    markerStore.currentMarker = { lat: 0, lng: 0, name: 'string', address: "string", city: "string", _id: "string" };
+    markerStore.currentMarker = {
+      lat: 0,
+      lng: 0,
+      name: "string",
+      address: "string",
+      city: "string",
+      _id: "string",
+    };
     setOpenInfo(false);
     setActiveMarker(null);
   };
@@ -66,10 +76,12 @@ const Maps: React.FC = (props: any) => {
     setOpenInfo(true);
   };
 
-
   useEffect(() => {
     setAddress(mapStore.currentAddress.address);
-    setCurrentLocation({ lat: mapStore.currentAddress.lat, lng: mapStore.currentAddress.lng });
+    setCurrentLocation({
+      lat: mapStore.currentAddress.lat,
+      lng: mapStore.currentAddress.lng,
+    });
   }, [mapStore.currentAddress]);
   useEffect(() => {
     debugger;
@@ -113,7 +125,11 @@ const Maps: React.FC = (props: any) => {
         mapStore.currentAddress.lng = lng;
         mapStore.center = { lat: lat, lng: lng };
         await fetch(
-          "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDuj7uje4eVa30MdHZOmm1sfyfKF22AKnE"
+          "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+            lat +
+            "," +
+            lng +
+            "&key=AIzaSyDuj7uje4eVa30MdHZOmm1sfyfKF22AKnE"
         )
           .then((res) => {
             return res.json();
@@ -133,45 +149,40 @@ const Maps: React.FC = (props: any) => {
   };
 
   const handleOpen = () => {
-    debugger
+    debugger;
     setOpenModal(true);
   };
   const handleClose = () => {
     setOpenModal(false);
   };
   const handleOpen2 = () => {
-    debugger
+    debugger;
     setOpenModal2(true);
   };
   const handleClose2 = () => {
     setOpenModal2(false);
   };
 
-  
-  const editMarker = async (item: MarkerModal) => {
-  }
+  const editMarker = async (item: MarkerModal) => {};
   const deleteMarker = async (item: MarkerModal) => {
     swal({
       title: "Are you sure?",
       text: " you want to delete this marker?",
       icon: "warning",
       dangerMode: true,
-    })
-      .then(async(willDelete) => {
-        if (willDelete) {
-          const res =await deleteM(item._id);
-          if (res == 200) {
-            swal("Poof! Your marker deleted!", {
-              icon: "success",
-            });
-          }
-        } else {
-          swal("Your marker is safe!");
-
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        const res = await deleteM(item._id);
+        if (res == 200) {
+          swal("Poof! Your marker deleted!", {
+            icon: "success",
+          });
         }
-      });
-  }
-
+      } else {
+        swal("Your marker is safe!");
+      }
+    });
+  };
 
   return (
     <>
@@ -190,9 +201,9 @@ const Maps: React.FC = (props: any) => {
               zoom={zoom}
               onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps)}
             >
-              {markerStore.markers?.map((marker, i) => (
+              {markerStore.markers?.map((marker) => (
                 <Marker
-                  key={i}
+                  key={marker.lat + marker.lng}
                   lat={marker.lat}
                   lng={marker.lng}
                   name={marker.name}
@@ -202,9 +213,7 @@ const Maps: React.FC = (props: any) => {
               ))}
             </GoogleMapReact>
           </Grid>
-          <Grid
-            item xs={6} md={4}
-          >
+          <Grid item xs={6} md={4}>
             <div>
               <h4>your current location:</h4>
               <h6>({currentLocation.lat + " , " + currentLocation?.lng})</h6>
@@ -226,11 +235,7 @@ const Maps: React.FC = (props: any) => {
                 Location to search nearBy
                 <MyAutoComplete />
               </Paper>
-              <IconButton
-                type="button"
-                sx={{ p: "10px" }}
-                aria-label="search"
-              >
+              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
                 <Search />
               </IconButton>
               <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
@@ -241,13 +246,16 @@ const Maps: React.FC = (props: any) => {
               >
                 <Directions />
               </IconButton>
-              <Button
-                variant="contained"
-                sx={{ padding: 2, width: "5vw" }}
-                onClick={handleOpen}
-              >
-                Add Location🎯
-              </Button>
+              {/* {ManagerStore.currentManager &&
+                ManagerStore.currentManager.role === Roles.ADMIN && ( */}
+                  <Button
+                    variant="contained"
+                    sx={{ padding: 2, width: "5vw" }}
+                    onClick={handleOpen}
+                  >
+                    Add Location🎯
+                  </Button>
+                {/* // )} */}
             </Paper>
             {openModal && <AddMarker />}
             {openInfo && (
@@ -261,9 +269,16 @@ const Maps: React.FC = (props: any) => {
                   {markerStore.currentMarker?.email}
                   {markerStore.currentMarker?.phone}
                 </h4>
-                <Button onClick={() => { deleteMarker(markerStore.currentMarker) }}>Delete</Button>
-                <Button  onClick={handleOpen2} >Edit
-                {openModal2 && <EditMarker/>}
+                <Button
+                  onClick={() => {
+                    deleteMarker(markerStore.currentMarker);
+                  }}
+                >
+                  Delete
+                </Button>
+                <Button onClick={handleOpen2}>
+                  Edit
+                  {openModal2 && <EditMarker />}
                 </Button>
                 <Button onClick={onInfoWindowClose}>close</Button>
               </div>

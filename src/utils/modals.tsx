@@ -1,3 +1,5 @@
+// import mongoose from 'mongoose';
+
 export enum Roles {
   MAIN_ADMIN,
   ADMIN,
@@ -45,7 +47,7 @@ export interface Marker{
   phone?: string,
   _id: string
 }
-export interface Managers  {
+export interface Manager  {
   user_id:  string,
   systemId: string,
   active: boolean,
@@ -62,14 +64,22 @@ export interface Map{
   zoom:number;
   center:Position
 }
-
 export interface Request {
-  firstName: string
-  lastName: string
-  email: string
-  phone: string
-  system_id: string,
-  display_name: string
   status: Status,
-  notes: string
+  // system_id: mongoose.Schema.Types.ObjectId,
+  system_id: string,
+  firstName: string,
+  lastName: string,
+  email: string,
+  phone: string,
+  // notesForManager: string,
+  display_name: string,
+  description: string,
+  notesForDiaplay: string,
+  markerAddress:{
+      land:string,
+      city:string,
+      street:string,
+      building:string
+  }
 }

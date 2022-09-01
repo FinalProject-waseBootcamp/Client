@@ -29,7 +29,7 @@ export default function SuperLogin() {
           
       user.getIdToken().then(value=>{
         console.log(value);
-        userStore.addUser(user);
+        userStore.setUser(user);
         navigate("/addSystem");
         // alert("userStore.user :"+userStore.user.displayName+" photo: "+userStore.user.photoURL);
       })

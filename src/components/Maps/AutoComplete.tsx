@@ -47,8 +47,8 @@ export default function MyAutoComplete(props: any) {
             city:description.structured_formatting.secondary_text,
 
           };
-          markerStore.addAdresses(newAdders);
-          console.log("addresses: ", markerStore.addresses);
+          markerStore.addAdress(newAdders);
+          console.log("addresses: ", markerStore.address);
           debugger;
         })
         .catch((error) => {

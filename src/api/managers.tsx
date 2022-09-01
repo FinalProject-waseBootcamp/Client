@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { Managers } from '../utils/modals'
+import { Manager } from '../utils/modals'
 
 
-export const post = async (newManager: Managers) => {
+export const postManager = async (newManager: Manager) => {
     try {
         const response = await axios.post('http://localhost:3333/manager', newManager);
         return response.data;
@@ -15,7 +15,7 @@ export const post = async (newManager: Managers) => {
 export const getAllManagers = async () => {
     try {
         const response = await axios.get('http://localhost:3333/manager');
-        const ManagersList: Managers[] = await response.data.map((manager: Managers) => {
+        const ManagersList: Manager[] = await response.data.map((manager: Manager) => {
             return {
                 user_id: manager.user_id,
                 systemId: manager.systemId,
@@ -39,7 +39,7 @@ export const getByIds = async (managerId: string,systemId :string)=> {
     }
 }
 
-export const putManager = async (managerId: string, updatedManager: Managers) => {
+export const putManager = async (managerId: string, updatedManager: Manager) => {
     try {
         await axios.put(`http://localhost:3333/system/manager?id=${managerId}`, updatedManager);
     } catch (err) {

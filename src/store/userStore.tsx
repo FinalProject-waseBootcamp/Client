@@ -2,11 +2,14 @@ import {  User } from '../utils/modals';
 import {makeAutoObservable} from 'mobx';
 import { getAuth } from 'firebase/auth';
 
+interface FireBaseUser{
 
+}
 class Store{
     user:any;
+    // user:FireBaseUser;
    
-    async addUser(user:any){
+    async setUser(user:any){
         this.user=user;
         console.log(this.user)
     }

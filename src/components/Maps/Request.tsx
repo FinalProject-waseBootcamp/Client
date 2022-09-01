@@ -7,36 +7,97 @@ import { Request, Status } from "../../utils/modals";
 import axios from "axios";
 import systemStore from "../../store/systemStore";
 import { useForm } from "react-hook-form";
+import { Textarea } from "evergreen-ui";
+import { post } from "../../api/request";
+import swal from "sweetalert";
 
 export default function Requests() {
-  const firstName_ref = useRef<HTMLInputElement>();
-  const lastName_ref = useRef<HTMLInputElement>();
-  const email_ref = useRef<HTMLInputElement>();
-  const phone_ref = useRef<HTMLInputElement>();
-  const displayName_ref = useRef<HTMLInputElement>();
-  const notes_ref = useRef<any>();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Request>();
-
-  const handleSave = async () => {
-    debugger;
+  } = useForm<Request>({
+    mode: "onChange",
+  });
+  const registerOptions = {
+    firstName: {
+      required: " First Name is required",
+      minLength: {
+        value: 2,
+        message: "too short First Name",
+      },
+      maxLength: {
+        value: 10,
+        message: "too long First Name",
+      },
+    },
+    lastName: {
+      required: "Last Name is required",
+      minLength: {
+        value: 2,
+        message: "too short Last Name",
+      },
+      maxLength: {
+        value: 10,
+        message: "too long Last Name",
+      },
+    },
+    general: {
+      required: " required",
+      minLength: {
+        value: 2,
+        message: "too short",
+      },
+      maxLength: {
+        value: 20,
+        message: "too long",
+      },
+    },
+    email: {
+      required: "Email is required",
+      pattern: {
+        value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+$/,
+        message: "Email is not valid",
+      },
+    },
+    phone: {
+      required: "Phone is required",
+      minLength: {
+        value: 9,
+        message: "too short phone number",
+      },
+      maxLength: {
+        value: 20,
+        message: "too long phone number",
+      },
+    },
+    description: {
+      required: "Description is required",
+      maxLength: {
+        value: 30,
+        message: "Description is too long",
+      },
+    },
+    notes: {
+      maxLength: {
+        message: "Too long",
+        value: 50,
+      },
+    },
+    building: {
+      required:"required"
+    },
+  };
+  const onSubmit = async (data: any) => {
     const newRequest: Request = {
-      firstName: firstName_ref.current?.value || "",
-      lastName: lastName_ref.current?.value || "",
-      email: email_ref.current?.value || "",
-      phone: phone_ref.current?.value || "",
-      system_id: {...systemStore.currentSystem}._id,
-      display_name: displayName_ref.current?.value || "",
+      ...data,
+      system_id: { ...systemStore.currentSystem }._id,
       status: Status.SENT,
-      notes: notes_ref.current?.value || "",
     };
+    alert(JSON.stringify(newRequest));
     try {
-      debugger;
-      await axios.post("http://localhost:3333/request", newRequest);
-      debugger;
+      await post(newRequest);
+      swal("SAVED", "success ","success");
     } catch (e) {
       debugger;
       console.log(e);
@@ -52,127 +113,125 @@ export default function Requests() {
         }}
         noValidate
         autoComplete="off"
+        onSubmit={handleSubmit(onSubmit)}
       >
-        <div>
-          <h4>Fill your Details for add Location Request</h4>
-          <div
-            style={{
-              border: "1px solid #4c6a92",
-              borderRadius: "5px",
-              margin: "2vh",
-            }}
-          >
-            <h6>these fields will not be shown to anyOne besides you</h6>
-            <nav style={{ display: "flex", flexDirection: "row" }}>
-              <TextField
-                label="first name"
-                id="outlined-size-small"
-                size="small"
-                inputRef={firstName_ref}
-                {...register("firstName", {
-                  required: true,
-                  minLength: 2,
-                  maxLength: 20,
-                })}
-              />
-              {errors.firstName?.type === "minLength" && (
-                <span>too short firstName</span>
-              )}
-              {errors.firstName?.type === "maxLength" && (
-                <span>too long firstName</span>
-              )}
-              {errors.firstName?.type === "required" && <span>required</span>}
-              <TextField
-                label="last name"
-                id="outlined-size-small"
-                size="small"
-                inputRef={lastName_ref}
-                {...register("lastName", {
-                  required: true,
-                  minLength: 2,
-                  maxLength: 20,
-                })}
-              />
-              {errors.lastName?.type === "minLength" && (
-                <span>too short lastName</span>
-              )}
-              {errors.lastName?.type === "maxLength" && (
-                <span>too long lastName</span>
-              )}
-              {errors.lastName?.type === "required" && <span>required</span>}
-            </nav>
-          </div>
-          <div
-            style={{
-              border: "1px solid #4c6a92",
-              borderRadius: "5px",
-              margin: "2vh",
-            }}
-          >
+        <h4>Fill your Details for adding Location Request</h4>
+        <div
+          style={{
+            border: "1px solid #4c6a92",
+            borderRadius: "5px",
+            margin: "2vh",
+          }}
+        >
+          <h5>Personal Details</h5>
+          these fields will not be shown to customers
+          <nav style={{ display: "flex", flexDirection: "row" }}>
             <TextField
-              label="email"
+              label="first name"
               id="outlined-size-small"
               size="small"
-              inputRef={email_ref}
-              {...register("email", {
-                required: true,
-                minLength: 2,
-                maxLength: 20,
-              })}
+              {...register("firstName", registerOptions.firstName)}
             />
-            {errors.email?.type === "minLength" && (
-              <span>too short address</span>
-            )}
-            {errors.email?.type === "maxLength" && (
-              <span>too long address</span>
-            )}
-            {errors.email?.type === "required" && <span>required</span>}
+            <small>{errors.firstName && errors.firstName.message}</small>
+
             <TextField
-              label="phone"
+              label="last name"
               id="outlined-size-small"
               size="small"
-              inputRef={phone_ref}
-              {...register("phone", {
-                required: true,
-                minLength: 9,
-                maxLength: 20,
-              })}
+              {...register("lastName", registerOptions.lastName)}
             />
-            {errors.phone?.type === "minLength" && (
-              <span>too short number</span>
-            )}
-            {errors.phone?.type === "maxLength" && <span>too long number</span>}
-            {errors.phone?.type === "required" && <span>required</span>}
+            <small>{errors.lastName && errors.lastName.message}</small>
+          </nav>
+        </div>
+        <div
+          style={{
+            border: "1px solid #4c6a92",
+            borderRadius: "5px",
+            margin: "2vh",
+          }}
+        >
+          <nav>
             <TextField
               label="display name"
               id="outlined-size-small"
               size="small"
-              inputRef={displayName_ref}
-              {...register("display_name", {
-                required: true,
-                minLength: 2,
-                maxLength: 20,
-              })}
+              {...register("display_name", registerOptions.general)}
             />
-            {errors.display_name?.type === "minLength" && (
-              <span>too short name</span>
-            )}
-            {errors.display_name?.type === "maxLength" && (
-              <span>too long name</span>
-            )}
-            {errors.display_name?.type === "required" && <span>required</span>}
-            <TextareaAutosize
-              placeholder="notes"
+            <small>{errors.display_name && errors.display_name.message}</small>
+          </nav>
+          <nav>
+            <TextField
+              label="email"
               id="outlined-size-small"
-              {...register("notes", {
-                maxLength: 100,
-              })}
-              ref={notes_ref}
+              size="small"
+              {...register("email", registerOptions.email)}
             />
-            {errors.notes?.type === "maxLength" && <span>too long</span>}
-          </div>
+            <small>{errors.email && errors.email.message}</small>
+            <TextField
+              label="phone"
+              id="outlined-size-small"
+              size="small"
+              {...register("phone", registerOptions.phone)}
+            />
+            <small>{errors.phone && errors.phone.message}</small>
+          </nav>
+          <nav style={{ display:"flex",flexDirection: "row",flexWrap:"nowrap"}}>
+            <h6>Describe your object</h6>
+            <TextField
+              label="description"
+              id="outlined-size-small"
+              size="small"
+              {...register("description", registerOptions.description)}
+            />
+            <small>{errors.description && errors.description.message}</small>
+            <Textarea
+              style={{
+                resize: "none",
+                width: "25%",
+                margin: "5px",
+              }}
+              placeholder="notes for customers"
+              id="outlined-size-small"
+              {...register("notesForDiaplay", registerOptions.notes)}
+            />
+            <small>
+              {errors.notesForDiaplay && errors.notesForDiaplay.message}
+            </small>
+          </nav>
+
+          <nav style={{ display:"flex",flexDirection: "row",flexWrap:"nowrap"}}>
+            <h5>Location</h5>
+            <TextField
+              label="land"
+              id="outlined-size-small"
+              size="small"
+              {...register("markerAddress.land", registerOptions.general)}
+            />
+            <small>{errors.markerAddress && errors.markerAddress.message}</small>
+            <TextField
+              label="city"
+              id="outlined-size-small"
+              size="small"
+              {...register("markerAddress.city", registerOptions.general)}
+            />
+            <small>{errors.markerAddress && errors.markerAddress.message}</small>
+            <TextField
+              label="street"
+              id="outlined-size-small"
+              size="small"
+              {...register("markerAddress.street", registerOptions.general)}
+            />
+            <small>{errors.markerAddress && errors.markerAddress.message}</small>
+            <TextField
+              label="building"
+              id="outlined-size-small"
+              size="small"
+              {...register("markerAddress.building", registerOptions.building)}
+            />
+            <small>{errors.markerAddress && errors.markerAddress.message}</small>
+          </nav>
         </div>
-        <Button onClick={handleSubmit(handleSave)}>Save</Button>
+        <Button type="submit">save</Button>
       </Box>
     </>
   );

@@ -17,7 +17,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Header from "../Header";
 
 export default function AdminSystems() {
-  debugger
+
   let auth = getAuth();
   let user = auth.currentUser;
   const [mySystems, setMySystems] = useState<System[]>([]);
@@ -25,11 +25,18 @@ export default function AdminSystems() {
 
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   userStore.setUser(user);
+  //   setAdminId(user?.uid);
+  //   getSystems();
+  // },[]);
+  useEffect(() => {
+    setMySystems(systemStore.systems);
+  },[systemStore.systems])
   onAuthStateChanged(auth, (user) => {
-    debugger
     auth = getAuth();
     user = auth.currentUser;
-    userStore.addUser(user);
+    userStore.setUser(user);
     setAdminId(user?.uid);
     getSystems();
   });
