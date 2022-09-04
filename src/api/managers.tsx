@@ -32,16 +32,17 @@ export const getAllManagers = async () => {
 }
 export const getByIds = async (managerId: string,systemId :string)=> {
     try {
-        const Manager = await axios.get(`http://localhost:3333/manager?mId=${managerId}sId=${systemId}`);
-        return Manager;
+        debugger
+        const Manager = await axios.get(`http://localhost:3333/manager/1?mId=${managerId}&sId=${systemId}`);
+        return Manager.data;
     } catch (error) {
-        console.log('error in get systems', error);
+        console.log('error in get Manager', error);
     }
 }
 
 export const putManager = async (managerId: string, updatedManager: Manager) => {
     try {
-        await axios.put(`http://localhost:3333/system/manager?id=${managerId}`, updatedManager);
+        await axios.put(`http://localhost:3333/system/manager/${managerId}`, updatedManager);
     } catch (err) {
         console.log(err);
     }
@@ -49,7 +50,7 @@ export const putManager = async (managerId: string, updatedManager: Manager) => 
 
 export const deleteManager = async (managerId: string) => {
     try {
-        await axios.delete(`http://localhost:3333/system/managers?id=${managerId}`);
+        await axios.delete(`http://localhost:3333/system/manager/${managerId}`);
     } catch (err) {
         console.log(err);
     }

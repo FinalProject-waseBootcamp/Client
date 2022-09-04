@@ -16,7 +16,7 @@ import Search from "@mui/icons-material/Search";
 import Directions from "@mui/icons-material/Directions";
 import { useNavigate, useParams } from "react-router";
 import Marker from "./Marker";
-import { Marker as MarkerModal, Position, Roles } from "../../utils/modals";
+import { Manager, Marker as MarkerModal, Position, Roles } from "../../utils/modals";
 import markerStore from "../../store/markerStore";
 import { SocketAddress } from "net";
 import MyAutoComplete from "./SearchLocation";
@@ -27,6 +27,9 @@ import swal from "sweetalert";
 import { observer } from "mobx-react";
 import EditMarker from "./EditMarker";
 import ManagerStore from "../../store/mangersStore";
+import userStore from "../../store/userStore";
+import systemStore from "../../store/systemStore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 interface Film {
   title: string;
   year: number;
@@ -57,6 +60,7 @@ const Maps: React.FC = (props: any) => {
   ]);
   const marker_ref = useRef<HTMLInputElement>();
   const [activeMarker, setActiveMarker] = useState<MarkerModal | null>(null);
+  const [manager, setManager] = useState<Manager | null>(null);
 
   const onInfoWindowClose = () => {
     mapStore.openInfo = false;
@@ -75,7 +79,27 @@ const Maps: React.FC = (props: any) => {
     setActiveMarker(markerStore.currentMarker);
     setOpenInfo(true);
   };
-
+  const isManager = async () => {
+    debugger;
+    if (userStore.user) {
+      const manager=await ManagerStore.setManagerByUserIdAndSystemId(
+        userStore.user.uid,
+        uid
+      );
+      setManager(manager);
+      debugger;
+      console.log(ManagerStore.currentManager.role);
+    }
+  };
+  let auth = getAuth();
+  let user = auth.currentUser;
+  console.log(user);
+  onAuthStateChanged(auth, (user) => {
+    auth = getAuth();
+    user = auth.currentUser;
+    userStore.setUser(user);
+    isManager();
+  });
   useEffect(() => {
     setAddress(mapStore.currentAddress.address);
     setCurrentLocation({
@@ -246,8 +270,11 @@ const Maps: React.FC = (props: any) => {
               >
                 <Directions />
               </IconButton>
-              {/* {ManagerStore.currentManager &&
-                ManagerStore.currentManager.role === Roles.ADMIN && ( */}
+              {ManagerStore.currentManager &&
+                // ManagerStore.currentManager.role === Roles.ADMIN &&
+                 ManagerStore.currentManager.systemId == uid
+                 && ManagerStore.currentManager.user_id == userStore.user.uid&&
+                (
                   <Button
                     variant="contained"
                     sx={{ padding: 2, width: "5vw" }}
@@ -255,7 +282,7 @@ const Maps: React.FC = (props: any) => {
                   >
                     Add Location🎯
                   </Button>
-                {/* // )} */}
+                )}
             </Paper>
             {openModal && <AddMarker />}
             {openInfo && (

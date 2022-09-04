@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { postManager } from '../api/managers';
+import { getByIds, postManager } from '../api/managers';
 import { Manager } from '../utils/modals';
 
 class Store {
@@ -14,9 +14,12 @@ class Store {
         this.currentManager = manager;
     }
 
-    // async getManagersByUserIdAndSystemId(user_id: string, system_id: string) {
-    //     this.currentManager = await getByIds(user_id, system_id)
-    // }
+    async setManagerByUserIdAndSystemId(user_id: string, system_id: string) {
+        debugger
+        const manager=await getByIds(user_id, system_id) as Manager;
+        this.currentManager = manager;
+        return manager;
+    }
 
 }
 const ManagerStore = new Store();
