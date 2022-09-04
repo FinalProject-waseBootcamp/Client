@@ -53,8 +53,14 @@ const AddMarker = () => {
     const inputNotes = useRef<HTMLInputElement>();
     const inputcolor = useRef<HTMLInputElement>();
 
-
-
+    useEffect(() => {
+        debugger;
+        handleClickOpen();
+    }, []);
+    useEffect(() => {
+        console.log(openDialog);
+    }, [openDialog]);
+ 
     const handleClickOpen = () => {
         setOpenDialog(true);
     };
@@ -104,7 +110,7 @@ const AddMarker = () => {
         });
         handleClose()
     }
-    
+
     return (
         <Paper
             component="form"

@@ -15,32 +15,41 @@ import userStore from "../../store/userStore";
 import systemStore from "../../store/systemStore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Header from "../Header";
+import { getByAdminId } from '../../api/system'
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function AdminSystems() {
   let auth = getAuth();
-  let user = auth.currentUser;
   const [mySystems, setMySystems] = useState<System[]>([]);
+  const [user, loading, error] = useAuthState(auth);
   const [adminId, setAdminId] = useState(user?.uid);
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   // userStore.setUser(user);
-  //   setAdminId(user?.uid);
-  //   getSystems();
-  // }, []);
+  useEffect(() => {
+    debugger
+    userStore.setUser(user);
+    setAdminId(user?.uid);
+    getSystems();
+    auth = getAuth();
+    getSystems();
+  }, []);
 
-  // useEffect(() => {
-  //   setMySystems(systemStore.systems);
-  // }, [systemStore.systems]);
+  useEffect(() => {
+    debugger
+    if (loading) {
+      return;
+    }
+    if (user) {
+      setAdminId(user?.uid);
+    }
+  }, [userStore.user])
 
-  // onAuthStateChanged(auth, (user) => {
-  //   auth = getAuth();
-  //   user = auth.currentUser;
-  //   userStore.setUser(user);
-  //   setAdminId(user?.uid);
-  //   getSystems();
-  // });
+  useEffect(() => { 
+    getSystems();
+    setMySystems(systemStore.systems);    
+  }, [adminId])
+
 
   const deleteSystem = async (uid: string) => {
     try {
@@ -71,12 +80,10 @@ export default function AdminSystems() {
 
   const getSystems = async () => {
     try {
-      debugger;
-      const res = await axios.get(
-        `http://localhost:3333/system?adminId=${adminId}`
-      );
-      const _mySystems: System[] = await res.data;
-      debugger;
+      debugger
+      const res = await getByAdminId(adminId);
+      const _mySystems: System[] = res;
+      debugger
       setMySystems(_mySystems);
       console.log(_mySystems[0]);
     } catch (error) {

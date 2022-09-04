@@ -96,3 +96,22 @@ export default function MyAutoComplete(props: any) {
     </>
   );
 }
+
+
+
+
+
+
+// class AuthStore {
+// @observable user = null;
+// constructor () {
+// auth().onAuthStateChanged(user => setUser(user));
+// }
+// @action setUser(user) {
+// this.user = user;
+// }
+
+// @computed get isAuthenticated() {
+// return this.user !== null ? true : false;
+// }
+// }
