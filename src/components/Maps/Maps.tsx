@@ -43,19 +43,13 @@ const Maps: React.FC = (props: any) => {
   const [openModal, setOpenModal] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
   const [address, setAddress] = useState("");
-  const [currentLocation, setCurrentLocation] = useState<Position>({
-    lat: mapStore.currentAddress.lat,
-    lng: mapStore.currentAddress.lng,
-  });
+  const [currentLocation, setCurrentLocation] = useState<Position>({lat: mapStore.currentAddress.lat,lng: mapStore.currentAddress.lng,});
   const [center, setCenter] = useState<Position>(currentLocation);
   const [zoom, setZoom] = useState<number>(15);
-  const [markers, setMarkers] = useState<MarkerModal[]>([
-    ...markerStore.markers,
-  ]);
+  const [markers, setMarkers] = useState<MarkerModal[]>([...markerStore.markers,]);
   const marker_ref = useRef<HTMLInputElement>();
   const [activeMarker, setActiveMarker] = useState<MarkerModal | null>(null);
   const [manager, setManager] = useState<Manager | null>(null);
-
   const onInfoWindowClose = () => {
     mapStore.openInfo = false;
     markerStore.currentMarker = {
@@ -88,18 +82,22 @@ const Maps: React.FC = (props: any) => {
   let auth = getAuth();
   let user = auth.currentUser;
   console.log(user);
+
   onAuthStateChanged(auth, (user) => {
     auth = getAuth();
     user = auth.currentUser;
     userStore.setUser(user);
     isManager();
   });
+  
   useEffect(() => {
     setAddress(mapStore.currentAddress.address);
     setCurrentLocation({
       lat: mapStore.currentAddress.lat,
       lng: mapStore.currentAddress.lng,
     });
+    isManager();
+
   }, [mapStore.currentAddress]);
   useEffect(() => {
     debugger;
@@ -265,7 +263,6 @@ const Maps: React.FC = (props: any) => {
                 <Directions />
               </IconButton>
               {ManagerStore.currentManager &&
-                // ManagerStore.currentManager.role === Roles.ADMIN &&
                  ManagerStore.currentManager.systemId == uid
                  && ManagerStore.currentManager.user_id == userStore.user.uid&&
                 (
@@ -290,6 +287,10 @@ const Maps: React.FC = (props: any) => {
                   {markerStore.currentMarker?.email}
                   {markerStore.currentMarker?.phone}
                 </h4>
+                {ManagerStore.currentManager &&
+                 ManagerStore.currentManager.systemId == uid
+                 && ManagerStore.currentManager.user_id == userStore.user.uid&&
+                (<>
                 <Button
                   onClick={() => {
                     deleteMarker(markerStore.currentMarker);
@@ -301,6 +302,8 @@ const Maps: React.FC = (props: any) => {
                   Edit
                   {openModal2 && <EditMarker />}
                 </Button>
+                </>
+                )}
                 <Button onClick={onInfoWindowClose}>close</Button>
               </div>
             )}
