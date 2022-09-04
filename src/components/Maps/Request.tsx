@@ -7,7 +7,7 @@ import { Request, Status } from "../../utils/modals";
 import axios from "axios";
 import systemStore from "../../store/systemStore";
 import { useForm } from "react-hook-form";
-import { Textarea } from "evergreen-ui";
+// import { Textarea } from "evergreen-ui";
 import { post } from "../../api/request";
 import swal from "sweetalert";
 
@@ -184,7 +184,7 @@ export default function Requests() {
               {...register("description", registerOptions.description)}
             />
             <small>{errors.description && errors.description.message}</small>
-            <Textarea
+            {/* <Textarea
               style={{
                 resize: "none",
                 width: "25%",
@@ -193,7 +193,7 @@ export default function Requests() {
               placeholder="notes for customers"
               id="outlined-size-small"
               {...register("notesForDiaplay", registerOptions.notes)}
-            />
+            /> */}
             <small>
               {errors.notesForDiaplay && errors.notesForDiaplay.message}
             </small>

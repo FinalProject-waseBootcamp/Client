@@ -8,8 +8,8 @@ interface FireBaseUser{
 class Store{
     user:any;
     // user:FireBaseUser;
-   
     async setUser(user:any){
+        debugger
         this.user=user;
         console.log(this.user)
     }
