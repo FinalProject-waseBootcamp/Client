@@ -4,7 +4,7 @@ import { Request } from '../utils/modals'
 
 export const post = async (newRequest: Request) => {
     try {
-        const response = await axios.post('http://localhost:3333/request', newRequest);
+        const response = await axios.post('https://bold-hope-360316.el.r.appspot.com/request', newRequest);
         return response.data;
     } catch (error) {
         console.log('error in create newRequest', error);
@@ -13,7 +13,7 @@ export const post = async (newRequest: Request) => {
 
 export const getAllRequests = async () => {
     try {
-        const response = await axios.get('http://localhost:3333/request');
+        const response = await axios.get('https://bold-hope-360316.el.r.appspot.com/request');
         const RequestsList: Request[] = await response.data;
         // .map((requests: Request) => {
         //     return {
@@ -34,7 +34,7 @@ export const getAllRequests = async () => {
 }
 export const getByIds = async (systemId: string) => {
     try {
-        const Request = await axios.get(`http://localhost:3333/request?id=${systemId}`);
+        const Request = await axios.get(`https://bold-hope-360316.el.r.appspot.com/request?id=${systemId}`);
         return Request;
     } catch (error) {
         console.log('error in get systems', error);
@@ -43,7 +43,7 @@ export const getByIds = async (systemId: string) => {
 
 export const putRequest = async (requestId: string, updatedRequest: Request) => {
     try {
-        await axios.put(`http://localhost:3333/system/request?id=${requestId}`, updatedRequest);
+        await axios.put(`https://bold-hope-360316.el.r.appspot.com/request?id=${requestId}`, updatedRequest);
     } catch (err) {
         console.log(err);
     }
@@ -51,7 +51,7 @@ export const putRequest = async (requestId: string, updatedRequest: Request) => 
 
 export const deleteRequest = async (requestId: string) => {
     try {
-        await axios.delete(`http://localhost:3333/system/request?id=${requestId}`);
+        await axios.delete(`https://bold-hope-360316.el.r.appspot.com/request?id=${requestId}`);
     } catch (err) {
         console.log(err);
     }

@@ -3,7 +3,7 @@ import{User as Iuser} from '../utils/modals'
 
 export const get = async () => {
     try {
-        const response= await axios.get('http://localhost:3333/user');
+        const response= await axios.get('https://bold-hope-360316.el.r.appspot.com/user');
         const usersList:Iuser[]=await response.data.map((user:Iuser)=>{
             return{
                 uid:user.uid,

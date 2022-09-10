@@ -4,7 +4,7 @@ import { Manager } from '../utils/modals'
 
 export const postManager = async (newManager: Manager) => {
     try {
-        const response = await axios.post('http://localhost:3333/manager', newManager);
+        const response = await axios.post('https://bold-hope-360316.el.r.appspot.com/manager', newManager);
         return response.data;
     } catch (error) {
         console.log('error in create newManager', error);
@@ -14,7 +14,7 @@ export const postManager = async (newManager: Manager) => {
 
 export const getAllManagers = async () => {
     try {
-        const response = await axios.get('http://localhost:3333/manager');
+        const response = await axios.get('https://bold-hope-360316.el.r.appspot.com/manager');
         const ManagersList: Manager[] = await response.data.map((manager: Manager) => {
             return {
                 user_id: manager.user_id,
@@ -33,7 +33,7 @@ export const getAllManagers = async () => {
 export const getByIds = async (managerId: string,systemId :string)=> {
     try {
         debugger
-        const Manager = await axios.get(`http://localhost:3333/manager/1?mId=${managerId}&sId=${systemId}`);
+        const Manager = await axios.get(`https://bold-hope-360316.el.r.appspot.com/manager/1?mId=${managerId}&sId=${systemId}`);
         return Manager.data;
     } catch (error) {
         console.log('error in get Manager', error);
@@ -42,7 +42,7 @@ export const getByIds = async (managerId: string,systemId :string)=> {
 
 export const putManager = async (managerId: string, updatedManager: Manager) => {
     try {
-        await axios.put(`http://localhost:3333/system/manager/${managerId}`, updatedManager);
+        await axios.put(`https://bold-hope-360316.el.r.appspot.com/manager/${managerId}`, updatedManager);
     } catch (err) {
         console.log(err);
     }
@@ -50,7 +50,7 @@ export const putManager = async (managerId: string, updatedManager: Manager) => 
 
 export const deleteManager = async (managerId: string) => {
     try {
-        await axios.delete(`http://localhost:3333/system/manager/${managerId}`);
+        await axios.delete(`https://bold-hope-360316.el.r.appspot.com/manager/${managerId}`);
     } catch (err) {
         console.log(err);
     }

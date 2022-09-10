@@ -5,7 +5,7 @@ import{System as Isystem} from '../utils/modals'
 
 export const get = async () => {
     try {
-        const response= await axios.get('http://localhost:3333/system');
+        const response= await axios.get('https://bold-hope-360316.el.r.appspot.com/system');
         const systemssList:Isystem[]=await response.data.map((system:Isystem)=>{
             return{
                 _id:system._id,
@@ -23,7 +23,7 @@ export const get = async () => {
 }
 export const getById = async (systemId: string) => {
     try {
-        const response = await axios.get(`http://localhost:3333/system/${systemId}`);
+        const response = await axios.get(`https://bold-hope-360316.el.r.appspot.com/system/${systemId}`);
         return response.data;
     } catch (error) {
         console.log('error in get system', error);
@@ -32,7 +32,7 @@ export const getById = async (systemId: string) => {
 
 export const getByAdminId = async (adminId: string) => {
     try {
-        const response = await axios.get(`http://localhost:3333/system?adminId=${adminId}`);
+        const response = await axios.get(`https://bold-hope-360316.el.r.appspot.com/system?adminId=${adminId}`);
         return response.data;
     } catch (error) {
         console.log('error in get manager systems', error);
@@ -42,7 +42,7 @@ export const postSystem=async(newSystem:Isystem)=>{
     try{
         debugger;
         console.log(newSystem);
-        const response= await axios.post('http://localhost:3333/system',newSystem);
+        const response= await axios.post('https://bold-hope-360316.el.r.appspot.com/system',newSystem);
         return response.data;
     }catch(error){
         console.log('error in create system', error);
@@ -51,7 +51,7 @@ export const postSystem=async(newSystem:Isystem)=>{
 }
 export const put=async(uid : string ,updatedSystem:Isystem)=>{
     try {
-        const res =await axios.put(`http://localhost:3333/system/${uid}`, updatedSystem);
+        const res =await axios.put(`https://bold-hope-360316.el.r.appspot.com/system/${uid}`, updatedSystem);
         return res.status;
       } catch (err) {
         console.log(err);
