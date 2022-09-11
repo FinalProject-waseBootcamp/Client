@@ -20,6 +20,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 import Request from "../Maps/Request";
 
 export default function MySystem() {
+  console.log("MySystem");
   const auth = getAuth();
   const user = auth.currentUser;
   const { name, uid }: any = useParams();
@@ -31,9 +32,11 @@ export default function MySystem() {
 
 
   const handleOpen = () => {
+  console.log("handleOpen");
     setOpen(true);
   };
   const handleClose = () => {
+  console.log("handleClose");
     setOpen(false);
   };
   const style = {
@@ -51,6 +54,7 @@ export default function MySystem() {
 
   const getCurrentSystem = async () => {
     try {
+  console.log("getCurrent System");
       const response = await getById(uid);
       const currentSystem: System = response;
       systemStore.currentSystem = currentSystem;
@@ -62,12 +66,14 @@ export default function MySystem() {
 
   React.useEffect(() => {
     debugger;
+  console.log("useEffect");
     getCurrentSystem();
     sortMarkersByCities();
   }, []);
 
   const sortMarkersByCities = async () => {
     debugger;
+  console.log("sortMarkersByCities");
     let arr: string[] = [];
     markerStore.markers.map((marker) => {
       if (!arr.includes(marker.city)) {
@@ -86,6 +92,7 @@ export default function MySystem() {
   //   setClicks([...clicks, e.latLng!]);
   // };
   const handleClick = (item: Marker) => {
+    console.log("handleClick");
     debugger;
     mapStore.center = { lat: item.lat, lng: item.lng };
     markerStore.currentMarker = item;

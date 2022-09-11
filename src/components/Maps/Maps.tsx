@@ -76,7 +76,7 @@ const Maps: React.FC = (props: any) => {
       );
       setManager(manager);
       debugger;
-      console.log(ManagerStore.currentManager.role);
+      // console.log(ManagerStore.currentManager.role);
     }
   };
   let auth = getAuth();
@@ -218,7 +218,7 @@ const Maps: React.FC = (props: any) => {
               zoom={zoom}
               onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps)}
             >
-              {markerStore.markers?.map((marker) => (
+              {markerStore.markers?.length&&markerStore.markers.map((marker) => (
                 <Marker
                   key={marker.lat + marker.lng}
                   lat={marker.lat}
