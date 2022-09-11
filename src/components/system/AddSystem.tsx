@@ -16,7 +16,7 @@ import Header from "../Header";
 import ManagerStore from "../../store/mangersStore";
 import { postManager } from "../../api/managers";
 
-const basic_url = "http://localhost:3000/system/welcome";
+const basic_url = "https://mapswithnestjs.web.app/system/welcome";
 
 export default function AddSystem() {
   const auth = getAuth();

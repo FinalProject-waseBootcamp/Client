@@ -28,6 +28,7 @@ export default function SuperLogin() {
           // localStorage.setItem('user','true');
           
       user.getIdToken().then(value=>{
+        debugger
         console.log(value);
         userStore.setUser(user);
         navigate("/addSystem");

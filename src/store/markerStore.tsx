@@ -7,7 +7,7 @@ async function getSystemMarkers() {
   const uid = systemStore.currentSystem?._id;
   try {
     debugger;
-    const res = await axios.get(`http://localhost:3333/marker?systemId=${uid}`);
+    const res = await axios.get(`https://mapswithnestjs.web.app/marker?systemId=${uid}`);
     // if (res.data.length<1) {
     //   const markers :Marker[] = [];
     //   return markers;

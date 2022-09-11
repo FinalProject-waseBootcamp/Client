@@ -61,7 +61,7 @@ export default function AdminSystems() {
         dangerMode: true,
       }).then(async (willDelete) => {
         if (willDelete) {
-          const res = await axios.delete(`http://localhost:3333/system/${uid}`);
+          const res = await axios.delete(`https://mapswithnestjs.web.app/system/${uid}`);
           const status = await res.status;
           if (status === 200) {
             swal("Poof! Your business has been deleted!", {

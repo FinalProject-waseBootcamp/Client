@@ -37,6 +37,7 @@ console.log(user);
 onAuthStateChanged(auth, (user) => {
   auth = getAuth();
   user = auth.currentUser;
+  debugger
   userStore.setUser(user);
 });
 

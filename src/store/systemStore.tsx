@@ -28,6 +28,11 @@ class Store {
   systems: System[] = [];
   currentSystem:System |null= null;
 
+  constructor() {
+    makeAutoObservable(this);
+    this.loadSystems();
+  }
+  
   async loadSystems() {
     debugger
     this.systems = await getSystems(userStore.user.uid) as System[];
@@ -37,10 +42,6 @@ class Store {
     await addSystem(system);
     this.systems.push(system);
     console.log(this.systems);
-  }
-  constructor() {
-    makeAutoObservable(this);
-    this.loadSystems();
   }
 }
 const systemStore = new Store();

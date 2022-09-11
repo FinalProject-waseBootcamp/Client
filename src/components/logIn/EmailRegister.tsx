@@ -73,6 +73,7 @@ export default function EmailRegister() {
     if (user) {
       // addUserToDb(user.uid);
       user.getIdToken().then((value) => {
+        debugger
         console.log(value);
         userStore.setUser(user);
       });

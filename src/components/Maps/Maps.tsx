@@ -86,6 +86,7 @@ const Maps: React.FC = (props: any) => {
   onAuthStateChanged(auth, (user) => {
     auth = getAuth();
     user = auth.currentUser;
+    debugger
     userStore.setUser(user);
     isManager();
   });
