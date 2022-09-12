@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-// import logo from "./logo.svg";
 import "./App.css";
 import User from "./components/Users";
 import SuperLogin from "./components/logIn/SuperLogin";
@@ -8,7 +7,6 @@ import AddSystem from "./components/system/AddSystem";
 import MySystem from "./components/system/System";
 import EditSystem from "./components/system/EditSystem";
 import ResetPassword from "./components/logIn/ResetPassword";
-import Header from "./components/Header";
 import AdminSystems from "./components/system/AdminSystems";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -17,7 +15,6 @@ import MyAutocomplete from "./components/Maps/AutoComplete";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import userStore from "./store/userStore";
 import AddMarker from "./components/Maps/AddMarker";
-import Map from "./components/Maps/Map";
 
 let theme = createTheme();
 theme = createTheme(theme, {

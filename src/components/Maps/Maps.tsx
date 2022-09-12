@@ -212,7 +212,7 @@ const Maps: React.FC = (props: any) => {
           <Grid item md={6} sx={{ height: "70vh", width: "100vh" }}>
             <GoogleMapReact
               bootstrapURLKeys={{
-                key: "AIzaSyAMPFO6Sc4Ihhl2ciCChm6Am1QVlMtDMb0",
+                key: process.env.REACT_APP_bootstrapURLKeys,
               }}
               center={center}
               zoom={zoom}

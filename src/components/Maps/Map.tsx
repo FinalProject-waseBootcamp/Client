@@ -39,11 +39,10 @@ const Map = () => {
 
   // const center={lat:40,lng:-80};
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyC3OCX35jO7Q0qKZn89UfSQUBYXMpTdl3E",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries: ["places"],
-
-
   })
+
   if (!isLoaded) return <div>Loading...</div>;
   return (
   

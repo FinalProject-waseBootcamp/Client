@@ -1,7 +1,5 @@
 // firebase.initializeApp(config);
-
 // const auth = firebase.auth();
-
 // export { auth, firebase };
 import { initializeApp } from "firebase/app";
 import {
@@ -28,15 +26,19 @@ import { Roles, User } from "./utils/modals";
 // dotenv.config();
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyACOl3OJgiJpk5luBai21eY1TVhHq3gOSo",
-    authDomain: "mapswithnestjs.firebaseapp.com",
-    projectId: "mapswithnestjs",
-    storageBucket: "mapswithnestjs.appspot.com",
-    messagingSenderId: "579480671622",
-    appId: "1:579480671622:web:64eec2469c4cff8a0dc807",
-    measurementId: "G-Q87M89KWXW"
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain:process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID,
+    measurementId: process.env.REACT_APP_MEASUREMENT_ID
     // measurementId: "G-3WW4Y70EEF"
 };
+
+alert(process.env.NODE_ENV)
+alert(process.env.REACT_APP_API_KEY);
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);

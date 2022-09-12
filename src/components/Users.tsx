@@ -11,7 +11,7 @@ export default function User() {
 
   const getAllUsers = async () => {
     try {
-      const users = await get() as Iuser[];
+      const users = (await get()) as Iuser[];
       setUsers(users);
     } catch (err) {
       console.log(err);
@@ -25,7 +25,7 @@ export default function User() {
       ) : (
         users.map((user: Iuser) => (
           <div>
-            <h2>Name:{user.firstName+" "+user.lastName}</h2>
+            <h2>Name:{user.firstName + " " + user.lastName}</h2>
             <h3> Email:{user.email}</h3>
           </div>
         ))
