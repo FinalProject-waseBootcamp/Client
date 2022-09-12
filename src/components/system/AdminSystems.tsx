@@ -19,6 +19,7 @@ import { getByAdminId } from '../../api/system'
 import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function AdminSystems() {
+  debugger
   let auth = getAuth();
   const [mySystems, setMySystems] = useState<System[]>([]);
   const [user, loading, error] = useAuthState(auth);
@@ -27,12 +28,14 @@ export default function AdminSystems() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    auth = getAuth();
     debugger
     userStore.setUser(user);
     setAdminId(user?.uid);
+    debugger
     getSystems();
-    auth = getAuth();
-    getSystems();
+    debugger
+    // getSystems();
   }, []);
 
   useEffect(() => {
@@ -46,8 +49,9 @@ export default function AdminSystems() {
   }, [userStore.user])
 
   useEffect(() => { 
+    debugger
     getSystems();
-    setMySystems(systemStore.systems);    
+    // setMySystems(systemStore.systems);    
   }, [adminId])
 
 

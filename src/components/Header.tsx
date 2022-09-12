@@ -23,13 +23,13 @@ export default function Header() {
 
   let auth = getAuth();
   let user = auth.currentUser;
-  // onAuthStateChanged(auth, (user) => {
-  //   auth = getAuth();
-  //   user = auth.currentUser;
-  //   debugger
-  //   userStore.setUser(user);
-  //   setCurrentUser(user);
-  // });
+  onAuthStateChanged(auth, (user) => {
+    auth = getAuth();
+    user = auth.currentUser;
+    debugger
+    userStore.setUser(user);
+    setCurrentUser(user);
+  });
 
   const navigate = useNavigate();
   const signOut = async () => {
