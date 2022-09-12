@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { get } from "../api/user";
 import { User as Iuser } from "../utils/modals";
 
@@ -13,7 +13,6 @@ export default function User() {
     try {
       const users = (await get()) as Iuser[];
       setUsers(users);
-      debugger;
     } catch (err) {
       console.log(err);
     }
@@ -26,8 +25,8 @@ export default function User() {
       ) : (
         users.map((user: Iuser) => (
           <div>
-            <h1>Name:{user.firstName+" "+user.lastName}</h1>
-            <h1> Email:{user.email}</h1>
+            <h2>Name:{user.firstName + " " + user.lastName}</h2>
+            <h3> Email:{user.email}</h3>
           </div>
         ))
       )}
