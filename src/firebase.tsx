@@ -1,6 +1,3 @@
-// firebase.initializeApp(config);
-// const auth = firebase.auth();
-// export { auth, firebase };
 import { initializeApp } from "firebase/app";
 import {
   GoogleAuthProvider,
@@ -21,10 +18,6 @@ import {
 } from "firebase/firestore";
 import userStore from "./store/userStore";
 import { Roles, User } from "./utils/modals";
-// import * as dotenv from "dotenv"
-// const dotenv = require('dotenv');
-// dotenv.config();
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
     authDomain:process.env.REACT_APP_AUTH_DOMAIN,
@@ -36,8 +29,7 @@ const firebaseConfig = {
     // measurementId: "G-3WW4Y70EEF"
 };
 
-alert(process.env.NODE_ENV)
-alert(process.env.REACT_APP_API_KEY);
+alert("environment: "+process.env.NODE_ENV)
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);

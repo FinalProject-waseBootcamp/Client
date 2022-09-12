@@ -34,7 +34,7 @@ console.log(user);
 onAuthStateChanged(auth, (user) => {
   auth = getAuth();
   user = auth.currentUser;
-  debugger
+  debugger;
   userStore.setUser(user);
 });
 
@@ -43,7 +43,6 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Router>
-          {/* <Header /> */}
           <Routes>
             <Route path="" element={<SuperLogin />} />
             <Route path="/login" element={<SuperLogin />} />

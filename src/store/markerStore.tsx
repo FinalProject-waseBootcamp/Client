@@ -8,10 +8,6 @@ async function getSystemMarkers() {
   try {
     debugger;
     const res = await axios.get(`https://bold-hope-360316.el.r.appspot.com/marker?systemId=${uid}`);
-    // if (res.data.length<1) {
-    //   const markers :Marker[] = [];
-    //   return markers;
-    // }
     return res.data;
   } catch (error) {
     console.log(error);
@@ -30,10 +26,6 @@ class Store {
   constructor() {
     makeAutoObservable(this);
     this.initMarkers();
-    // async function get(){
-    //   const markers:Marker[]=await
-    //   this.markers=markers;
-    // }
   }
 
   async initMarkers() {

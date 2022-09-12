@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { logout } from "../firebase";
-import { User } from "../utils/modals";
-import { Roles } from "../utils/modals";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import userStore from "../store/userStore";
 import {
   getAuth,
   onAuthStateChanged,
-  signInWithEmailAndPassword,
-  browserSessionPersistence,
-  setPersistence,
-  signInWithRedirect,
-  inMemoryPersistence,
-  GoogleAuthProvider,
 } from "firebase/auth";
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
@@ -43,14 +35,8 @@ export default function Header() {
         {/* {currentUser?.photoURL && ( */}
         {user?.photoURL&&(
            <Stack direction="row" >
-           <Avatar alt="profile" src={userStore.user?.photoURL} sx={{ width: 56, height: 56 }}/>
+           <Avatar alt="profile" src={user.photoURL} sx={{ width: 56, height: 56 }}/>
          </Stack>
-          // <img
-          //   src={
-          //     userStore.user?.photoURL
-          //     // currentUser.photoURL
-          //   }
-          // ></img>
         )}
         <h3 id="navTitle">Build your system</h3>
         {

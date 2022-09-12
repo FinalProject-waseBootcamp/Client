@@ -1,6 +1,5 @@
 import { async } from '@firebase/util';
 import axios from 'axios';
-import { stringify } from 'querystring';
 import{System as Isystem} from '../utils/modals'
 
 export const get = async () => {

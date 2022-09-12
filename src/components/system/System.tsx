@@ -105,7 +105,6 @@ export default function MySystem() {
       <h1>WELCOME TO {currentSystem?.name} SYSTEM</h1>
       {/* here customers can search for their closest location of the object 👇*/}
       {/* <Container id="container"> */}
-      {/* <h3>locations</h3> */}
       <nav className="main">
         <div id="mapDiv">
           <Maps />
